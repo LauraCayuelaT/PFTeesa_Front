@@ -73,4 +73,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
-Proyecto para una empresa Colombaina ubicada en Cali Colombia.
+Proyecto para una empresa Colombiana ubicada en Cali Colombia.
