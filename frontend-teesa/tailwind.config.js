@@ -4,10 +4,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        transparent: 'transparent',
-        current: 'currentColor',
-        landingb: '#cce3f5',
-        bluetext: '#3598dc',
+        teesaBlueDark: '#00082D',
+        teesaBlueLight: '#192C8C',
+        teesaWhite: '#FBFEFA',
+        teesaGrey: '#E5E5E5',
+        teesaGreenDark: '#224957',
+        teesaGreen: '#03D368',
       },
     },
   },
