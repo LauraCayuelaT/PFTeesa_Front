@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="640.0px"
+   height="480.0px"
+   viewBox="0 0 640.0 480.0"
+   version="1.1"
+   id="SVGRoot"
+   sodipodi:docname="MiniCircleTeesa.svg"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview99"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="px"
+     showgrid="false"
+     inkscape:zoom="0.66142459"
+     inkscape:cx="257.02099"
+     inkscape:cy="258.53287"
+     inkscape:window-width="1366"
+     inkscape:window-height="705"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs94" />
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:#03d368;fill-opacity:1;stroke:none;stroke-width:0.680118"
+       d="m 306.74372,340.82701 c -12.06708,-0.17467 -26.94625,-2.87219 -38.36818,-6.95596 -37.9975,-13.58554 -64.60836,-43.78986 -72.06346,-81.79468 -1.46089,-7.44744 -1.68231,-25.51273 -0.40906,-33.3767 5.3688,-33.15946 27.4971,-63.34285 58.76635,-80.15832 17.94618,-9.65082 35.71302,-14.26842 56.61162,-14.71336 17.10145,-0.3641 31.93993,2.14677 46.91335,7.93833 44.06095,17.0423 72.28435,58.37331 70.10795,102.66761 -2.95565,60.15321 -56.85677,107.3297 -121.55857,106.39308 z"
+       id="path340" />
+  </g>
+</svg>
