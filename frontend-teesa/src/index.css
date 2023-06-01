@@ -3,9 +3,12 @@
 @tailwind utilities;
 
 /* COLORS
-#00082D: Azul
-#03E56F: Verde
+#03D368: Verde
+#224957: Verde Oscuri
 #FBFEFA: Blanco
+#E5E5E5: Gris
+#192C8C: Azul Claro
+#00082D: Azul Oscuro
 */
 
 html,
@@ -15,4 +18,5 @@ body,
   width: 100% !important;
   height: 100% !important;
   background-color: #e2f5ff;
+  font-family: 'Roboto', sans-serif;
 }
