@@ -2,7 +2,7 @@ import React from "react";
 import {Link,NavLink} from "react-router-dom";
 import styles from './NavBar.module.css'
 import title from '../../title.png';
-// import 'boxicons' from 
+// import 'boxicons'
 
 
 export default function NavBar() {
