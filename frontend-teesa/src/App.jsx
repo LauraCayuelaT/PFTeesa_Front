@@ -7,6 +7,7 @@ import Landing from './Components/Landing/Landing';
 import Detail from './Components/Detail/Detail';
 import Login from './Components/Login/Login';
 import About from './Components/About/About';
+import Services from './Components/Services/Services';
 
 function App() {
   const location = useLocation();
@@ -21,6 +22,7 @@ function App() {
         <Route path='/home/:id' element={<Detail />} />
         <Route path='/login' element={<Login />} />
         <Route path='/about' element={<About />} />
+        <Route path='/services' element={<Services />}/>
       </Routes>
     </div>
   );
