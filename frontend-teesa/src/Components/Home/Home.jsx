@@ -1,30 +1,31 @@
 //Instalaciones:
-// import { useEffect, useState } from 'react';
-// import axios from 'axios';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Card } from '../Card/Card';
+// import { CardMockup } from '../Card/CardMockup';
 
 function Home() {
   // Codigo del Sol:
 
   // Codigo de Juan:
-  //Conexión con Back:
-  // eslint-disable-next-line no-unused-vars
-  // const [products, setProducts] = useState([]);
+  // Conexión con Back:
+  //eslint-disable-next-line no-unused-vars
+  const [products, setProducts] = useState([]);
 
-  // const fetchData = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       'https://servidor-teesa.onrender.com/products'
-  //     );
-  //     setProducts(response.data);
-  //   } catch (error) {
-  //     console.error('Error fetching products:', error);
-  //   }
-  // };
+  const getApiData = async () => {
+    try {
+      const response = await axios.get(
+        'https://servidor-teesa.onrender.com/products'
+      );
+      setProducts(response.data);
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    }
+  };
 
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    getApiData();
+  }, []);
 
   return (
     <div className='flex w-full h-full flex-col flex-wrap'>
@@ -54,9 +55,22 @@ function Home() {
         </div>
         {/* Termina parte de Sol. */}
         {/* Inicia parte de Juan. */}
-        <div className='cardsContainer w-5/6 m-5 bg-teesaGrey flex flex-wrap justify-start items-start'>
-          <Card /> <Card /> <Card /> <Card /> <Card />
+
+        <div className=' flex cardsContainer w-5/6 h-fit m-5 bg-teesaWhite  items-end '>
+          <div className='flex flex-wrap m-auto justify-center'>
+            {products.map((product) => (
+              <Card
+                key={product.id}
+                nombre={product.nombre}
+                categoria={product.categoria}
+                precio={product.precio}
+                imagen={product.imagen}
+                marca={product.marca}
+              />
+            ))}
+          </div>
         </div>
+
         {/* Termina parte de Juan. */}
       </div>
     </div>
