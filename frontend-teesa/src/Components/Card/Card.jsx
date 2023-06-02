@@ -2,7 +2,7 @@
 
 export const Card = () => {
   return (
-    <div className='flex w-[260px] h-[450px]  my-1 mx-4'>
+    <div className='flex w-[260px] h-[450px]  my-2 mx-4 transition duration-100 transform hover:scale-105 '>
       <div className=' shadow-md border  bg-teesaGrey border-gray-400'>
         <img
           className=''
@@ -15,12 +15,14 @@ export const Card = () => {
             Horno Deshidratador (20 Bandejas)
           </h2>
           <h4 className='text-black text-[16px] font-md'>$12,692,900 COL</h4>
-          <a
+          <div
             href='#'
             className='text-white   font-medium  text-md px-3 py-2 text-center inline-flex items-end  dark:bg-blue-600 hover:bg-blue-700 '
           >
-            Añadir al Carro
-          </a>
+            <a href=''>
+              Añadir al Carro <i className='fa-solid fa-cart-shopping'></i>
+            </a>
+          </div>
         </div>
       </div>
     </div>
