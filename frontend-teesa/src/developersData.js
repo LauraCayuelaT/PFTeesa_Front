@@ -12,7 +12,7 @@ const developers = [
       country: "Argentina",
       role: "Full Stack Web Developer",
       linkedin: "https://www.linkedin.com/in/maria-sol-comba-maiztegui/",
-      github: "https://github.com/mariasolcba",
+      github: "https://github.com/MariaSol1999",
       image: SolDevImg,
     },
     {
@@ -20,7 +20,7 @@ const developers = [
       country: "Colombia",
       role: "Full Stack Web Developer",
       linkedin: "https://www.linkedin.com/in/lauracayuelatovar/",
-      github: "https://github.com/lauracayuela",
+      github: "https://github.com/LauraCayuelaT",
       image: LauraDevImg,
     },
     {
@@ -28,7 +28,7 @@ const developers = [
         country: "Colombia",
         role: "Full Stack Web Developer",
         linkedin: "https://www.linkedin.com/in/jhonnyzamsa/",
-        github: "https://github.com/jhonnyzamsa",
+        github: "https://github.com/Jhonny91360",
         image: JhonnyDevImg,
       },
       {
@@ -36,7 +36,7 @@ const developers = [
         country: "Colombia",
         role: "Full Stack Web Developer",
         linkedin: "https://www.linkedin.com/in/juan-david-gustin-andino/",
-        github: "https://github.com/juangustinandino",
+        github: "https://github.com/Gustindev",
         image: JuanDevImg,
       },
       {
@@ -44,7 +44,7 @@ const developers = [
         country: "Argentina",
         role: "Full Stack Web Developer",
         linkedin: "https://www.linkedin.com/in/tiago-bergmann-0576b7264/",
-        github: "https://github.com/tiago-bergmann",
+        github: "https://github.com/Oscarcito122",
         image: ThiagoDevImg,
       },
       {
@@ -52,7 +52,7 @@ const developers = [
         country: "Argentina",
         role: "Full Stack Web Developer",
         linkedin: "https://www.linkedin.com/in/yoseli-aguilera-2766a1218/",
-        github: "https://github.com/yoseliaguilera",
+        github: "https://www.linkedin.com/in/yoseli-aguilera-2766a1218",
         image: YoseliDevImg,
       },
       {
@@ -60,7 +60,7 @@ const developers = [
         country: "Colombia",
         role: "Full Stack Web Developer",
         linkedin: "https://www.linkedin.com/in/andr%C3%A9s-jose-paternina-rubiano-557309229/",
-        github: "https://github.com/andrespaternina",
+        github: "https://github.com/ANDRESJP98",
         image: AndresDevImg,
       },
 
