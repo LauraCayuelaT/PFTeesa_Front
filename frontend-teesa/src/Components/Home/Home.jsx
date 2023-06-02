@@ -1,50 +1,51 @@
 //Instalaciones:
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useEffect } from 'react';
 import { Card } from '../Card/Card';
-// import { CardMockup } from '../Card/CardMockup';
+import { useSelector, useDispatch } from 'react-redux';
+//Redux
+import { getApiData } from '../../features/reduxReducer/productSlice';
+//Gif
+import loadingGif from '../../assets/icon/Loading.gif';
 
 function Home() {
   // Codigo del Sol:
 
-  // Codigo de Juan:
-  // Conexión con Back:
-  //eslint-disable-next-line no-unused-vars
-  const [products, setProducts] = useState([]);
+  // Codigo de Juan - Conexión con Back:
 
-  const getApiData = async () => {
-    try {
-      const response = await axios.get(
-        'https://servidor-teesa.onrender.com/products'
-      );
-      setProducts(response.data);
-    } catch (error) {
-      console.error('Error fetching products:', error);
-    }
-  };
+  const dispatch = useDispatch();
+  const isDataLoaded = useSelector(
+    (state) => state.productState.allProducts.length > 0
+  );
 
   useEffect(() => {
-    getApiData();
-  }, []);
+    if (!isDataLoaded) {
+      dispatch(getApiData());
+    }
+  }, [dispatch, isDataLoaded]);
+
+  let productsTeesa = useSelector((state) => state.productState.allProducts);
+
+  //isLoading
+  let loading = useSelector((state) => state.productState.loading);
 
   return (
     <div className='flex w-full h-full flex-col flex-wrap'>
       {/* Second Navbar */}
       <div className='flex bg-teesaBlueDark w-full m-0 items-center justify-center mt-[-1px] border-t-4 border-teesaGreen text-teesaWhite h-[60px] text-[16px]'>
         <h2 className='mx-4  hover:text-teesaGreen'>
-          <a href='#'>Electrico</a>
+          <a href=''>Eléctrico</a>
         </h2>
         <h2 className='mx-4  hover:text-teesaGreen'>
-          <a href='#'>Gas</a>
+          <a href=''>Gas</a>
         </h2>
         <h2 className='mx-4  hover:text-teesaGreen'>
-          <a href='#'>Refrigeración</a>
+          <a href=''>Refrigeración</a>
         </h2>
         <h2 className='mx-4  hover:text-teesaGreen'>
-          <a href='#'>Hornos</a>
+          <a href=''>Hornos</a>
         </h2>
         <h2 className='mx-4  hover:text-teesaGreen'>
-          <a href='#'>Repuestos</a>
+          <a href=''>Repuestos</a>
         </h2>
       </div>
       {/* Hero */}
@@ -56,21 +57,28 @@ function Home() {
         {/* Termina parte de Sol. */}
         {/* Inicia parte de Juan. */}
 
-        <div className=' flex cardsContainer w-5/6 h-fit m-5 bg-teesaWhite  items-end '>
-          <div className='flex flex-wrap m-auto justify-center'>
-            {products.map((product) => (
-              <Card
-                key={product.id}
-                nombre={product.nombre}
-                categoria={product.categoria}
-                precio={product.precio}
-                imagen={product.imagen}
-                marca={product.marca}
-              />
-            ))}
+        {loading && (
+          <div className='flex justify-center items-center w-5/6 flex-col mt-[-200px]'>
+            <img src={loadingGif} alt='gif' />
           </div>
-        </div>
+        )}
 
+        {!loading && (
+          <div className=' flex cardsContainer w-5/6 h-fit m-5 bg-teesaWhite  items-end '>
+            <div className='flex flex-wrap m-auto justify-center'>
+              {productsTeesa.map((product) => (
+                <Card
+                  key={product.id}
+                  nombre={product.nombre}
+                  categoria={product.categoria}
+                  precio={product.precio}
+                  imagen={product.imagen}
+                  marca={product.marca}
+                />
+              ))}
+            </div>
+          </div>
+        )}
         {/* Termina parte de Juan. */}
       </div>
     </div>
