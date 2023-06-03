@@ -7,8 +7,9 @@ import Landing from './views/Landing/Landing';
 import Detail from './Components/Detail/Detail';
 import Login from './Components/Login/Login';
 import Services from './views/Services/Services';
-import Contact from './views/Contact/Contact';
 import Direccion from './views/Direccion/Direccion';
+import About from './views/About/About';
+
 
 function App() {
   const location = useLocation();
@@ -23,9 +24,8 @@ function App() {
         <Route path='/home/:id' element={<Detail />} />
         <Route path='/login' element={<Login />} />
         <Route path='/services' element={<Services />}/>
-        <Route path='/contact' element={<Contact />}/>
         <Route path='/location' element={<Direccion/>}/>
-        
+        <Route path='/about' element={<About />} />
       </Routes>
     </div>
   );
