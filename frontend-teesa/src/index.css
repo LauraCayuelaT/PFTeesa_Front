@@ -7,7 +7,6 @@
 #03E56F: Verde
 #FBFEFA: Blanco
 */
-
 html,
 body,
 #root,
@@ -15,4 +14,5 @@ body,
   width: 100% !important;
   height: 100% !important;
   background-color: #e2f5ff;
+
 }
