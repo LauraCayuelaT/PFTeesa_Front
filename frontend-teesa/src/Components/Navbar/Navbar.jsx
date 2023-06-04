@@ -18,7 +18,7 @@ export default function NavBar() {
           Inicio
         </NavLink>
         <NavLink
-          to='/contacto'
+          to='/contact'
           className={({ isActive }) =>
             isActive ? styles.active : styles.navLinks
           }

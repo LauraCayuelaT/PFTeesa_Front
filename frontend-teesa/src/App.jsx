@@ -8,6 +8,7 @@ import Detail from './Components/Detail/Detail';
 import Login from './Components/Login/Login';
 import About from './Components/About/About';
 import Services from './Components/Services/Services';
+import Contact from './Components/Contact/Contact';
 
 function App() {
   const location = useLocation();
@@ -23,6 +24,7 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/services' element={<Services />} />
         <Route path='/about' element={<About />} />
+        <Route path='/contact' element={<Contact />} />
       </Routes>
     </div>
   );
