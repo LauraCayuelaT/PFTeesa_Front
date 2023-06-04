@@ -8,10 +8,7 @@ function Landing() {
     <div className="relative bg-cover h-screen bg-teesaBlueDark overflow-hidden">
       <div className="flex justify-end xl:mr-[9em] xl:text-xl lg:mr-[5em] lg:text-xl gap-10 pt-8 md:mr-[] md:text-l sm:mr-[3em] sm:text-l text-teesaWhite">
         <Link to="/contact">
-          <button>Contacto</button>
-        </Link>
-        <Link to="/location">
-          <button>Dirección</button>
+          <button>Contáctanos</button>
         </Link>
         <Link to="/about">
           <button>Sobre nosotros</button>
@@ -42,6 +39,7 @@ function Landing() {
 
 <img src={GreenCircleTeesa} alt="greenabajo" className=" hidden lg:block xl:block md:block absolute xl:h-[30em] xl:bottom-[-25em] xl:left-[30em] lg:h-[25em] lg:bottom-[-20em] lg:left-[12em] md:h-[20em] md:bottom-[-15em] md:left-[12em] " />
 <img src={BlueCircleTeesa} alt="bluederecha" className="hidden lg:block xl:block absolute xl:h-[25em] xl:bottom-[17em] xl:left-[78em] lg:h-[20em] lg:bottom-[17em] lg:left-[62em] "/>
+    
     </div> 
   );
 }
