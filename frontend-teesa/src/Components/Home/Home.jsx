@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getApiData } from '../../features/reduxReducer/productSlice';
 //Gif
 import loadingGif from '../../assets/icon/Loading.gif';
+import { NavLink } from 'react-router-dom';
 
 function Home() {
   // Codigo del Sol:
@@ -47,6 +48,18 @@ function Home() {
         <h2 className='mx-4  hover:text-teesaGreen'>
           <a href=''>Repuestos</a>
         </h2>
+        <div className="flex items-center w-[30%] justify-evenly ">
+        <input
+          className="w-[60%] h-[50%] outline-none"
+          type='search'
+          placeholder='Buscar...'
+        />
+        <NavLink className="buttonadd" to='/home'>
+          <button type='submit'>
+            <box-icon name='search-alt' color='#fbfef8'></box-icon>
+          </button>
+        </NavLink>
+      </div>
       </div>
       {/* Hero */}
       <div className='heroContainer flex w-full h-[800px]'>
