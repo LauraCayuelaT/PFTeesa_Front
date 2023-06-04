@@ -1,6 +1,70 @@
 import Map from './Map';
+import { useRef, useState } from 'react';
+import emailjs from '@emailjs/browser';
+import Swal from 'sweetalert2';
 
 const Contact = () => {
+  //Form - State
+  const [formulario, setFormulario] = useState({
+    user_name: '',
+    user_phone: '',
+    user_email: '',
+    message: '',
+  });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormulario({
+      ...formulario,
+      [name]: value,
+    });
+    console.log(formulario);
+  };
+
+  const handleSubmit = () => {
+    setFormulario({
+      user_name: '',
+      user_phone: '',
+      user_email: '',
+      message: '',
+    });
+  };
+
+  //Alert
+  const alert = () => {
+    Swal.fire({
+      title: 'Mensaje Enviado',
+      text: 'Nos contactaremos pronto.',
+      icon: 'success',
+      confirmButtonText: 'Aceptar',
+    });
+  };
+
+  //EmailJS
+  const form = useRef();
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .sendForm(
+        'service_prr11cf',
+        'template_0glkzy9',
+        form.current,
+        'u-QBAzeFYmV_VDbW6'
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+          alert();
+          handleSubmit();
+          console.log('Mensaje Enviado.');
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+  };
   return (
     <div className='w-full h-full'>
       <div className='w-full '>
@@ -15,50 +79,59 @@ const Contact = () => {
               <div className='flex flex-wrap w-full flex-row justify-center'>
                 <div className='mb-12 w-full shrink-0 grow-0 basis-auto md:px-3 lg:mb-0 lg:w-5/12 lg:px-6'>
                   {/* FORM */}
-                  <form>
+                  <form ref={form} onSubmit={sendEmail}>
                     <h1 className='font-bold text-4xl text-teesaBlueDark my-1'>
                       ¿Quieres tener más información?
                     </h1>
                     <h2 className=' my-3 font-medium text-[20px]'>
                       Escribe tus datos y te contactaremos.
                     </h2>
-                    <div className='relative mb-6' data-te-input-wrapper-init>
+                    <div className='relative mb-6'>
                       <input
                         type='text'
+                        name='user_name'
                         className='peer block min-h-[auto] w-full rounded border-10 bg-transparent py-[0.32rem] px-3 leading-[1.6] outline-none border-2 border-teesaBlueLight shadow-lg'
                         placeholder='Nombre'
+                        value={formulario.user_name}
+                        onChange={handleChange}
                       />
                     </div>
-                    <div className='relative mb-6' data-te-input-wrapper-init>
+                    <div className='relative mb-6'>
                       <input
                         type='phone'
+                        name='user_phone'
                         className='peer block min-h-[auto] w-full rounded bg-transparent py-[0.32rem] px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear  border-2 border-teesaBlueLight shadow-lg'
                         placeholder='Celular'
+                        value={formulario.user_phone}
+                        onChange={handleChange}
                       />
                     </div>
-                    <div className='relative mb-6' data-te-input-wrapper-init>
+                    <div className='relative mb-6'>
                       <input
                         type='email'
+                        name='user_email'
                         className='peer block min-h-[auto] w-full rounded bg-transparent py-[0.32rem] px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear  border-2 border-teesaBlueLight shadow-lg'
                         placeholder='Email'
+                        value={formulario.user_email}
+                        onChange={handleChange}
                       />
                     </div>
                     <div className='relative mb-6' data-te-input-wrapper-init>
                       <textarea
+                        name='message'
                         className='peer block min-h-[auto] w-full rounded  bg-transparent py-[0.32rem] px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear border-2 border-teesaBlueLight shadow-lg'
                         rows='3'
                         placeholder='Escribe tu mensaje.'
+                        onChange={handleChange}
+                        value={formulario.message}
                       ></textarea>
                     </div>
                     <div className=' inline-block min-h-[1.5rem] justify-center pl-[1.5rem] md:flex'></div>
-                    <button
-                      type='button'
-                      data-te-ripple-init
-                      data-te-ripple-color='light'
-                      className='mb-6 inline-block w-full rounded bg-teesaBlueLight  px-6 pt-2.5 pb-2 text-md font-medium uppercase leading-normal text-white shadow-lg hover:bg-teesaBlueDark'
-                    >
-                      Enviar
-                    </button>
+                    <input
+                      type='submit'
+                      value='Enviar'
+                      className='mb-6 inline-block w-full rounded bg-teesaBlueLight  px-6 pt-2.5 pb-2 text-md font-medium uppercase leading-normal text-white shadow-lg hover:bg-teesaBlueDark cursor-pointer'
+                    />
                   </form>
                   {/* FORM */}
                 </div>
