@@ -32,20 +32,16 @@ function Home() {
     <div className='flex w-full h-full flex-col flex-wrap'>
       {/* Second Navbar */}
       <div className='flex bg-teesaBlueDark w-full m-0 items-center justify-center mt-[-1px] border-t-4 border-teesaGreen text-teesaWhite h-[60px] text-[16px]'>
-        <h2 className='mx-4  hover:text-teesaGreen'>
-          <a href=''>Eléctrico</a>
+        <h2 className='mx-4  hover:text-teesaGreen cursor-pointer'>
+          Eléctrico
         </h2>
-        <h2 className='mx-4  hover:text-teesaGreen'>
-          <a href=''>Gas</a>
+        <h2 className='mx-4  hover:text-teesaGreen cursor-pointer'>Gas</h2>
+        <h2 className='mx-4  hover:text-teesaGreen cursor-pointer'>
+          Refrigeración
         </h2>
-        <h2 className='mx-4  hover:text-teesaGreen'>
-          <a href=''>Refrigeración</a>
-        </h2>
-        <h2 className='mx-4  hover:text-teesaGreen'>
-          <a href=''>Hornos</a>
-        </h2>
-        <h2 className='mx-4  hover:text-teesaGreen'>
-          <a href=''>Repuestos</a>
+        <h2 className='mx-4  hover:text-teesaGreen cursor-pointer'>Hornos</h2>
+        <h2 className='mx-4  hover:text-teesaGreen cursor-pointer'>
+          Repuestos
         </h2>
       </div>
       {/* Hero */}
