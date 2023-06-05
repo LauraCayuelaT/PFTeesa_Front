@@ -41,12 +41,13 @@ function Home() {
   };
 
   //FUNCIONANDO PERFECTO
-  // const handleSortPrice = (e) => {
-  //   e.preventDefault();
-  //   dispatch(sortByPrice({ minPrice: 100000000, maxPrice: 500000000 }));
-  //   dispatch(sortByPrice(e.target.value.toLowerCase()));
-  //   setOrden(`Ordenado por precio ${e.target.value}`);
-  // };
+  const handleSortPrices = (e) => {
+    e.preventDefault();
+    dispatch(sortByPrice({ minPrice: 100000000, maxPrice: 500000000 }));
+    dispatch(sortByPrice(e.target.value.toLowerCase()));
+    setOrden(`Ordenado por precio ${e.target.value}`);
+  };
+
   const handleSortPrice = (e) => {
     e.preventDefault();
     const selectedRange = e.target.value.toLowerCase();
@@ -175,7 +176,7 @@ function Home() {
               id="sortPrice"
               className="w-full border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-teesaGreen"
               value=""
-              onChange={(e) => handleSortPrice(e)}
+              onChange={(e) => handleSortPrices(e)}
             >
               <option value="" disabled>Seleccionar</option>
               <option value="precio_min">Precio Mínimo</option>

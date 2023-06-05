@@ -1,5 +1,5 @@
 import React from 'react';
-import AboutDevCard from '../AboutDevCard/AboutDevCard';
+import AboutDevCard from '../About/AboutDevCard/AboutDevCard';
 import { Link } from 'react-router-dom';
 import Logo from '../../assets/Logo - Screenshot.jpg';
 // import FaLinkedin from "../../assets/LinkedIn_icon.svg.png"
