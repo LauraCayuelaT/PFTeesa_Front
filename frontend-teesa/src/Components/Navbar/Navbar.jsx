@@ -25,7 +25,7 @@ export default function NavBar() {
             Servicios
           </NavLink>
           <NavLink
-            to='/contacto'
+            to='/contact'
             className='hover:text-teesaGreen focus:text-teesaGreen'
           >
             Contáctanos
