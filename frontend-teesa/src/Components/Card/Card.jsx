@@ -3,8 +3,8 @@
 
 export const Card = ({ nombre, categoria, imagen, precio, marca }) => {
   return (
-    <div className='flex w-[260px] h-[460px]  my-2 mx-6 transition duration-100 transform hover:scale-105 hover:cursor-pointer '>
-      <div className=' shadow-md border  bg-teesaWhite border-gray-400'>
+    <div className='flex w-[260px] h-[460px]  my-2 mx-6 transition duration-100 transform hover:scale-105 hover:cursor-pointer'>
+      <div className=' shadow-md border  bg-teesaWhite border-gray-400 rounded-md'>
         <div className='imageContainer w-[290px] '>
           <img
             className='w-[290px] h-[260px] object-fill'
