@@ -92,9 +92,7 @@ export const productSlice = createSlice({
       state.brands = [];
       state.error = action.error.message;
     });
-    
   },
-  
 });
 
 //Exportamos los reducers
@@ -108,4 +106,3 @@ export const {
 } = productSlice.actions;
 
 export default productSlice.reducer;
-
