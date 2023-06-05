@@ -11,6 +11,13 @@ export default {
         teesaGreenDark: '#224957',
         teesaGreen: '#03D368',
       },
+      screens: {
+        'xs': '280',
+        'sm': '640px', 
+        'md': '768px',
+        'lg': '1024px',
+        'xl': '1280px',
+      },
     },
   },
   plugins: [],
