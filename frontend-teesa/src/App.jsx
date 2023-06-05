@@ -6,10 +6,8 @@ import Navbar from './Components/Navbar/Navbar';
 import Landing from './views/Landing/Landing';
 import Detail from './Components/Detail/Detail';
 import Login from './Components/Login/Login';
-// import About from './Components/About/About';
 import Services from './views/Services/Services';
 import Contact from './Components/Contact/Contact';
-import Direccion from './views/Direccion/Direccion';
 import About from './views/About/About';
 
 function App() {
@@ -24,7 +22,8 @@ function App() {
         <Route path='/home' element={<Home />} />
         <Route path='/home/:id' element={<Detail />} />
         <Route path='/login' element={<Login />} />
-        <Route path='/services' element={<Services />}/>
+        <Route path='/services' element={<Services />} />
+        <Route path='/services' element={<Services />} />
         <Route path='/about' element={<About />} />
         <Route path='/contact' element={<Contact />} />
       </Routes>
