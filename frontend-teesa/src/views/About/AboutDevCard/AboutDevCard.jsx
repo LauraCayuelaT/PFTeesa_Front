@@ -27,18 +27,18 @@ const AboutDevCard = ({ name, country, role, linkedin, github, image }) => {
             alt={name}
           />
         </div>
-        <div className={`infoArea flex-grow text-center ${isHovered ? 'text-white' : 'text-black'}`}>
-          <h2 className="font-bold text-lg">{name}</h2>
-          <p className="text-sm">{role}</p>
+        <div className={`infoArea flex-grow text-center ${isHovered ? 'text-white' : 'text-teesaBlueDark'}`}>
+          <h2 className="font-bold text-teesaBlueDark">{name}</h2>
+          <p className="text-sm text-teesaGreen">{role}</p>
         </div>
         {isHovered && (
           <>
-            <div className={`infoArea ${isHovered ? 'text-white' : 'text-black'}`}>
+            <div className={`infoArea ${isHovered ? 'text-white' : 'text-teesaBlueDark'}`}>
               <ul className="datos flex flex-col items-center gap-2">
                 <li>{country}</li>
               </ul>
             </div>
-            <div className={`datos flex gap-4 ${isHovered ? 'text-white' : 'text-black'}`}>
+            <div className={`datos flex gap-4 ${isHovered ? 'text-white' : 'text-teesaBlueDark'}`}>
               <a href={linkedin} target="_blank" rel="noopener noreferrer">
                 LinkedIn
               </a>
