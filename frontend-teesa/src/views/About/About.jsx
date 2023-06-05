@@ -1,5 +1,5 @@
 import React from 'react';
-import AboutDevCard from '../../Components/AboutDevCard/AboutDevCard';
+import AboutDevCard from '../About/AboutDevCard/AboutDevCard';
 import FaLinkedin from "../../assets/LinkedIn_icon.svg.png"
 import FaGithub from "../../assets/images.png"
 import developers from "../../developersData";
