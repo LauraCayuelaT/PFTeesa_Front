@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { Card } from '../Card/Card';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
+import {Link} from "react-router-dom"
 import NoRepuestosDisponibles from '../NoHayRep/NoRepuestos';
 import NoHayProductosRango from '../NoHayProductosRango/NoHayProductosRango';
 import {
@@ -258,6 +259,8 @@ function Home() {
           {!loading && (
             <div className='flex flex-wrap m-auto justify-center'>
               {filteredProducts.map((product) => (
+                                <Link to={`/home/${product.id}`} style={{ textDecoration: "none" }}>
+
                 <Card
                   key={product.id}
                   nombre={product.nombre}
@@ -266,6 +269,7 @@ function Home() {
                   imagen={product.imagen}
                   marca={product.marca}
                 />
+                </Link>
               ))}
             </div>
           )}
