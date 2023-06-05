@@ -10,7 +10,7 @@ const About = () => {
   return (
     <div className="bg-white text-black">
       <div className="mx-auto max-w-3xl">
-        <h1 className="text-4xl font-bold mt-8 mb-4 text-blue-900 md:text-left">Desarrolladores Web</h1>
+        <h1 className="text-4xl font-bold mt-8 mb-4 text-teesaBlueDark md:text-left">Desarrolladores Web</h1>
         <p className="text-lg mb-4 text-blue-900 md:text-left">
           Somos un equipo de 7 web developers provenientes de Colombia y Argentina unidos para desarrollar este proyecto, combinando nuestros conocimientos en bases de datos, back-end y front-end, y aplicando herramientas de diseño UX/UI para ofrecer una experiencia de navegación intuitiva.
         </p>
