@@ -23,7 +23,7 @@ const Contact = () => {
     if (!formulario.user_phone) {
       errors.user_phone = 'Por favor, ingresa tu número de celular';
     } else if (!/^[0-9\s+]+$/.test(formulario.user_phone)) {
-      errors.user_phone = 'El número de celular debe tener números.';
+      errors.user_phone = 'El celular solo debe tener números.';
     } else {
       delete errors.user_phone;
     }
@@ -50,7 +50,7 @@ const Contact = () => {
   //Form - State
   const [formulario, setFormulario] = useState({
     user_name: '',
-    user_phone: '', 
+    user_phone: '',
     user_email: '',
     message: '',
   });
@@ -126,11 +126,7 @@ const Contact = () => {
             <div className='flex flex-wrap  flex-row justify-center'>
               <div className='mb-12  shrink-0 grow-0 basis-auto md:px-3 lg:mb-0 lg:w-5/12 lg:px-0'>
                 {/* FORM */}
-                <form
-                  ref={form}
-                  onSubmit={sendEmail}
-                  className='w-full ml-[-20px]'
-                >
+                <form ref={form} onSubmit={sendEmail} className='w-full -m-1'>
                   <h1 className='font-bold text-3xl text-teesaBlueDark my-1'>
                     ¿Quieres tener más información?
                   </h1>
@@ -147,9 +143,11 @@ const Contact = () => {
                       onChange={handleChange}
                     />
                     {fieldErrors.user_name ? (
-                      <p className='text-red-500'>{fieldErrors.user_name}</p>
+                      <p className='text-red-500 text-sm'>
+                        {fieldErrors.user_name}
+                      </p>
                     ) : (
-                      <div className='h-[24.1px]'></div>
+                      <div className='h-[20px]'></div>
                     )}
                   </div>
                   <div className='relative mb-1'>
@@ -162,9 +160,11 @@ const Contact = () => {
                       onChange={handleChange}
                     />
                     {fieldErrors.user_phone ? (
-                      <p className='text-red-500'>{fieldErrors.user_phone}</p>
+                      <p className='text-red-500 text-sm'>
+                        {fieldErrors.user_phone}
+                      </p>
                     ) : (
-                      <div className='h-[24.1px]'></div>
+                      <div className='h-[20px]'></div>
                     )}
                   </div>
                   <div className='relative mb-1'>
@@ -177,9 +177,11 @@ const Contact = () => {
                       onChange={handleChange}
                     />
                     {fieldErrors.user_email ? (
-                      <p className='text-red-500'>{fieldErrors.user_email}</p>
+                      <p className='text-red-500 text-sm'>
+                        {fieldErrors.user_email}
+                      </p>
                     ) : (
-                      <div className='h-[24.1px]'></div>
+                      <div className='h-[20px]'></div>
                     )}
                   </div>
                   <div className='relative mb-1' data-te-input-wrapper-init>
@@ -192,9 +194,11 @@ const Contact = () => {
                       value={formulario.message}
                     ></textarea>
                     {fieldErrors.message ? (
-                      <p className='text-red-500'>{fieldErrors.message}</p>
+                      <p className='text-red-500 text-sm'>
+                        {fieldErrors.message}
+                      </p>
                     ) : (
-                      <div className='h-[24.1px]'></div>
+                      <div className='h-[20px]'></div>
                     )}
                   </div>
                   <div className=' inline-block min-h-[1.5rem] justify-center pl-[1.5rem] md:flex'></div>
@@ -207,7 +211,7 @@ const Contact = () => {
                 {/* FORM */}
               </div>
               {/* DESING */}
-              <div className='w-full shrink-0 grow-0 basis-auto lg:w-5/12'>
+              <div className='w-full lg:w-6/12'>
                 <div className='flex flex-wrap flex-col'>
                   <div className='mb-12  shrink-0 grow-0 basis-auto '>
                     <div className='flex items-start'>
