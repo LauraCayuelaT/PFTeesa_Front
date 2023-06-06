@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 //Instalaciones:
 import { useEffect } from 'react';
 import { Card } from '../Card/Card';
@@ -11,27 +12,24 @@ import {
   getBrands,
   sortByPrice,
 } from '../../features/reduxReducer/productSlice';
+import { NavLink } from 'react-router-dom';
 
 //Gif
 import loadingGif from '../../assets/icon/Loading.gif';
-import { NavLink } from 'react-router-dom';
 
 function Home() {
-    // Codigo de Sol:
-  const [orden, setOrden] = useState("");
+  // Codigo de Sol:
+  const [orden, setOrden] = useState('');
   const [selectedBrand, setSelectedBrand] = useState('');
   const [selectedType, setSelectedType] = useState('');
   const [selectedPriceRange, setSelectedPriceRange] = useState('');
   const [showNoProductsInRange, setShowNoProductsInRange] = useState(false);
 
-
-  const allBrands = useSelector((state) => state.productState.allProducts);
+  const allBrands = useSelector((state) => state?.productState?.allProducts);
   const dispatch = useDispatch();
   const isDataLoaded = useSelector(
     (state) => state.productState.allProducts.length > 0
   );
-
-  
 
   //FUNCIONANDO PERFECTO
   const handleSort = (e) => {
@@ -51,22 +49,23 @@ function Home() {
   const handleSortPrice = (e) => {
     e.preventDefault();
     const selectedRange = e.target.value.toLowerCase();
-  
+
     if (selectedRange === '0-10') {
       dispatch(sortByPrice({ minPrice: 0, maxPrice: 10 }));
     } else if (selectedRange === '10-20') {
       dispatch(sortByPrice({ minPrice: 10, maxPrice: 20 }));
     } else if (selectedRange === '20+') {
-      dispatch(sortByPrice({ minPrice: 20, maxPrice: Number.MAX_SAFE_INTEGER }));
+      dispatch(
+        sortByPrice({ minPrice: 20, maxPrice: Number.MAX_SAFE_INTEGER })
+      );
     } else {
       // Si no se selecciona un rango válido, se muestra el mensaje de error o se realiza otra acción apropiada
       console.log('Rango de precios inválido');
     }
-  
+
     setOrden(`Ordenado por precio ${e.target.value}`);
     setShowNoProductsInRange(true);
   };
-  
 
   //FUNCIONA PERFECTO PERO NO FILTRA X EL BACK
   const handleSortBrands = (e) => {
@@ -75,13 +74,12 @@ function Home() {
     dispatch(getBrands(e.target.value));
   };
 
-    //FUNCIONANDO PERFECTO
+  //FUNCIONANDO PERFECTO
   const handleSortTypes = (e) => {
     e.preventDefault();
     setSelectedType(e.target.value);
     dispatch(getBrands(selectedBrand, e.target.value));
   };
-
 
   // Codigo de Juan - Conexión con Back:
 
@@ -89,8 +87,7 @@ function Home() {
   // const isDataLoaded = useSelector(
   //   (state) => state.productState.allProducts.length > 0
   // );
-// SOL : Tuve que cambiar el lugar del dispatch juan por eso lo comente y lo reestablecí arriba
-
+  // SOL : Tuve que cambiar el lugar del dispatch juan por eso lo comente y lo reestablecí arriba
 
   useEffect(() => {
     if (!isDataLoaded) {
@@ -99,22 +96,31 @@ function Home() {
   }, [dispatch, isDataLoaded]);
 
   let productsTeesa = useSelector((state) => state.productState.allProducts);
-  
+
   //isLoading
   let loading = useSelector((state) => state.productState.loading);
 
-   //sol
+  //sol
   // Filtrar productos por tipo "Repuesto"
   // const filteredProducts = selectedType === 'repuesto' ? productsTeesa.filter((product) => product.categoria === 'repuesto') : productsTeesa;
 
-  let filteredProducts = selectedType === 'repuesto' ? productsTeesa.filter((product) => product.categoria === 'repuesto') : productsTeesa;
+  let filteredProducts =
+    selectedType === 'repuesto'
+      ? productsTeesa.filter((product) => product.categoria === 'repuesto')
+      : productsTeesa;
 
   if (selectedPriceRange === '0-10000000') {
-    filteredProducts = filteredProducts.filter((product) => product.precio >= 0 && product.precio <= 10000000);
+    filteredProducts = filteredProducts.filter(
+      (product) => product.precio >= 0 && product.precio <= 10000000
+    );
   } else if (selectedPriceRange === '10000000-20000000') {
-    filteredProducts = filteredProducts.filter((product) => product.precio >= 10000000 && product.precio <= 20000000);
+    filteredProducts = filteredProducts.filter(
+      (product) => product.precio >= 10000000 && product.precio <= 20000000
+    );
   } else if (selectedPriceRange === '20000000+') {
-    filteredProducts = filteredProducts.filter((product) => product.precio >= 20000000);
+    filteredProducts = filteredProducts.filter(
+      (product) => product.precio >= 20000000
+    );
   }
 
   //Sol
@@ -133,22 +139,22 @@ function Home() {
         <h2 className='mx-4  hover:text-teesaGreen cursor-pointer'>
           Repuestos
         </h2>
-        <div className="flex items-center w-[30%] justify-evenly ">
-        <input
-          className="w-[60%] h-[50%] outline-none"
-          type='search'
-          placeholder='Buscar...'
-        />
-        <NavLink className="buttonadd" to='/home'>
-          <button type='submit'>
-            <box-icon name='search-alt' color='#fbfef8'></box-icon>
-          </button>
-        </NavLink>
-      </div>
+        <div className='flex items-center w-[30%] justify-evenly '>
+          <input
+            className='w-[60%] h-[50%] outline-none'
+            type='search'
+            placeholder='Buscar...'
+          />
+          <NavLink className='buttonadd' to='/home'>
+            <button type='submit'>
+              <box-icon name='search-alt' color='#fbfef8'></box-icon>
+            </button>
+          </NavLink>
+        </div>
       </div>
       {/* Hero */}
       <div className='heroContainer flex w-full h-[800px]'>
-       {/* Inicia parte de Sol. */} {/* FILTROS */}
+        {/* Inicia parte de Sol. */} {/* FILTROS */}
         <div className='filters w-1/6 m-4 bg-gray-100 p-4 rounded-lg'>
           <h1 className='text-xl font-bold mb-4'>Filtros</h1>
           <div className='mb-4'>
@@ -166,58 +172,64 @@ function Home() {
               <option value='descendente'>Z-A</option>
             </select>
           </div>
-          <div className="mb-4">
-            <label htmlFor="sortPrice">Precio</label>
+          <div className='mb-4'>
+            <label htmlFor='sortPrice'>Precio</label>
             <select
-              id="sortPrice"
-              className="w-full border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-teesaGreen"
-              value=""
+              id='sortPrice'
+              className='w-full border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-teesaGreen'
+              value=''
               onChange={(e) => handleSortPrices(e)}
             >
-              <option value="" disabled>Seleccionar</option>
-              <option value="precio_min">Precio Mínimo</option>
-              <option value="precio_max">Precio Máximo</option>
+              <option value='' disabled>
+                Seleccionar
+              </option>
+              <option value='precio_min'>Precio Mínimo</option>
+              <option value='precio_max'>Precio Máximo</option>
             </select>
           </div>
-             <div className="mb-4">
-       <label htmlFor="sortPrice">Precio</label>
-          <select
-            id="sortPrice"
-            className="w-full border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-teesaGreen"
-            value={selectedPriceRange}
-            onChange={(e) => setSelectedPriceRange(e.target.value)}
-             >
-        <option value="" disabled>
-           Seleccionar
-         </option>
-          <option value=''>Todos</option>
-          <option value="0-10000000">0 - 10000000</option>
-          <option value="10000000-20000000">10000000 - 20000000</option>
-          <option value="20000000+">20000000 en adelante</option>
-      </select>
-      </div>
-
-          <div className="mb-4">
-            <label htmlFor="filterCreated">Condición</label>
+          <div className='mb-4'>
+            <label htmlFor='sortPrice'>Precio</label>
             <select
-              id="filterCreated"
-              className="w-full border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-teesaGreen"
+              id='sortPrice'
+              className='w-full border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-teesaGreen'
+              value={selectedPriceRange}
+              onChange={(e) => setSelectedPriceRange(e.target.value)}
             >
-              <option value="" disabled>Seleccionar</option>
-              <option value="nuevos">Nuevos</option>
-              <option value="usados">Usados</option>
+              <option value='' disabled>
+                Seleccionar
+              </option>
+              <option value=''>Todos</option>
+              <option value='0-10000000'>0 - 10000000</option>
+              <option value='10000000-20000000'>10000000 - 20000000</option>
+              <option value='20000000+'>20000000 en adelante</option>
+            </select>
+          </div>
+
+          <div className='mb-4'>
+            <label htmlFor='filterCreated'>Condición</label>
+            <select
+              id='filterCreated'
+              className='w-full border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-teesaGreen'
+            >
+              <option value='' disabled>
+                Seleccionar
+              </option>
+              <option value='nuevos'>Nuevos</option>
+              <option value='usados'>Usados</option>
             </select>
           </div>
           <div>
-            <label htmlFor="brands">Marcas</label>
+            <label htmlFor='brands'>Marcas</label>
             <select
-              id="brands"
-              className="w-full border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-teesaGreen"
+              id='brands'
+              className='w-full border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-teesaGreen'
               value={selectedBrand}
               onChange={(e) => handleSortBrands(e)}
             >
-              <option value="" disabled>Seleccionar</option>
-              <option value="Todos">Todos</option>
+              <option value='' disabled>
+                Seleccionar
+              </option>
+              <option value='Todos'>Todos</option>
               {allBrands?.map((b) => (
                 <option value={b.marca} key={b.id}>
                   {b.marca}
@@ -242,11 +254,8 @@ function Home() {
             </select>
           </div>
         </div>
-
- {/* Termina parte de Sol. */}
-
+        {/* Termina parte de Sol. */}
         {/* Inicia parte de Juan. */}
-
         {/* Cards */}
         <div className='cardsContainer w-5/6 h-fit m-5 bg-teesaWhite  items-end '>
           {loading && (
@@ -259,6 +268,7 @@ function Home() {
             <div className='flex flex-wrap m-auto justify-center'>
               {filteredProducts.map((product) => (
                 <Card
+                  id={product.id}
                   key={product.id}
                   nombre={product.nombre}
                   categoria={product.categoria}
@@ -270,16 +280,15 @@ function Home() {
             </div>
           )}
           {/* Termina parte de Juan. */}
-        {/* sol */}
+          {/* sol */}
 
           {filteredProducts.length === 0 && selectedType === 'repuesto' && (
-      <NoRepuestosDisponibles />
-      )}
+            <NoRepuestosDisponibles />
+          )}
 
-      {filteredProducts.length === 0 && showNoProductsInRange && selectedType !== 'repuesto' && (
-        <NoHayProductosRango />
-      )}
-        
+          {filteredProducts.length === 0 &&
+            showNoProductsInRange &&
+            selectedType !== 'repuesto' && <NoHayProductosRango />}
         </div>
       </div>
     </div>

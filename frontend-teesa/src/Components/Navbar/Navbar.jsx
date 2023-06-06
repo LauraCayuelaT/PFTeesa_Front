@@ -14,31 +14,31 @@ export default function NavBar() {
         <div className='flex xl:gap-[12%] lg:gap-[12%] md:gap-[8%] sm:gap-[4%] '>
           <NavLink
             to='/home'
-            className='hover:text-teesaGreen focus:text-teesaGreen'
+            className='transition duration-300 ease-in-out transform hover:text-teesaGreen focus:text-teesaGreen'
           >
             Inicio
           </NavLink>
           <NavLink
             to='/services'
-            className='hover:text-teesaGreen focus:text-teesaGreen'
+            className=' transition duration-300 ease-in-out transform hover:text-teesaGreen focus:text-teesaGreen'
           >
             Servicios
           </NavLink>
           <NavLink
             to='/contact'
-            className='hover:text-teesaGreen focus:text-teesaGreen'
+            className='transition duration-300 ease-in-out transform hover:text-teesaGreen focus:text-teesaGreen'
           >
             Contáctanos
           </NavLink>
           <NavLink
             to='/about'
-            className='hover:text-teesaGreen focus:text-teesaGreen'
+            className=' transition duration-300 ease-in-out transform hover:text-teesaGreen focus:text-teesaGreen'
           >
             Nosotros
           </NavLink>
           <NavLink
             to='/login'
-            className='hover:text-teesaGreen focus:text-teesaGreen'
+            className='transition duration-300 ease-in-out transform hover:text-teesaGreen focus:text-teesaGreen'
           >
             Login
           </NavLink>
