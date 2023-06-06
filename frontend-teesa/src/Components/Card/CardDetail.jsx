@@ -30,13 +30,15 @@ const CardDetail = ({
         <p className="text-gray-700 text-xl mb-6">Caracteristicas: {caracteristicas}</p>
         <div className="flex justify-between mb-6">
           <div className="text-teesaGreenDark text-3xl font-bold">${precio}</div>
-          <div className="text-red-500 text-xl">Stock: {stock}</div> {/* Aquí se establece el color rojo */}
+          <div className="text-xl" style={{ color: stock === 0 ? 'darkRed' : 'teesaGreenDark' }}>
+             Stock: {stock === 0 ? 'Bajo pedido' : stock}
+          </div> 
           <div className="text-gray-700 text-xl">Estado: {estado}</div>
         </div>
         <div className="mt-6">
           <a
             href="#"
-            className="block text-center text-white font-medium py-3 px-6 bg-blue-600 rounded-md text-2xl"
+            className="block text-center text-white font-medium py-3 px-6 bg-blue-600 rounded-md text-2xl hover:bg-blue-700 flex justify-center w-45 m-auto"
           >
             Agregar <i className="fas fa-shopping-cart"></i>
           </a>
