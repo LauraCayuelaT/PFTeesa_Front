@@ -143,7 +143,7 @@ function Home() {
         </h2>
         <div className='flex items-center w-[30%] justify-evenly '>
           <input
-            className='w-[60%] h-[50%] outline-none'
+            className='w-[60%] h-[50%] outline-none text-black'
             type='search'
             placeholder='Buscar...'
           />
