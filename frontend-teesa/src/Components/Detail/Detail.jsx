@@ -3,7 +3,10 @@
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProductById, clearDetail } from '../../features/reduxReducer/detailSlice';
+import {
+  getProductById,
+  clearDetail,
+} from '../../features/reduxReducer/detailSlice';
 import { useParams } from 'react-router-dom';
 import CardDetail from '../Card/CardDetail';
 

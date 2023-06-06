@@ -1,5 +1,5 @@
 //React Router Dom:
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation, Navigate } from 'react-router-dom';
 //Components
 import Home from './Components/Home/Home';
 import Navbar from './Components/Navbar/Navbar';
@@ -19,12 +19,13 @@ function App() {
       {!isLanding && <Navbar />}
       <Routes>
         <Route path='/' element={<Landing />} />
-        <Route path='/home' element={<Home />} />
-        <Route path='/home/:id' element={<Detail />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/services' element={<Services />} />
-        <Route path='/about' element={<About />} />
-        <Route path='/contact' element={<Contact />} />
+        <Route path='home' element={<Home />} />
+        <Route path='home/:id' element={<Detail />} />
+        <Route path='login' element={<Login />} />
+        <Route path='services' element={<Services />} />
+        <Route path='about' element={<About />} />
+        <Route path='contact' element={<Contact />} />
+        <Route path='*' element={<Navigate to='home' />} />
       </Routes>
     </div>
   );
