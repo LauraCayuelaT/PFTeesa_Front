@@ -12,10 +12,10 @@ import {
   getBrands,
   sortByPrice,
 } from '../../features/reduxReducer/productSlice';
+import { NavLink } from 'react-router-dom';
 
 //Gif
 import loadingGif from '../../assets/icon/Loading.gif';
-import { NavLink } from 'react-router-dom';
 
 function Home() {
   // Codigo de Sol:
