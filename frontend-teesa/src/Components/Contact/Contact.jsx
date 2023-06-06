@@ -50,7 +50,7 @@ const Contact = () => {
   //Form - State
   const [formulario, setFormulario] = useState({
     user_name: '',
-    user_phone: '',
+    user_phone: '', 
     user_email: '',
     message: '',
   });
