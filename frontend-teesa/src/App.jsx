@@ -9,7 +9,7 @@ import Login from './Components/Login/Login';
 import Services from './views/Services/Services';
 import Contact from './Components/Contact/Contact';
 import About from './views/About/About';
-import Register from './views/Register/Register'
+import Register from './views/Register/Register';
 
 function App() {
   const location = useLocation();
