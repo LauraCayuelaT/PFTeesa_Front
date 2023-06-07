@@ -52,9 +52,9 @@ const About = () => {
         </p>
         <div className="flex items-center">
           <img src={Logo} alt="" className="w-6 h-6 mx-2" />
-        <Link to="/services">
+        <Link to="/contact">
           <button className="text-white text-sm rounded-md px-4 py-2 ml-2 font-semibold bg-teesaGreen hover:bg-gradient-to-r from-teesaGreen to-teesaGreenDark transition-colors duration-300 shadow-md">
-            Servicios
+            Contacto
           </button>
         </Link>
       </div>
@@ -64,4 +64,3 @@ const About = () => {
 };
 
 export default About;
-

@@ -7,6 +7,7 @@ const initialState = {
   loading: false,
   allProducts: [],
   brands: [], // Nuevo estado para almacenar las marcas
+  filteredProducts: [],
   error: '',
 };
 
@@ -41,9 +42,9 @@ export const productSlice = createSlice({
     sortByName: (state, action) => {
       state.allProducts.sort((a, b) => {
         if (action.payload === 'ascendente') {
-          return a.marca.toLowerCase().localeCompare(b.marca.toLowerCase());
+          return a.nombre.toLowerCase().localeCompare(b.nombre.toLowerCase());
         } else if (action.payload === 'descendente') {
-          return b.marca.toLowerCase().localeCompare(a.marca.toLowerCase());
+          return b.nombre.toLowerCase().localeCompare(a.nombre.toLowerCase());
         }
         return 0;
       });
@@ -59,7 +60,18 @@ export const productSlice = createSlice({
         return 0;
       });
     },
+    // sortByBrand: (state, action) => {
+    //   if (action.payload === 'todos') {
+    //     state.filteredProducts = state.allProducts;
+    //   } else {
+    //     state.filteredProducts = state.allProducts.filter(
+    //       (product) => product.marca === action.payload
+    //     );
+    //   }
+
   },
+
+
   //GetData
   extraReducers: (builder) => {
     //Cargando productos
@@ -97,12 +109,13 @@ export const productSlice = createSlice({
 
 //Exportamos los reducers
 export const {
+
   increment,
   FilterByName,
   sortByName,
-  resetFilter,
   sortByPrice,
-  filterByPrice,
+  sortByBrand,
+  sortByCondition,
 } = productSlice.actions;
 
 export default productSlice.reducer;
