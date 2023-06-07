@@ -11,7 +11,6 @@ import {
   getApiData,
   getBrands,
   sortByPrice,
-  sortByCondition,
 } from '../../features/reduxReducer/productSlice';
 import { NavLink } from 'react-router-dom';
 

@@ -115,7 +115,6 @@ export const {
   sortByName,
   sortByPrice,
   sortByBrand,
-  sortByCondition,
 } = productSlice.actions;
 
 export default productSlice.reducer;
