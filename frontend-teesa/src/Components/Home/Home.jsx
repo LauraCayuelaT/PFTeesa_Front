@@ -13,10 +13,10 @@ import {
   sortByPrice,
   sortByCondition,
 } from '../../features/reduxReducer/productSlice';
+import { NavLink } from 'react-router-dom';
 
 //Gif
 import loadingGif from '../../assets/icon/Loading.gif';
-import { NavLink } from 'react-router-dom';
 
 function Home() {
   // Codigo de Sol:
@@ -133,7 +133,7 @@ function Home() {
         </h2>
         <div className='flex items-center w-[30%] justify-evenly '>
           <input
-            className='w-[60%] h-[50%] outline-none'
+            className='w-[60%] h-[50%] outline-none text-black'
             type='search'
             placeholder='Buscar...'
           />

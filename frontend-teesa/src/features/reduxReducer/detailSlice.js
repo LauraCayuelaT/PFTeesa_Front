@@ -1,9 +1,9 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, createAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const initialState = {
   loading: false,
-  productDetail: [], // Nuevo estado para almacenar el detail.
+  productDetail: [],
   error: '',
 };
 
@@ -22,11 +22,14 @@ export const getProductById = createAsyncThunk(
   }
 );
 
+export const clearDetail = createAction('detailState/clearDetail');
+
 export const detailSlice = createSlice({
   name: 'detailState',
   initialState,
-  reducers: {},
-  //GetData
+  reducers: {
+    // Aquí puedes agregar otros reducers si los necesitas
+  },
   extraReducers: (builder) => {
     builder.addCase(getProductById.pending, (state) => {
       state.loading = true;
@@ -41,10 +44,11 @@ export const detailSlice = createSlice({
       state.productDetail = [];
       state.error = action.error.message;
     });
+    builder.addCase(clearDetail, (state) => {
+      state.productDetail = [];
+      state.error = '';
+    });
   },
 });
-
-//Exportamos los reducers
-//export const {} = detailSlice.actions;
 
 export default detailSlice.reducer;
