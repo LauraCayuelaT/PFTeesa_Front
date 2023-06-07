@@ -22,8 +22,11 @@ function Home() {
   const [orden, setOrden] = useState('');
   const [selectedBrand, setSelectedBrand] = useState('');
   const [selectedType, setSelectedType] = useState('');
+  const [selectedCondition, setSelectedCondition] = useState('');
   const [selectedPriceRange, setSelectedPriceRange] = useState('');
   const [showNoProductsInRange, setShowNoProductsInRange] = useState(false);
+
+
 
   const allBrands = useSelector((state) => state?.productState?.allProducts);
   const dispatch = useDispatch();
@@ -46,35 +49,24 @@ function Home() {
     setOrden(`Ordenado por precio ${e.target.value}`);
   };
 
-  const handleSortPrice = (e) => {
-    e.preventDefault();
-    const selectedRange = e.target.value.toLowerCase();
 
-    if (selectedRange === '0-10') {
-      dispatch(sortByPrice({ minPrice: 0, maxPrice: 10 }));
-    } else if (selectedRange === '10-20') {
-      dispatch(sortByPrice({ minPrice: 10, maxPrice: 20 }));
-    } else if (selectedRange === '20+') {
-      dispatch(
-        sortByPrice({ minPrice: 20, maxPrice: Number.MAX_SAFE_INTEGER })
-      );
-    } else {
-      // Si no se selecciona un rango válido, se muestra el mensaje de error o se realiza otra acción apropiada
-      console.log('Rango de precios inválido');
-    }
-
-    setOrden(`Ordenado por precio ${e.target.value}`);
-    setShowNoProductsInRange(true);
-  };
 
   //FUNCIONA PERFECTO PERO NO FILTRA X EL BACK
-  const handleSortBrands = (e) => {
+  // const handleSortBrands = (e) => {
+  //   e.preventDefault();
+  //   const selectedBrand = e.target.value;
+  //   dispatch(sortByBrand(selectedBrand));
+  //   // setOrden(`Ordenado por marca ${selectedBrand}`);
+  // };
+  
+  //FUNCIONANDO PERFECTO
+  const handleSortCondition = (e) => {
     e.preventDefault();
-    setSelectedBrand(e.target.value);
-    dispatch(getBrands(e.target.value));
+    const condition = e.target.value;
+    setSelectedCondition(condition);
   };
 
-  //FUNCIONANDO PERFECTO
+
   const handleSortTypes = (e) => {
     e.preventDefault();
     setSelectedType(e.target.value);
@@ -82,12 +74,6 @@ function Home() {
   };
 
   // Codigo de Juan - Conexión con Back:
-
-  // const dispatch = useDispatch();
-  // const isDataLoaded = useSelector(
-  //   (state) => state.productState.allProducts.length > 0
-  // );
-  // SOL : Tuve que cambiar el lugar del dispatch juan por eso lo comente y lo reestablecí arriba
 
   useEffect(() => {
     if (!isDataLoaded) {
@@ -102,12 +88,12 @@ function Home() {
 
   //sol
   // Filtrar productos por tipo "Repuesto"
-  // const filteredProducts = selectedType === 'repuesto' ? productsTeesa.filter((product) => product.categoria === 'repuesto') : productsTeesa;
-
+  
   let filteredProducts =
     selectedType === 'repuesto'
       ? productsTeesa.filter((product) => product.categoria === 'repuesto')
       : productsTeesa;
+    
 
   if (selectedPriceRange === '0-10000000') {
     filteredProducts = filteredProducts.filter(
@@ -123,25 +109,32 @@ function Home() {
     );
   }
 
+  if (selectedCondition === 'nuevos') {
+    filteredProducts = filteredProducts.filter((product) => product.estado === 'nuevo');
+  } else if (selectedCondition === 'usados') {
+    filteredProducts = filteredProducts.filter((product) => product.estado === 'usado');
+  }
+
+
   //Sol
   return (
     <div className='flex w-full h-full flex-col flex-wrap'>
       {/* Second Navbar */}
       <div className='flex bg-teesaBlueDark w-full m-0 items-center justify-center mt-[-1px] border-t-4 border-teesaGreen text-teesaWhite h-[60px] text-[16px]'>
-        <h2 className='mx-4  hover:text-teesaGreen cursor-pointer'>
+        <h2 className='mx-4 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>
           Eléctrico
         </h2>
-        <h2 className='mx-4  hover:text-teesaGreen cursor-pointer'>Gas</h2>
-        <h2 className='mx-4  hover:text-teesaGreen cursor-pointer'>
+        <h2 className='mx-4 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>Gas</h2>
+        <h2 className='mx-4 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>
           Refrigeración
         </h2>
-        <h2 className='mx-4  hover:text-teesaGreen cursor-pointer'>Hornos</h2>
-        <h2 className='mx-4  hover:text-teesaGreen cursor-pointer'>
+        <h2 className='mx-4 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>Hornos</h2>
+        <h2 className='mx-4 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>
           Repuestos
         </h2>
         <div className='flex items-center w-[30%] justify-evenly '>
           <input
-            className='w-[60%] h-[50%] outline-none'
+            className='w-[60%] h-[50%] outline-none text-black'
             type='search'
             placeholder='Buscar...'
           />
@@ -210,10 +203,13 @@ function Home() {
             <select
               id='filterCreated'
               className='w-full border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-teesaGreen'
+              value={selectedCondition}
+              onChange={(e) => handleSortCondition(e)}
             >
               <option value='' disabled>
                 Seleccionar
               </option>
+              <option value=''>Todos</option>
               <option value='nuevos'>Nuevos</option>
               <option value='usados'>Usados</option>
             </select>
@@ -229,7 +225,7 @@ function Home() {
               <option value='' disabled>
                 Seleccionar
               </option>
-              <option value='Todos'>Todos</option>
+              <option value='todos'>Todos</option>
               {allBrands?.map((b) => (
                 <option value={b.marca} key={b.id}>
                   {b.marca}
@@ -263,7 +259,7 @@ function Home() {
               <img src={loadingGif} alt='gif' />
             </div>
           )}
-
+           
           {!loading && (
             <div className='flex flex-wrap m-auto justify-center'>
               {filteredProducts.map((product) => (
@@ -275,21 +271,25 @@ function Home() {
                   precio={product.precio}
                   imagen={product.imagen}
                   marca={product.marca}
-                />
+                  />
+      
               ))}
-            </div>
+            
+          </div>
           )}
+         
           {/* Termina parte de Juan. */}
           {/* sol */}
 
           {filteredProducts.length === 0 && selectedType === 'repuesto' && (
             <NoRepuestosDisponibles />
-          )}
+            )}
 
           {filteredProducts.length === 0 &&
             showNoProductsInRange &&
             selectedType !== 'repuesto' && <NoHayProductosRango />}
         </div>
+       
       </div>
     </div>
   );
