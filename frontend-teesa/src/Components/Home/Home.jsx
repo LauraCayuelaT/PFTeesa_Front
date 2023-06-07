@@ -26,6 +26,8 @@ function Home() {
   const [selectedPriceRange, setSelectedPriceRange] = useState('');
   const [showNoProductsInRange, setShowNoProductsInRange] = useState(false);
 
+
+
   const allBrands = useSelector((state) => state?.productState?.allProducts);
   const dispatch = useDispatch();
   const isDataLoaded = useSelector(
@@ -119,15 +121,15 @@ function Home() {
     <div className='flex w-full h-full flex-col flex-wrap'>
       {/* Second Navbar */}
       <div className='flex bg-teesaBlueDark w-full m-0 items-center justify-center mt-[-1px] border-t-4 border-teesaGreen text-teesaWhite h-[60px] text-[16px]'>
-        <h2 className='mx-4  hover:text-teesaGreen cursor-pointer'>
+        <h2 className='mx-4 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>
           Eléctrico
         </h2>
-        <h2 className='mx-4  hover:text-teesaGreen cursor-pointer'>Gas</h2>
-        <h2 className='mx-4  hover:text-teesaGreen cursor-pointer'>
+        <h2 className='mx-4 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>Gas</h2>
+        <h2 className='mx-4 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>
           Refrigeración
         </h2>
-        <h2 className='mx-4  hover:text-teesaGreen cursor-pointer'>Hornos</h2>
-        <h2 className='mx-4  hover:text-teesaGreen cursor-pointer'>
+        <h2 className='mx-4 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>Hornos</h2>
+        <h2 className='mx-4 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>
           Repuestos
         </h2>
         <div className='flex items-center w-[30%] justify-evenly '>
@@ -257,7 +259,7 @@ function Home() {
               <img src={loadingGif} alt='gif' />
             </div>
           )}
-
+           
           {!loading && (
             <div className='flex flex-wrap m-auto justify-center'>
               {filteredProducts.map((product) => (
@@ -269,21 +271,25 @@ function Home() {
                   precio={product.precio}
                   imagen={product.imagen}
                   marca={product.marca}
-                />
+                  />
+      
               ))}
-            </div>
+            
+          </div>
           )}
+         
           {/* Termina parte de Juan. */}
           {/* sol */}
 
           {filteredProducts.length === 0 && selectedType === 'repuesto' && (
             <NoRepuestosDisponibles />
-          )}
+            )}
 
           {filteredProducts.length === 0 &&
             showNoProductsInRange &&
             selectedType !== 'repuesto' && <NoHayProductosRango />}
         </div>
+       
       </div>
     </div>
   );

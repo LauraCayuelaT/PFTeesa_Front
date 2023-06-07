@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -26,7 +25,7 @@ function Detail() {
     };
   }, [dispatch, id]);
 
-  console.log(detail);
+ 
 
   return (
     <div>
