@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { Card } from '../Card/Card';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
+import { SearchBar } from '../SearchBar/SearchBar';
 import NoRepuestosDisponibles from '../NoHayRep/NoRepuestos';
 import NoHayProductosRango from '../NoHayProductosRango/NoHayProductosRango';
 import {
@@ -132,18 +133,7 @@ function Home() {
         <h2 className='mx-4 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>
           Repuestos
         </h2>
-        <div className='flex items-center w-[30%] justify-evenly '>
-          <input
-            className='w-[60%] h-[50%] outline-none text-black'
-            type='search'
-            placeholder='Buscar...'
-          />
-          <NavLink className='buttonadd' to='/home'>
-            <button type='submit'>
-              <box-icon name='search-alt' color='#fbfef8'></box-icon>
-            </button>
-          </NavLink>
-        </div>
+        <SearchBar />
       </div>
       {/* Hero */}
       <div className='heroContainer flex w-full h-[800px]'>
