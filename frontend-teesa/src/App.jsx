@@ -9,6 +9,7 @@ import Login from './Components/Login/Login';
 import Services from './views/Services/Services';
 import Contact from './Components/Contact/Contact';
 import About from './views/About/About';
+import Register from './views/Register/Register'
 
 function App() {
   const location = useLocation();
@@ -25,6 +26,7 @@ function App() {
         <Route path='services' element={<Services />} />
         <Route path='about' element={<About />} />
         <Route path='contact' element={<Contact />} />
+        <Route path='/register' element={<Register />} />
         <Route path='*' element={<Navigate to='home' />} />
       </Routes>
     </div>
