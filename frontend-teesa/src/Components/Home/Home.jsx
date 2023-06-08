@@ -80,17 +80,18 @@ function Home() {
     }
   }, [dispatch, isDataLoaded]);
 
-  let productsTeesa = useSelector((state) => state.productState.allProducts);
+  //* Data "Repuesto"
+  let productsTeesa = useSelector((state) => state?.productState?.allProducts);
 
   //isLoading
   let loading = useSelector((state) => state.productState.loading);
 
   //sol
-  // Filtrar productos por tipo "Repuesto"
+  //* Filtrar productos por tipo "Repuesto"
 
   let filteredProducts =
     selectedType === 'repuesto'
-      ? productsTeesa.filter((product) => product.categoria === 'repuesto')
+      ? productsTeesa.filter((producto) => producto.categoria === 'repuesto')
       : productsTeesa;
 
   if (selectedPriceRange === '0-10000000') {
