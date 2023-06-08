@@ -11,9 +11,9 @@ import {
   getApiData,
   getBrands,
   sortByPrice,
+  getPaginationData
 } from '../../features/reduxReducer/productSlice';
 import { NavLink } from 'react-router-dom';
-
 //Gif
 import loadingGif from '../../assets/icon/Loading.gif';
 
@@ -25,6 +25,9 @@ function Home() {
   const [selectedCondition, setSelectedCondition] = useState('');
   const [selectedPriceRange, setSelectedPriceRange] = useState('');
   const [showNoProductsInRange, setShowNoProductsInRange] = useState(false);
+  // tiago y juan:
+  const [currentPage, setCurrentPage] = useState(1);
+
 
   const allBrands = useSelector(
     (state) => state?.productState?.allProducts.products
@@ -73,12 +76,40 @@ function Home() {
   };
 
   // Codigo de Juan - Conexión con Back:
-
+  
   useEffect(() => {
     if (!isDataLoaded) {
       dispatch(getApiData());
     }
   }, [dispatch, isDataLoaded]);
+
+  //Tiago y juan
+
+  useEffect(() => {
+    dispatch(getPaginationData(currentPage));
+  }, [dispatch, currentPage]);
+
+
+  const allProducts = useSelector(
+    (state) => state?.productState?.general?.products);
+
+  const general = useSelector((state) => state?.productState?.general);
+
+  function arrayPaginas(total) {
+    let pages = [];
+    for (let index = 1; index < total + 1; index++) {
+      pages.push(index);
+    }
+    return pages;
+  }
+
+  let paginasFinal = arrayPaginas(general.totalPages);
+
+  let pagesChange = (number) => {
+    setCurrentPage(number);
+  };
+
+
 
   //* Data "Repuesto"
   let productsTeesa = useSelector((state) => state?.productState?.allProducts);
@@ -294,6 +325,31 @@ function Home() {
             selectedType !== 'repuesto' && <NoHayProductosRango />}
         </div>
       </div>
+       {/* //paginacion */}
+       {/* <div>
+      <div className="flex flex-wrap m-auto justify-center">
+        {allProducts?.map((product) => (
+          <Card
+            id={product?.id}
+            key={product?.id}
+            nombre={product?.nombre}
+            categoria={product?.categoria}
+            precio={product?.precio}
+            imagen={product?.imagen}
+            marca={product?.marca}
+          />
+        ))}
+      </div>
+      {paginasFinal?.map((pagina) => (
+        <button
+          onClick={() => pagesChange(pagina)}
+          className="w-5"
+          key={pagina}
+        >
+          {pagina}
+        </button>
+      ))}
+    </div> */}
     </div>
     
   );

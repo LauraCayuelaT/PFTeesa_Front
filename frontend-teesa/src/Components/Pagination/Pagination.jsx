@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  getApiData,
-  getPaginationData,
-} from "../../features/reduxReducer/productSlice";
+import { getPaginationData } from "../../features/reduxReducer/productSlice";
 import { Card } from "../Card/Card";
 
 const Pagination = () => {
