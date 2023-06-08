@@ -1,46 +1,69 @@
-// import React from 'react';
-// import "./Pagination.css";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  getApiData,
+  getPaginationData,
+} from "../../features/reduxReducer/productSlice";
+import { Card } from "../Card/Card";
 
-// export default function Pagination({ currentPage, itemsPerPage, totalItems, onPageChange }) {
-//   const totalPages = Math.ceil(totalItems / itemsPerPage);
-//   const pageNumbers = [];
+const Pagination = () => {
+  const dispatch = useDispatch();
+  const [currentPage, setCurrentPage] = useState(1);
 
-//   for (let i = 1; i <= totalPages; i++) {
-//     pageNumbers.push(i);
-//   }
+  useEffect(() => {
+    dispatch(getPaginationData(currentPage));
+  }, [dispatch, currentPage]);
 
-//   return (
-//     <nav>
-//       <ul className="pagination">
-//         <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-//           <button
-//             className="page-link"
-//             onClick={() => onPageChange(currentPage - 1)}
-//             disabled={currentPage === 1}
-//           >
-//             Prev
-//           </button>
-//         </li>
-//         {pageNumbers.map((number) => (
-//           <li key={number} className={`page-item ${number === currentPage ? "active" : ""}`}>
-//             <button
-//               onClick={() => onPageChange(number)}
-//               className="page-link"
-//             >
-//               {number}
-//             </button>
-//           </li>
-//         ))}
-//         <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-//           <button
-//             className="page-link"
-//             onClick={() => onPageChange(currentPage + 1)}
-//             disabled={currentPage === totalPages}
-//           >
-//             Next
-//           </button>
-//         </li>
-//       </ul>
-//     </nav>
-//   );
-// }
+  const allProducts = useSelector(
+    (state) => state?.productState?.general?.products
+  );
+  console.log(allProducts);
+
+  const general = useSelector((state) => state?.productState?.general);
+  console.log(general);
+
+  function arrayPaginas(total) {
+    let pages = [];
+    for (let index = 1; index < total + 1; index++) {
+      pages.push(index);
+    }
+    return pages;
+  }
+
+  let paginasFinal = arrayPaginas(general.totalPages);
+
+  console.log(paginasFinal);
+
+  let pagesChange = (number) => {
+    setCurrentPage(number);
+  };
+
+  return (
+    <div>
+      <div className="flex flex-wrap m-auto justify-center">
+        {allProducts?.map((product) => (
+          <Card
+            id={product?.id}
+            key={product?.id}
+            nombre={product?.nombre}
+            categoria={product?.categoria}
+            precio={product?.precio}
+            imagen={product?.imagen}
+            marca={product?.marca}
+          />
+        ))}
+      </div>
+      {paginasFinal?.map((pagina) => (
+        <button
+          onClick={() => pagesChange(pagina)}
+          className="w-5"
+          key={pagina}
+        >
+          {pagina}
+        </button>
+      ))}
+    </div>
+  );
+};
+
+export default Pagination;
