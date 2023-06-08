@@ -2,6 +2,8 @@
 import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../features/reduxReducer/loginSlice';
+//import { registerUser } from '../../features/reduxReducer/registerSlice';
+
 //NPMs
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
@@ -9,6 +11,19 @@ import Swal from 'sweetalert2';
 import googleIcon from '../../assets/icon/Google.svg';
 
 const Login = () => {
+  //Register Yose (acuerdate de importar el registerUser de la Slice):
+
+  //const dispatch = useDispatch();
+  //const loadingr = useSelector((state) => state.registerState.loading);
+  //const errorr = useSelector((state) => state.registerState.error);
+  //console.log(loadingr);
+  //Ejecutar el Reducer Post.
+  // const onSubmit2 = (data) => {
+  //   console.log(data);
+  //   dispatch(registerUser(data));
+  //   reset();
+  // };
+
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.loginState.loading);
   const error = useSelector((state) => state.loginState.error);

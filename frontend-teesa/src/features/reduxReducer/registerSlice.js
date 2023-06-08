@@ -9,12 +9,12 @@ const initialState = {
 };
 
 // Comunicación con BACK.
-export const loginUser = createAsyncThunk(
-  'product/loginUser',
+export const registerUser = createAsyncThunk(
+  'product/registerUser',
   async ({ user_email, user_password }) => {
     try {
       const response = await axios.post(
-        'https://servidor-teesa.onrender.com/login',
+        'https://servidor-teesa.onrender.com/signup',
         { user_email, user_password }
       );
       return response.data;
@@ -26,22 +26,23 @@ export const loginUser = createAsyncThunk(
 );
 
 // Slice Login
-const loginSlice = createSlice({
-  name: 'loginState',
+const registerSlice = createSlice({
+  name: 'registerState',
   initialState,
 
   reducers: {},
   extraReducers: (builder) => {
     // Acciones relacionadas con el inicio de sesión
-    builder.addCase(loginUser.pending, (state) => {
+    builder.addCase(registerUser.pending, (state) => {
       state.loading = true;
       state.error = null;
     });
-    builder.addCase(loginUser.fulfilled, (state) => {
+    builder.addCase(registerUser.fulfilled, (state) => {
       state.loading = false;
       //state.token = payload.token
+      state.error = null;
     });
-    builder.addCase(loginUser.rejected, (state) => {
+    builder.addCase(registerUser.rejected, (state) => {
       state.loading = false;
       state.error = true;
       //   state.error = action.error.message;
@@ -49,4 +50,4 @@ const loginSlice = createSlice({
   },
 });
 
-export default loginSlice.reducer;
+export default registerSlice.reducer;
