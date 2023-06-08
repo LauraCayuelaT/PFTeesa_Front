@@ -14,6 +14,7 @@ const Contact = () => {
       text: 'Nos contactaremos pronto.',
       icon: 'success',
       confirmButtonText: 'Aceptar',
+      confirmButtonColor: '#192C8C',
     });
   };
 

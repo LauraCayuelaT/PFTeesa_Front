@@ -26,13 +26,15 @@ function Home() {
   const [selectedPriceRange, setSelectedPriceRange] = useState('');
   const [showNoProductsInRange, setShowNoProductsInRange] = useState(false);
 
-
-
-  const allBrands = useSelector((state) => state?.productState?.allProducts);
+  const allBrands = useSelector(
+    (state) => state?.productState?.allProducts.products
+  );
   const dispatch = useDispatch();
   const isDataLoaded = useSelector(
     (state) => state.productState.allProducts.length > 0
   );
+
+  //console.log(allBrands);
 
   //FUNCIONANDO PERFECTO
   const handleSort = (e) => {
@@ -49,8 +51,6 @@ function Home() {
     setOrden(`Ordenado por precio ${e.target.value}`);
   };
 
-
-
   //FUNCIONA PERFECTO PERO NO FILTRA X EL BACK
   // const handleSortBrands = (e) => {
   //   e.preventDefault();
@@ -58,14 +58,13 @@ function Home() {
   //   dispatch(sortByBrand(selectedBrand));
   //   // setOrden(`Ordenado por marca ${selectedBrand}`);
   // };
-  
+
   //FUNCIONANDO PERFECTO
   const handleSortCondition = (e) => {
     e.preventDefault();
     const condition = e.target.value;
     setSelectedCondition(condition);
   };
-
 
   const handleSortTypes = (e) => {
     e.preventDefault();
@@ -81,19 +80,19 @@ function Home() {
     }
   }, [dispatch, isDataLoaded]);
 
-  let productsTeesa = useSelector((state) => state.productState.allProducts);
+  //* Data "Repuesto"
+  let productsTeesa = useSelector((state) => state?.productState?.allProducts);
 
   //isLoading
   let loading = useSelector((state) => state.productState.loading);
 
   //sol
-  // Filtrar productos por tipo "Repuesto"
-  
+  //* Filtrar productos por tipo "Repuesto"
+
   let filteredProducts =
     selectedType === 'repuesto'
-      ? productsTeesa.filter((product) => product.categoria === 'repuesto')
+      ? productsTeesa.filter((producto) => producto.categoria === 'repuesto')
       : productsTeesa;
-    
 
   if (selectedPriceRange === '0-10000000') {
     filteredProducts = filteredProducts.filter(
@@ -110,11 +109,14 @@ function Home() {
   }
 
   if (selectedCondition === 'nuevos') {
-    filteredProducts = filteredProducts.filter((product) => product.estado === 'nuevo');
+    filteredProducts = filteredProducts.filter(
+      (product) => product.estado === 'nuevo'
+    );
   } else if (selectedCondition === 'usados') {
-    filteredProducts = filteredProducts.filter((product) => product.estado === 'usado');
+    filteredProducts = filteredProducts.filter(
+      (product) => product.estado === 'usado'
+    );
   }
-
 
   //Sol
   return (
@@ -124,11 +126,15 @@ function Home() {
         <h2 className='mx-4 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>
           Eléctrico
         </h2>
-        <h2 className='mx-4 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>Gas</h2>
+        <h2 className='mx-4 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>
+          Gas
+        </h2>
         <h2 className='mx-4 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>
           Refrigeración
         </h2>
-        <h2 className='mx-4 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>Hornos</h2>
+        <h2 className='mx-4 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>
+          Hornos
+        </h2>
         <h2 className='mx-4 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>
           Repuestos
         </h2>
@@ -220,7 +226,7 @@ function Home() {
               id='brands'
               className='w-full border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-teesaGreen'
               value={selectedBrand}
-              onChange={(e) => handleSortBrands(e)}
+              // onChange={(e) => handleSortBrands(e)}
             >
               <option value='' disabled>
                 Seleccionar
@@ -259,7 +265,7 @@ function Home() {
               <img src={loadingGif} alt='gif' />
             </div>
           )}
-           
+
           {!loading && (
             <div className='flex flex-wrap m-auto justify-center'>
               {filteredProducts.map((product) => (
@@ -271,25 +277,22 @@ function Home() {
                   precio={product.precio}
                   imagen={product.imagen}
                   marca={product.marca}
-                  />
-      
+                />
               ))}
-            
-          </div>
+            </div>
           )}
-         
+
           {/* Termina parte de Juan. */}
           {/* sol */}
 
           {filteredProducts.length === 0 && selectedType === 'repuesto' && (
             <NoRepuestosDisponibles />
-            )}
+          )}
 
           {filteredProducts.length === 0 &&
             showNoProductsInRange &&
             selectedType !== 'repuesto' && <NoHayProductosRango />}
         </div>
-       
       </div>
     </div>
   );
