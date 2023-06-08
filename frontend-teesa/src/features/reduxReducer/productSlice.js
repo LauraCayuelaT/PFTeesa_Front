@@ -16,7 +16,8 @@ export const getApiData = createAsyncThunk('products/getApiData', async () => {
     const response = await axios.get(
       'https://servidor-teesa.onrender.com/products'
     );
-    return response.data;
+    console.log(response.data);
+    return response.data.products;
   } catch (error) {
     console.error('Error fetching products:', error);
     throw error;
@@ -28,7 +29,8 @@ export const getBrands = createAsyncThunk('products/getBrands', async () => {
     const response = await axios.get(
       'https://servidor-teesa.onrender.com/brands'
     );
-    return response.data;
+    console.log(response.data);
+    return response.data.products;
   } catch (error) {
     console.error('Error fetching brands:', error);
     throw error;
@@ -68,9 +70,7 @@ export const productSlice = createSlice({
     //       (product) => product.marca === action.payload
     //     );
     //   }
-
   },
-
 
   //GetData
   extraReducers: (builder) => {
@@ -108,13 +108,7 @@ export const productSlice = createSlice({
 });
 
 //Exportamos los reducers
-export const {
-
-  increment,
-  FilterByName,
-  sortByName,
-  sortByPrice,
-  sortByBrand,
-} = productSlice.actions;
+export const { increment, FilterByName, sortByName, sortByPrice, sortByBrand } =
+  productSlice.actions;
 
 export default productSlice.reducer;
