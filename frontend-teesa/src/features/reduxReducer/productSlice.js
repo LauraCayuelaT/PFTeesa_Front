@@ -9,6 +9,12 @@ const initialState = {
   brands: [], // Nuevo estado para almacenar las marcas
   filteredProducts: [],
   error: '',
+  // pagination:{
+  //   currentPage: 1,
+  //   itemsPage: 6,
+  //   totalPage: 1,
+  // }
+  general: []
 };
 
 export const getApiData = createAsyncThunk('products/getApiData', async () => {
@@ -16,13 +22,28 @@ export const getApiData = createAsyncThunk('products/getApiData', async () => {
     const response = await axios.get(
       'https://servidor-teesa.onrender.com/products'
     );
-    console.log(response.data);
+    console.log( response.data.products);
     return response.data.products;
   } catch (error) {
     console.error('Error fetching products:', error);
     throw error;
   }
 });
+
+export const getPaginationData = createAsyncThunk('products/getPaginationData', async (number) => {
+  try {
+    const response = await axios.get(
+      `https://servidor-teesa.onrender.com/products?page=${number}`
+    );
+    console.log(response.data.products);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    throw error;
+  }
+});
+
+
 //Filtro Marcas
 export const getBrands = createAsyncThunk('products/getBrands', async () => {
   try {
@@ -51,7 +72,7 @@ export const productSlice = createSlice({
         return 0;
       });
     },
-
+ 
     sortByPrice: (state, action) => {
       state.allProducts.sort((a, b) => {
         if (action.payload === 'precio_min') {
@@ -62,6 +83,9 @@ export const productSlice = createSlice({
         return 0;
       });
     },
+
+
+
     // sortByBrand: (state, action) => {
     //   if (action.payload === 'todos') {
     //     state.filteredProducts = state.allProducts;
@@ -87,6 +111,18 @@ export const productSlice = createSlice({
       state.loading = false;
       state.allProducts = [];
       state.error = action.error.message;
+    });
+
+     //Paginado
+
+    builder.addCase(getPaginationData.pending, (state) => {
+     
+    });
+    builder.addCase(getPaginationData.fulfilled, (state, action) => {
+      state.general = action.payload
+    });
+    builder.addCase(getPaginationData.rejected, (state, action) => {
+ 
     });
 
     //Cargando marcas
