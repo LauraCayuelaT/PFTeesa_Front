@@ -2,79 +2,13 @@
 import Map from './Map';
 import { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
+//NPMs
+import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 
 const Contact = () => {
-  //Validation:
-
-  const [fieldErrors, setFieldErrors] = useState({});
-
-  const validateForm = () => {
-    let errors = {};
-
-    if (!formulario.user_name) {
-      errors.user_name = 'Por favor, ingresa tu nombre';
-    } else if (!/^[a-zA-Z\s]+$/.test(formulario.user_name)) {
-      errors.user_name = 'El nombre solo debe contener letras';
-    } else {
-      delete errors.user_name;
-    }
-
-    if (!formulario.user_phone) {
-      errors.user_phone = 'Por favor, ingresa tu número de celular';
-    } else if (!/^[0-9\s+]+$/.test(formulario.user_phone)) {
-      errors.user_phone = 'El celular solo debe tener números.';
-    } else {
-      delete errors.user_phone;
-    }
-
-    if (!formulario.user_email) {
-      errors.user_email = 'Por favor, ingresa tu correo electrónico';
-    } else if (!/\S+@\S+\.\S+/.test(formulario.user_email)) {
-      errors.user_email = 'Por favor, ingresa un correo electrónico válido';
-    } else {
-      delete errors.user_email;
-    }
-
-    if (!formulario.message) {
-      errors.message = 'Por favor, ingresa un mensaje';
-    } else {
-      delete errors.message;
-    }
-
-    setFieldErrors(errors);
-
-    return Object.keys(errors).length === 0;
-  };
-
-  //Form - State
-  const [formulario, setFormulario] = useState({
-    user_name: '',
-    user_phone: '',
-    user_email: '',
-    message: '',
-  });
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormulario({
-      ...formulario,
-      [name]: value,
-    });
-    console.log(formulario);
-  };
-
-  const handleSubmit = () => {
-    setFormulario({
-      user_name: '',
-      user_phone: '',
-      user_email: '',
-      message: '',
-    });
-  };
-
   //Alert
-  const alert = () => {
+  const alertConfirm = () => {
     Swal.fire({
       title: 'Mensaje Enviado',
       text: 'Nos contactaremos pronto.',
@@ -83,35 +17,50 @@ const Contact = () => {
     });
   };
 
+  //Hock Form
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    trigger,
+  } = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data);
+    //Envío
+    emailjs
+      .sendForm(
+        'service_prr11cf',
+        'template_0glkzy9',
+        form.current,
+        'u-QBAzeFYmV_VDbW6'
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+          handleSubmit();
+          console.log('Mensaje Enviado.');
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+    //After
+    alertConfirm();
+    reset();
+  };
+
+  const handleBlur = (fieldName) => {
+    trigger(fieldName);
+  };
+
   //EmailJS
   const form = useRef();
 
-  const sendEmail = (e) => {
-    e.preventDefault();
+  const sendEmail = (e) => {};
 
-    if (validateForm()) {
-      emailjs
-        .sendForm(
-          'service_prr11cf',
-          'template_0glkzy9',
-          form.current,
-          'u-QBAzeFYmV_VDbW6'
-        )
-        .then(
-          (result) => {
-            console.log(result.text);
-            alert();
-            handleSubmit();
-            console.log('Mensaje Enviado.');
-          },
-          (error) => {
-            console.log(error.text);
-          }
-        );
-    } else {
-      console.log('Hay errores en el formulario, por favor corrígelos');
-    }
-  };
   return (
     <div className='w-full h-full'>
       <section className='mb-32 w-full'>
@@ -126,82 +75,110 @@ const Contact = () => {
             <div className='flex flex-wrap  flex-row justify-center'>
               <div className='mb-12  shrink-0 grow-0 basis-auto md:px-3 lg:mb-0 lg:w-5/12 lg:px-0'>
                 {/* FORM */}
-                <form ref={form} onSubmit={sendEmail} className='w-full -m-1'>
+                <form
+                  ref={form}
+                  onSubmit={handleSubmit(onSubmit)}
+                  className='w-full -m-1'
+                >
                   <h1 className='font-bold text-3xl text-teesaBlueDark my-1'>
                     ¿Quieres tener más información?
                   </h1>
-                  <h2 className=' my-3 font-medium text-[20px]'>
+                  <h2 className='my-3 font-medium text-20px'>
                     Escribe tus datos y te contactaremos.
                   </h2>
                   <div className='relative mb-1'>
                     <input
                       type='text'
                       name='user_name'
-                      className='peer block min-h-[auto] w-full rounded border-10 bg-transparent py-[0.32rem] px-3 outline-none border-2 border-teesaBlueLight shadow-lg'
+                      className={`min-h-[auto] w-full rounded bg-transparent py-[0.32rem] px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear  border-2 border-teesaBlueLight shadow-lg ${
+                        errors.user_name ? 'border-red-500' : ''
+                      }`}
                       placeholder='Nombre'
-                      value={formulario.user_name}
-                      onChange={handleChange}
+                      {...register('user_name', {
+                        required: 'Este campo es obligatorio',
+                        pattern: {
+                          value: /^[A-Za-z\s]+$/,
+                          message: 'Ingresa solo letras y espacios.',
+                        },
+                      })}
+                      onBlur={() => handleBlur('user_name')}
                     />
-                    {fieldErrors.user_name ? (
-                      <p className='text-red-500 text-sm'>
-                        {fieldErrors.user_name}
-                      </p>
-                    ) : (
-                      <div className='h-[20px]'></div>
+                    {errors.user_name && (
+                      <span className='text-red-500'>
+                        {errors.user_name.message}
+                      </span>
                     )}
+                    {!errors.user_name && <div className='h-[24px]'></div>}
                   </div>
                   <div className='relative mb-1'>
                     <input
-                      type='phone'
+                      type='text'
                       name='user_phone'
-                      className='peer block min-h-[auto] w-full rounded bg-transparent py-[0.32rem] px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear  border-2 border-teesaBlueLight shadow-lg'
+                      className={`min-h-[auto] w-full rounded bg-transparent py-[0.32rem] px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear  border-2 border-teesaBlueLight shadow-lg ${
+                        errors.user_phone ? 'border-red-500' : ''
+                      }`}
                       placeholder='Celular'
-                      value={formulario.user_phone}
-                      onChange={handleChange}
+                      {...register('user_phone', {
+                        required: 'Este campo es obligatorio',
+                        pattern: {
+                          value: /^[0-9\s!@#$%^&*()]{6,14}$/,
+                          message: 'Ingresa un número de celular válido.',
+                        },
+                      })}
+                      onBlur={() => handleBlur('user_phone')}
                     />
-                    {fieldErrors.user_phone ? (
-                      <p className='text-red-500 text-sm'>
-                        {fieldErrors.user_phone}
-                      </p>
-                    ) : (
-                      <div className='h-[20px]'></div>
+                    {errors.user_phone && (
+                      <span className='text-red-500'>
+                        {errors.user_phone.message}
+                      </span>
                     )}
+                    {!errors.user_phone && <div className='h-[24px]'></div>}
                   </div>
                   <div className='relative mb-1'>
                     <input
-                      type='email'
+                      type='text'
                       name='user_email'
-                      className='peer block min-h-[auto] w-full rounded bg-transparent py-[0.32rem] px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear  border-2 border-teesaBlueLight shadow-lg'
+                      className={`min-h-[auto] w-full rounded bg-transparent py-[0.32rem] px-3 leading-[1.6] outline-none  border-2 border-teesaBlueLight  ${
+                        errors.user_email ? 'border-red-500' : ''
+                      }`}
                       placeholder='Email'
-                      value={formulario.user_email}
-                      onChange={handleChange}
+                      {...register('user_email', {
+                        required: 'Este campo es obligatorio',
+                        pattern: {
+                          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                          message: 'Ingresa un correo electrónico válido',
+                        },
+                      })}
+                      onBlur={() => handleBlur('user_email')}
                     />
-                    {fieldErrors.user_email ? (
-                      <p className='text-red-500 text-sm'>
-                        {fieldErrors.user_email}
-                      </p>
-                    ) : (
-                      <div className='h-[20px]'></div>
+                    {errors.user_email && (
+                      <span className='text-red-500 '>
+                        {errors.user_email.message}
+                      </span>
                     )}
+                    {!errors.user_email && <div className='h-[24px]'></div>}
                   </div>
                   <div className='relative mb-1' data-te-input-wrapper-init>
                     <textarea
                       name='message'
-                      className='peer block min-h-[auto] w-full rounded  bg-transparent py-[0.32rem] px-3 leading-[1.6] outline-none  border-2 border-teesaBlueLight shadow-lg'
+                      className={`min-h-[auto] w-full rounded bg-transparent py-[0.32rem] px-3 leading-[1.6] outline-none border-2 border-teesaBlueLight shadow-lg ${
+                        errors.message ? 'border-red-500' : ''
+                      }`}
                       rows='3'
                       placeholder='Escribe tu mensaje.'
-                      onChange={handleChange}
-                      value={formulario.message}
+                      {...register('message', {
+                        required: 'Este campo es obligatorio',
+                      })}
+                      onBlur={() => handleBlur('message')}
                     ></textarea>
-                    {fieldErrors.message ? (
-                      <p className='text-red-500 text-sm'>
-                        {fieldErrors.message}
-                      </p>
-                    ) : (
-                      <div className='h-[20px]'></div>
+                    {errors.message && (
+                      <span className='text-red-500'>
+                        {errors.message.message}
+                      </span>
                     )}
+                    {!errors.message && <div className='h-[24px]'></div>}
                   </div>
-                  <div className=' inline-block min-h-[1.5rem] justify-center pl-[1.5rem] md:flex'></div>
+                  <div className='inline-block min-h-1.5rem justify-center pl-1.5rem md:flex'></div>
                   <input
                     type='submit'
                     value='Enviar'
