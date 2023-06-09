@@ -1,41 +1,29 @@
 /* eslint-disable no-unused-vars */
 //Instalaciones:
-import { useEffect } from 'react';
-import { Card } from '../Card/Card';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useState } from 'react';
-import NoRepuestosDisponibles from '../NoHayRep/NoRepuestos';
-import NoHayProductosRango from '../NoHayProductosRango/NoHayProductosRango';
+//Redux:
+import {
+  addFilter,
+  fetchProducts,
+} from '../../features/reduxReducer/filterSlice';
 import {
   sortByName,
-  getApiData,
-  getBrands,
   sortByPrice,
+  getPaginationData,
 } from '../../features/reduxReducer/productSlice';
-import { NavLink } from 'react-router-dom';
 
+import { NavLink } from 'react-router-dom';
 //Gif
 import loadingGif from '../../assets/icon/Loading.gif';
+//Componentes:
+import { Card } from '../Card/Card';
+import FilterComponent from './FilterComponent';
+import NoRepuestosDisponibles from '../NoHayRep/NoRepuestos';
+import NoHayProductosRango from '../NoHayProductosRango/NoHayProductosRango';
 
 function Home() {
-  // Codigo de Sol:
-  const [orden, setOrden] = useState('');
-  const [selectedBrand, setSelectedBrand] = useState('');
-  const [selectedType, setSelectedType] = useState('');
-  const [selectedCondition, setSelectedCondition] = useState('');
-  const [selectedPriceRange, setSelectedPriceRange] = useState('');
-  const [showNoProductsInRange, setShowNoProductsInRange] = useState(false);
-
-  const allBrands = useSelector(
-    (state) => state?.productState?.allProducts.products
-  );
-  const dispatch = useDispatch();
-  const isDataLoaded = useSelector(
-    (state) => state.productState.allProducts.length > 0
-  );
-
-  //console.log(allBrands);
-
+  //Sol - Ordenamientos:
   //FUNCIONANDO PERFECTO
   const handleSort = (e) => {
     e.preventDefault();
@@ -51,74 +39,64 @@ function Home() {
     setOrden(`Ordenado por precio ${e.target.value}`);
   };
 
-  //FUNCIONA PERFECTO PERO NO FILTRA X EL BACK
-  // const handleSortBrands = (e) => {
-  //   e.preventDefault();
-  //   const selectedBrand = e.target.value;
-  //   dispatch(sortByBrand(selectedBrand));
-  //   // setOrden(`Ordenado por marca ${selectedBrand}`);
-  // };
+  // Tiago y Juan - Estado de Páginación:
+  const [currentPage, setCurrentPage] = useState(1);
 
-  //FUNCIONANDO PERFECTO
-  const handleSortCondition = (e) => {
-    e.preventDefault();
-    const condition = e.target.value;
-    setSelectedCondition(condition);
-  };
+  const allBrands = useSelector(
+    (state) => state?.productState?.allProducts.products
+  );
+  const dispatch = useDispatch();
+  const isDataLoaded = useSelector(
+    (state) => state.productState.allProducts.length > 0
+  );
+  // Codigo de Sol:
+  const [orden, setOrden] = useState('');
 
-  const handleSortTypes = (e) => {
-    e.preventDefault();
-    setSelectedType(e.target.value);
-    dispatch(getBrands(selectedBrand, e.target.value));
-  };
-
-  // Codigo de Juan - Conexión con Back:
+  //Tiago y Juan - Paginación.
 
   useEffect(() => {
-    if (!isDataLoaded) {
-      dispatch(getApiData());
-    }
-  }, [dispatch, isDataLoaded]);
+    dispatch(getPaginationData(currentPage));
+  }, [dispatch, currentPage]);
 
-  //* Data "Repuesto"
-  let productsTeesa = useSelector((state) => state?.productState?.allProducts);
+  const allProducts = useSelector(
+    (state) => state?.productState?.general?.products
+  );
+
+  const general = useSelector((state) => state?.productState?.general);
+
+  function arrayPaginas(total) {
+    let pages = [];
+    for (let index = 1; index < total + 1; index++) {
+      pages.push(index);
+    }
+    return pages;
+  }
+
+  let paginasFinal = arrayPaginas(general.totalPages);
+
+  let pagesChange = (number) => {
+    setCurrentPage(number);
+  };
 
   //isLoading
   let loading = useSelector((state) => state.productState.loading);
 
-  //sol
-  //* Filtrar productos por tipo "Repuesto"
+  //*Filtros Nuevos:
 
-  let filteredProducts =
-    selectedType === 'repuesto'
-      ? productsTeesa.filter((producto) => producto.categoria === 'repuesto')
-      : productsTeesa;
+  const { filters, products, status, error } = useSelector(
+    (state) => state.filters
+  );
 
-  if (selectedPriceRange === '0-10000000') {
-    filteredProducts = filteredProducts.filter(
-      (product) => product.precio >= 0 && product.precio <= 10000000
-    );
-  } else if (selectedPriceRange === '10000000-20000000') {
-    filteredProducts = filteredProducts.filter(
-      (product) => product.precio >= 10000000 && product.precio <= 20000000
-    );
-  } else if (selectedPriceRange === '20000000+') {
-    filteredProducts = filteredProducts.filter(
-      (product) => product.precio >= 20000000
-    );
-  }
+  useEffect(() => {
+    if (Object.keys(filters).length > 0) {
+      dispatch(fetchProducts(filters));
+    }
+  }, [filters, dispatch]);
 
-  if (selectedCondition === 'nuevos') {
-    filteredProducts = filteredProducts.filter(
-      (product) => product.estado === 'nuevo'
-    );
-  } else if (selectedCondition === 'usados') {
-    filteredProducts = filteredProducts.filter(
-      (product) => product.estado === 'usado'
-    );
-  }
+  const handleApplyFilters = (selectedFilters) => {
+    dispatch(addFilter(selectedFilters));
+  };
 
-  //Sol
   return (
     <div className='flex w-full h-full flex-col flex-wrap'>
       {/* Second Navbar */}
@@ -156,7 +134,9 @@ function Home() {
         {/* Inicia parte de Sol. */} {/* FILTROS */}
         <div className='filters w-1/6 m-4 bg-gray-100 p-4 rounded-lg'>
           <h1 className='text-xl font-bold mb-4'>Filtros</h1>
-          <div className='mb-4'>
+          <FilterComponent onApplyFilters={handleApplyFilters} />
+          {/* <div className='mb-4'>
+            <FilterComponent onApplyFilters={handleApplyFilters} />
             <label htmlFor='sort'>Orden Alfabético</label>
             <select
               id='sort'
@@ -188,20 +168,6 @@ function Home() {
           </div>
           <div className='mb-4'>
             <label htmlFor='sortPrice'>Precio</label>
-            <select
-              id='sortPrice'
-              className='w-full border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-teesaGreen'
-              value={selectedPriceRange}
-              onChange={(e) => setSelectedPriceRange(e.target.value)}
-            >
-              <option value='' disabled>
-                Seleccionar
-              </option>
-              <option value=''>Todos</option>
-              <option value='0-10000000'>0 - 10000000</option>
-              <option value='10000000-20000000'>10000000 - 20000000</option>
-              <option value='20000000+'>20000000 en adelante</option>
-            </select>
           </div>
 
           <div className='mb-4'>
@@ -254,21 +220,23 @@ function Home() {
               <option value='equipo'>Equipo</option>
               <option value='repuesto'>Repuesto</option>
             </select>
-          </div>
+          </div> */}
         </div>
         {/* Termina parte de Sol. */}
         {/* Inicia parte de Juan. */}
         {/* Cards */}
         <div className='cardsContainer w-5/6 h-fit m-5 bg-teesaWhite  items-end '>
-          {loading && (
+          {status === 'loading' && (
             <div className='flex justify-center items-center w-full h-[800px]'>
               <img src={loadingGif} alt='gif' />
             </div>
           )}
-
-          {!loading && (
+          {status === 'failed' && (
+            <div>Error al cargar los productos: {error}</div>
+          )}
+          {status === 'succeeded' && (
             <div className='flex flex-wrap m-auto justify-center'>
-              {filteredProducts.map((product) => (
+              {products.map((product) => (
                 <Card
                   id={product.id}
                   key={product.id}
@@ -285,15 +253,40 @@ function Home() {
           {/* Termina parte de Juan. */}
           {/* sol */}
 
-          {filteredProducts.length === 0 && selectedType === 'repuesto' && (
+          {/* {filteredProducts.length === 0 && selectedType === 'repuesto' && (
             <NoRepuestosDisponibles />
-          )}
+          )} */}
 
-          {filteredProducts.length === 0 &&
+          {/* {filteredProducts.length === 0 &&
             showNoProductsInRange &&
-            selectedType !== 'repuesto' && <NoHayProductosRango />}
+            selectedType !== 'repuesto' && <NoHayProductosRango />} */}
         </div>
       </div>
+      {/* //paginacion */}
+      {/* <div>
+      <div className="flex flex-wrap m-auto justify-center">
+        {allProducts?.map((product) => (
+          <Card
+            id={product?.id}
+            key={product?.id}
+            nombre={product?.nombre}
+            categoria={product?.categoria}
+            precio={product?.precio}
+            imagen={product?.imagen}
+            marca={product?.marca}
+          />
+        ))}
+      </div>
+      {paginasFinal?.map((pagina) => (
+        <button
+          onClick={() => pagesChange(pagina)}
+          className="w-5"
+          key={pagina}
+        >
+          {pagina}
+        </button>
+      ))}
+    </div> */}
     </div>
   );
 }
