@@ -1,5 +1,3 @@
-// ReduxReducer.js
-
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
@@ -14,15 +12,15 @@ const initialState = {
   //   itemsPage: 6,
   //   totalPage: 1,
   // }
-  general: []
+  general: [],
 };
 
+//Traer los productos
 export const getApiData = createAsyncThunk('products/getApiData', async () => {
   try {
     const response = await axios.get(
       'https://servidor-teesa.onrender.com/products'
     );
-    console.log( response.data.products);
     return response.data.products;
   } catch (error) {
     console.error('Error fetching products:', error);
@@ -30,19 +28,22 @@ export const getApiData = createAsyncThunk('products/getApiData', async () => {
   }
 });
 
-export const getPaginationData = createAsyncThunk('products/getPaginationData', async (number) => {
-  try {
-    const response = await axios.get(
-      `https://servidor-teesa.onrender.com/products?page=${number}`
-    );
-    console.log(response.data.products);
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching products:', error);
-    throw error;
+//Traer la Data en General
+export const getPaginationData = createAsyncThunk(
+  'products/getPaginationData',
+  async (number) => {
+    try {
+      const response = await axios.get(
+        `https://servidor-teesa.onrender.com/products?page=${number}`
+      );
+      console.log(response.data.products);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching products:', error);
+      throw error;
+    }
   }
-});
-
+);
 
 //Filtro Marcas
 export const getBrands = createAsyncThunk('products/getBrands', async () => {
@@ -72,7 +73,7 @@ export const productSlice = createSlice({
         return 0;
       });
     },
- 
+
     sortByPrice: (state, action) => {
       state.allProducts.sort((a, b) => {
         if (action.payload === 'precio_min') {
@@ -84,8 +85,6 @@ export const productSlice = createSlice({
       });
     },
 
-
-
     // sortByBrand: (state, action) => {
     //   if (action.payload === 'todos') {
     //     state.filteredProducts = state.allProducts;
@@ -94,9 +93,11 @@ export const productSlice = createSlice({
     //       (product) => product.marca === action.payload
     //     );
     //   }
+
+    //*Nuevos Filtros
   },
 
-  //GetData
+  //*GetData
   extraReducers: (builder) => {
     //Cargando productos
     builder.addCase(getApiData.pending, (state) => {
@@ -113,19 +114,19 @@ export const productSlice = createSlice({
       state.error = action.error.message;
     });
 
-     //Paginado
+    //*Paginado
 
-    builder.addCase(getPaginationData.pending, (state) => {
-     
-    });
+    // builder.addCase(getPaginationData.pending, (state) => {
+
+    // });
     builder.addCase(getPaginationData.fulfilled, (state, action) => {
-      state.general = action.payload
+      state.general = action.payload;
     });
-    builder.addCase(getPaginationData.rejected, (state, action) => {
- 
-    });
+    // builder.addCase(getPaginationData.rejected, (state, action) => {
 
-    //Cargando marcas
+    // });
+
+    //*Cargando marcas
     builder.addCase(getBrands.pending, (state) => {
       state.loading = true;
     });

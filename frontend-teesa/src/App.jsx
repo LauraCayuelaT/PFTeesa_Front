@@ -9,7 +9,8 @@ import Login from './Components/Login/Login';
 import Services from './views/Services/Services';
 import Contact from './Components/Contact/Contact';
 import About from './views/About/About';
-import Pagination from "./Components/Pagination/Pagination";
+import Pagination from './Components/Pagination/Pagination';
+import HomePrueba from './Components/Prueba/HomePrueba';
 
 function App() {
   const location = useLocation();
@@ -27,7 +28,7 @@ function App() {
         <Route path='about' element={<About />} />
         <Route path='contact' element={<Contact />} />
         <Route path='pagination' element={<Pagination />} />
-
+        <Route path='homeprueba' element={<HomePrueba />} />
         <Route path='*' element={<Navigate to='home' />} />
       </Routes>
     </div>
