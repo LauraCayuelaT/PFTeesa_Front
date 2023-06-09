@@ -1,13 +1,30 @@
 import React from 'react'
 import {useForm} from 'react-hook-form'
 import logo from '../../img/SVGs/TeesaAll.svg'
+import { registerUser } from '../../features/reduxReducer/registerSlice'
+import { useDispatch, useSelector } from 'react-redux'
 
 function Register() {
-    const {register, handleSubmit, errors, reset, trigger, watch} = useForm();
-
-    const onSubmit = (data) => {
+  const dispatch = useDispatch();
+  const loading = useSelector((state) => state.registerState.loading);
+  const error= useSelector((state) => state.registerState.error);
+  console.log(loading);
+  
+      //Ejecutar el Reducer Post.
+      const onSubmit = (data) => {
         console.log(data);
+        dispatch(registerUser(data));
+        reset();
       };
+
+      const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+        trigger,
+      } = useForm();
+
     
       const password = watch('password');
       const confirmPassword = watch('confirmPassword');

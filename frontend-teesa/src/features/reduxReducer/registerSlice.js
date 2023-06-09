@@ -11,11 +11,11 @@ const initialState = {
 // Comunicación con BACK.
 export const registerUser = createAsyncThunk(
   'product/registerUser',
-  async ({ user_email, user_password }) => {
+  async ({ nit, nombre, direccion, telefono, correo, contraseña, tipo  }) => {
     try {
       const response = await axios.post(
         'https://servidor-teesa.onrender.com/signup',
-        { user_email, user_password }
+        { nit, nombre, direccion, telefono, correo, contraseña, tipo }
       );
       return response.data;
     } catch (error) {
