@@ -8,49 +8,27 @@ import {
   fetchProducts,
 } from '../../features/reduxReducer/filterSlice';
 import {
-  sortByName,
-  sortByPrice,
   getPaginationData,
 } from '../../features/reduxReducer/productSlice';
 
 import { NavLink } from 'react-router-dom';
+import { SearchBar } from '../SearchBar/SearchBar';
 //Gif
 import loadingGif from '../../assets/icon/Loading.gif';
 //Componentes:
 import { Card } from '../Card/Card';
 import FilterComponent from './FilterComponent';
-import NoRepuestosDisponibles from '../NoHayRep/NoRepuestos';
-import NoHayProductosRango from '../NoHayProductosRango/NoHayProductosRango';
+
 
 function Home() {
-  //Sol - Ordenamientos:
-  //FUNCIONANDO PERFECTO
-  const handleSort = (e) => {
-    e.preventDefault();
-    dispatch(sortByName(e.target.value)); // Pasa el valor directamente
-    setOrden(`Ordenado ${e.target.value}`);
-  };
-
-  //FUNCIONANDO PERFECTO
-  const handleSortPrices = (e) => {
-    e.preventDefault();
-    dispatch(sortByPrice({ minPrice: 100000000, maxPrice: 500000000 }));
-    dispatch(sortByPrice(e.target.value.toLowerCase()));
-    setOrden(`Ordenado por precio ${e.target.value}`);
-  };
-
+  //Sol - Ordenamientos en componente Filter:
+  // const [selectedType, setSelectedType] = useState('');
+  // const [showNoProductsInRange, setShowNoProductsInRange] = useState(false);
   // Tiago y Juan - Estado de Páginación:
   const [currentPage, setCurrentPage] = useState(1);
 
-  const allBrands = useSelector(
-    (state) => state?.productState?.allProducts.products
-  );
-  const dispatch = useDispatch();
-  const isDataLoaded = useSelector(
-    (state) => state.productState.allProducts.length > 0
-  );
   // Codigo de Sol:
-  const [orden, setOrden] = useState('');
+  const dispatch = useDispatch(); 
 
   //Tiago y Juan - Paginación.
 
@@ -61,6 +39,7 @@ function Home() {
   const allProducts = useSelector(
     (state) => state?.productState?.general?.products
   );
+
 
   const general = useSelector((state) => state?.productState?.general);
 
@@ -154,62 +133,7 @@ function Home() {
               <option value='precio_min'>Precio Mínimo</option>
               <option value='precio_max'>Precio Máximo</option>
             </select>
-          </div>
-          <div className='mb-4'>
-            <label htmlFor='sortPrice'>Precio</label>
-          </div>
-
-          <div className='mb-4'>
-            <label htmlFor='filterCreated'>Condición</label>
-            <select
-              id='filterCreated'
-              className='w-full border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-teesaGreen'
-              value={selectedCondition}
-              onChange={(e) => handleSortCondition(e)}
-            >
-              <option value='' disabled>
-                Seleccionar
-              </option>
-              <option value=''>Todos</option>
-              <option value='nuevos'>Nuevos</option>
-              <option value='usados'>Usados</option>
-            </select>
-          </div>
-          <div>
-            <label htmlFor='brands'>Marcas</label>
-            <select
-              id='brands'
-              className='w-full border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-teesaGreen'
-              value={selectedBrand}
-              // onChange={(e) => handleSortBrands(e)}
-            >
-              <option value='' disabled>
-                Seleccionar
-              </option>
-              <option value='todos'>Todos</option>
-              {allBrands?.map((b) => (
-                <option value={b.marca} key={b.id}>
-                  {b.marca}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className='mt-4'>
-            <label htmlFor='types'>Tipo</label>
-            <select
-              id='types'
-              className='w-full border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-teesaGreen'
-              value={selectedType}
-              onChange={(e) => handleSortTypes(e)}
-            >
-              <option value='' disabled>
-                Seleccionar
-              </option>
-              <option value=''>Todos</option>
-              <option value='equipo'>Equipo</option>
-              <option value='repuesto'>Repuesto</option>
-            </select>
-          </div> */}
+          {/* </div> */}
         </div>
         {/* Termina parte de Sol. */}
         {/* Inicia parte de Juan. */}
@@ -237,18 +161,12 @@ function Home() {
                 />
               ))}
             </div>
+            
           )}
 
           {/* Termina parte de Juan. */}
           {/* sol */}
 
-          {/* {filteredProducts.length === 0 && selectedType === 'repuesto' && (
-            <NoRepuestosDisponibles />
-          )} */}
-
-          {/* {filteredProducts.length === 0 &&
-            showNoProductsInRange &&
-            selectedType !== 'repuesto' && <NoHayProductosRango />} */}
         </div>
       </div>
       {/* //paginacion */}

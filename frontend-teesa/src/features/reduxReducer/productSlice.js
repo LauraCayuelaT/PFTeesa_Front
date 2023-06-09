@@ -62,41 +62,9 @@ export const getBrands = createAsyncThunk('products/getBrands', async () => {
 export const productSlice = createSlice({
   name: 'productState',
   initialState,
-  reducers: {
-    sortByName: (state, action) => {
-      state.allProducts.sort((a, b) => {
-        if (action.payload === 'ascendente') {
-          return a.nombre.toLowerCase().localeCompare(b.nombre.toLowerCase());
-        } else if (action.payload === 'descendente') {
-          return b.nombre.toLowerCase().localeCompare(a.nombre.toLowerCase());
-        }
-        return 0;
-      });
-    },
-
-    sortByPrice: (state, action) => {
-      state.allProducts.sort((a, b) => {
-        if (action.payload === 'precio_min') {
-          return a.precio - b.precio;
-        } else if (action.payload === 'precio_max') {
-          return b.precio - a.precio;
-        }
-        return 0;
-      });
-    },
-
-    // sortByBrand: (state, action) => {
-    //   if (action.payload === 'todos') {
-    //     state.filteredProducts = state.allProducts;
-    //   } else {
-    //     state.filteredProducts = state.allProducts.filter(
-    //       (product) => product.marca === action.payload
-    //     );
-    //   }
-
+  reducers: {},
+    
     //*Nuevos Filtros
-  },
-
   //*GetData
   extraReducers: (builder) => {
     //Cargando productos
