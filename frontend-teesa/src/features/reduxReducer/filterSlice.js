@@ -9,9 +9,24 @@ export const fetchProducts = createAsyncThunk(
       const response = await axios.get(
         `https://servidor-teesa.onrender.com/products?${queryParams}`
       );
-      return response.data.products;
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
+    }
+  }
+);
+export const getPaginationData = createAsyncThunk(
+  'products/getPaginationData',
+  async (number) => {
+    try {
+      const response = await axios.get(
+        `https://servidor-teesa.onrender.com/products?page=${number}`
+      );
+      console.log(response.data.products);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching products:', error);
+      throw error;
     }
   }
 );
@@ -29,7 +44,7 @@ const filtersSlice = createSlice({
       state.filters = action.payload;
     },
     sortByName: (state, action) => {
-      state.products.sort((a, b) => {
+      state.products.products.sort((a, b) => {
         if (action.payload === 'ascendente') {
           return a.nombre.toLowerCase().localeCompare(b.nombre.toLowerCase());
         } else if (action.payload === 'descendente') {
@@ -39,7 +54,7 @@ const filtersSlice = createSlice({
       });
     },
     sortByPrice: (state, action) => {
-      state.products.sort((a, b) => {
+      state.products.products.sort((a, b) => {
         if (action.payload === 'precio_min') {
           return a.precio - b.precio;
         } else if (action.payload === 'precio_max') {
@@ -50,6 +65,9 @@ const filtersSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(getPaginationData.fulfilled, (state, action) => {
+      state.products = action.payload;
+    });
     builder
       .addCase(fetchProducts.pending, (state) => {
         state.status = 'loading';
