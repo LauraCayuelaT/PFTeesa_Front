@@ -45,7 +45,7 @@ export const getPaginationData = createAsyncThunk(
   }
 );
 
-//Filtro Marcas
+//Filtro Marcasssol
 export const getBrands = createAsyncThunk('products/getBrands', async () => {
   try {
     const response = await axios.get(
