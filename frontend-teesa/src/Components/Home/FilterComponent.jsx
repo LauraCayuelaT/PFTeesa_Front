@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+
 // import { useSelector } from 'react-redux';
 import {
   addFilter,
@@ -10,12 +11,15 @@ import {
 // import NoRepuestosDisponibles from '../NoHayRep/NoRepuestos';
 // import NoHayProductosRango from '../NoHayProductosRango/NoHayProductosRango';
 
+
 const FilterComponent = () => {
   const [estado, setEstado] = useState('');
   const [tipo, setTipo] = useState('');
   const [marca, setMarca] = useState('');
   const [precio, setPrecio] = useState('');
+
   
+
 
   const dispatch = useDispatch();
 
@@ -26,6 +30,8 @@ const FilterComponent = () => {
       marca: marca,
       precio: precio,
 
+
+
     };
 
     dispatch(addFilter(filters));
@@ -33,6 +39,7 @@ const FilterComponent = () => {
   }, [estado, tipo, marca, precio, dispatch]);
 
   //New
+
   //agrego ordenamientos y filtror- sol - componentes ultimos
   // const [selectedType, setSelectedType] = useState('');
   // const [showNoProductsInRange, setShowNoProductsInRange] = useState(false);
@@ -129,6 +136,7 @@ const FilterComponent = () => {
           value=''>Todas</option>
           <option 
           value='unox'>Unox</option>
+
           <option value='rational'>Rational</option>
           <option value='fagor'>Fagor</option>
           <option value='winterhalter'>WinterHalter</option>
@@ -138,6 +146,7 @@ const FilterComponent = () => {
       </label>
       <br />
 
+
       <label className='mb-4'>
         Precio:
         <select 
@@ -146,6 +155,7 @@ const FilterComponent = () => {
           onChange={(e) => setPrecio(e.target.value)}
           // onBlur={handleFilterPrice} 
           >
+
           <option value=''>Cualquier Precio</option>
           {/* En el value cambias como es el query, me sirvio preguntarle a ChatGPT como hacerlo */}
           <option value='0,10000000'>Menos de 10,000,000</option>
@@ -154,9 +164,12 @@ const FilterComponent = () => {
         </select>
       </label>
 
+
+
     </div>
   );
 };
+
 
 
 export default FilterComponent;

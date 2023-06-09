@@ -28,6 +28,7 @@ const filtersSlice = createSlice({
     addFilter: (state, action) => {
       state.filters = action.payload;
     },
+
     sortByName: (state, action) => {
       state.products.sort((a, b) => {
         if (action.payload === 'ascendente') {
@@ -48,6 +49,7 @@ const filtersSlice = createSlice({
         return 0;
       });
     },
+
   },
   extraReducers: (builder) => {
     builder
@@ -66,6 +68,8 @@ const filtersSlice = createSlice({
   },
 });
 
+
 export const { addFilter, sortByName, sortByPrice } = filtersSlice.actions;
+
 
 export default filtersSlice.reducer;

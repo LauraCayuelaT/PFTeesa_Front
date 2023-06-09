@@ -12,7 +12,9 @@ import {
 } from '../../features/reduxReducer/productSlice';
 
 import { NavLink } from 'react-router-dom';
+
 import { SearchBar } from '../SearchBar/SearchBar';
+
 //Gif
 import loadingGif from '../../assets/icon/Loading.gif';
 //Componentes:
@@ -30,7 +32,9 @@ function Home() {
   // Codigo de Sol:
   const dispatch = useDispatch(); 
 
+
   //Tiago y Juan - Paginación.
+
 
   useEffect(() => {
     dispatch(getPaginationData(currentPage));
@@ -51,7 +55,9 @@ function Home() {
     return pages;
   }
 
+
   let paginasFinal = arrayPaginas(general.totalPages);
+
 
   let pagesChange = (number) => {
     setCurrentPage(number);
@@ -133,7 +139,9 @@ function Home() {
               <option value='precio_min'>Precio Mínimo</option>
               <option value='precio_max'>Precio Máximo</option>
             </select>
+
           {/* </div> */}
+
         </div>
         {/* Termina parte de Sol. */}
         {/* Inicia parte de Juan. */}
@@ -166,6 +174,7 @@ function Home() {
 
           {/* Termina parte de Juan. */}
           {/* sol */}
+
 
         </div>
       </div>
