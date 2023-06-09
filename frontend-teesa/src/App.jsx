@@ -16,10 +16,11 @@ import HomePrueba from './Components/Prueba/HomePrueba';
 function App() {
   const location = useLocation();
   const isLanding = location.pathname === '/';
+  const isRegister=location.pathname === '/signup'
 
   return (
     <div>
-      {!isLanding && <Navbar />}
+      {!isLanding && !isRegister && <Navbar />}
       <Routes>
         <Route path='/' element={<Landing />} />
         <Route path='home' element={<Home />} />
