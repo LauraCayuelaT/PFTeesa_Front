@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getPaginationData } from "../../features/reduxReducer/productSlice";
-import { Card } from "../Card/Card";
+import { getPaginationData } from "../../features/reduxReducer/filterSlice";
 
 const Pagination = () => {
   const dispatch = useDispatch();
@@ -11,13 +10,7 @@ const Pagination = () => {
     dispatch(getPaginationData(currentPage));
   }, [dispatch, currentPage]);
 
-  const allProducts = useSelector(
-    (state) => state?.productState?.general?.products
-  );
-  console.log(allProducts);
-
-  const general = useSelector((state) => state?.productState?.general);
-  console.log(general);
+  const general = useSelector((state) => state?.filters?.products);
 
   function arrayPaginas(total) {
     let pages = [];
@@ -29,36 +22,59 @@ const Pagination = () => {
 
   let paginasFinal = arrayPaginas(general.totalPages);
 
-  console.log(paginasFinal);
-
   let pagesChange = (number) => {
     setCurrentPage(number);
   };
 
+  const handlePrevClick = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextClick = () => {
+    if (currentPage < general.totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
   return (
-    <div>
-      <div className="flex flex-wrap m-auto justify-center">
-        {allProducts?.map((product) => (
-          <Card
-            id={product?.id}
-            key={product?.id}
-            nombre={product?.nombre}
-            categoria={product?.categoria}
-            precio={product?.precio}
-            imagen={product?.imagen}
-            marca={product?.marca}
-          />
-        ))}
-      </div>
+    <div className="flex justify-center mt-4">
+      <button
+        className={`px-4 py-2 mx-1 rounded-lg ${
+          currentPage 
+            ? "bg-teesaBlueDark text-teesaWhite"
+            : "bg-gray-300 text-teesaBlueDark"
+        }`}
+        onClick={handlePrevClick}
+      >
+        {" "}
+        Back
+      </button>
       {paginasFinal?.map((pagina) => (
         <button
           onClick={() => pagesChange(pagina)}
-          className="w-5"
+          className={`px-4 py-2 mx-1 rounded-lg ${
+            currentPage === pagina
+              ? "bg-teesaBlueDark text-teesaWhite"
+              : "bg-gray-300 text-teesaBlueDark"
+          }`}
           key={pagina}
         >
           {pagina}
         </button>
       ))}
+      <button
+        className={`px-4 py-2 mx-1 rounded-lg ${
+          currentPage 
+            ? "bg-teesaBlueDark text-teesaWhite"
+            : "bg-gray-300 text-teesaBlueDark"
+        }`}
+        onClick={handleNextClick}
+      >
+        {" "}
+        Next
+      </button>
     </div>
   );
 };
