@@ -28,6 +28,26 @@ const filtersSlice = createSlice({
     addFilter: (state, action) => {
       state.filters = action.payload;
     },
+    sortByName: (state, action) => {
+      state.products.sort((a, b) => {
+        if (action.payload === 'ascendente') {
+          return a.nombre.toLowerCase().localeCompare(b.nombre.toLowerCase());
+        } else if (action.payload === 'descendente') {
+          return b.nombre.toLowerCase().localeCompare(a.nombre.toLowerCase());
+        }
+        return 0;
+      });
+    },
+    sortByPrice: (state, action) => {
+      state.products.sort((a, b) => {
+        if (action.payload === 'precio_min') {
+          return a.precio - b.precio;
+        } else if (action.payload === 'precio_max') {
+          return b.precio - a.precio;
+        }
+        return 0;
+      });
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -46,6 +66,6 @@ const filtersSlice = createSlice({
   },
 });
 
-export const { addFilter } = filtersSlice.actions;
+export const { addFilter, sortByName, sortByPrice } = filtersSlice.actions;
 
 export default filtersSlice.reducer;
