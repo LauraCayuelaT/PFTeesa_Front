@@ -138,7 +138,7 @@ function Register() {
     return (
       <div className="w-full bg-teesaBlueDark h-screen flex flex-row justify-center align-center items-center gap-[10%]">
         <div className='flex flex-col justify-center align-center items-center my-auto xl:mb-[14%] xl:mr-[8%] lg:mb-[14%] lg:mr-[8%]'>
-          <img src={logo} alt="logo" className='xl:h-[700px] lg:h-[500px] '/>
+          <img src={logo} alt="logo" className='xl:h-[800px] lg:h-[500px] '/>
           <h1 className='text-center text-teesaWhite xl:text-3xl xl:mt-[-6em] lg:text-2xl lg:mt-[-6em]'>Tecnología en Equipos Alimenticios</h1>
         </div>
         
