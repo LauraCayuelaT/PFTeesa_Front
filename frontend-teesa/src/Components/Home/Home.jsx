@@ -146,7 +146,7 @@ function Home() {
           )}
           {status === 'succeeded' && (
             <div className='flex flex-wrap m-auto justify-center'>
-              {products.products.map((product) => (
+              {products.products?.map((product) => (
                 <Card
                   id={product.id}
                   key={product.id}
