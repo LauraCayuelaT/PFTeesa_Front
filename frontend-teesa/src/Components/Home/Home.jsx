@@ -21,6 +21,7 @@ import { Card } from '../Card/Card';
 import FilterComponent from './FilterComponent';
 import NoRepuestosDisponibles from '../NoHayRep/NoRepuestos';
 import NoHayProductosRango from '../NoHayProductosRango/NoHayProductosRango';
+import Pagination from '../Pagination/Pagination';
 
 function Home() {
   //Sol - Ordenamientos:
@@ -58,26 +59,7 @@ function Home() {
     dispatch(getPaginationData(currentPage));
   }, [dispatch, currentPage]);
 
-  const allProducts = useSelector(
-    (state) => state?.productState?.general?.products
-  );
-
-  const general = useSelector((state) => state?.productState?.general);
-
-  function arrayPaginas(total) {
-    let pages = [];
-    for (let index = 1; index < total + 1; index++) {
-      pages.push(index);
-    }
-    return pages;
-  }
-
-  let paginasFinal = arrayPaginas(general.totalPages);
-
-  let pagesChange = (number) => {
-    setCurrentPage(number);
-  };
-
+ 
   //isLoading
   let loading = useSelector((state) => state.productState.loading);
 
@@ -236,7 +218,7 @@ function Home() {
           )}
           {status === 'succeeded' && (
             <div className='flex flex-wrap m-auto justify-center'>
-              {products.map((product) => (
+              {products.products.map((product) => (
                 <Card
                   id={product.id}
                   key={product.id}
@@ -249,6 +231,7 @@ function Home() {
               ))}
             </div>
           )}
+         <Pagination/>
 
           {/* Termina parte de Juan. */}
           {/* sol */}
