@@ -36,7 +36,7 @@ export const getPaginationData = createAsyncThunk(
       const response = await axios.get(
         `https://servidor-teesa.onrender.com/products?page=${number}`
       );
-      console.log(response.data.products);
+
       return response.data;
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -52,7 +52,6 @@ export const getBrands = createAsyncThunk('products/getBrands', async () => {
     const response = await axios.get(
       'https://servidor-teesa.onrender.com/brands'
     );
-    console.log(response.data);
     return response.data.products;
   } catch (error) {
     console.error('Error fetching brands:', error);

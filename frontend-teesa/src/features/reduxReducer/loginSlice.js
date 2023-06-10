@@ -5,48 +5,60 @@ import axios from 'axios';
 const initialState = {
   loading: false,
   error: null,
-  token: [],
+  errorMessage: '',
+  success: false,
+  token: '',
+  googleAuthLink: 'https://servidor-teesa.onrender.com/auth/google/login',
 };
 
-// Comunicación con BACK.
+// Login Back:
 export const loginUser = createAsyncThunk(
   'product/loginUser',
-  async ({ user_email, user_password }) => {
+  async ({ correo, contrasena }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
         'https://servidor-teesa.onrender.com/login',
-        { user_email, user_password }
+        { correo, contrasena }
       );
-      return response.data;
+      console.log(response.data.token);
+      return response.data.token;
     } catch (error) {
-      // Manejar cualquier error aquí
-      throw new Error(error.response.data);
+      console.log(error.response.data.message);
+      return rejectWithValue(error.response.data.message);
     }
   }
 );
+
+//Login Google:
 
 // Slice Login
 const loginSlice = createSlice({
   name: 'loginState',
   initialState,
 
-  reducers: {},
+  reducers: {
+    // eslint-disable-next-line no-unused-vars
+    resetLoginState: (state) => initialState,
+  },
   extraReducers: (builder) => {
     // Acciones relacionadas con el inicio de sesión
     builder.addCase(loginUser.pending, (state) => {
       state.loading = true;
       state.error = null;
+      state.errorMessage = null; // Reiniciar el mensaje de error
     });
-    builder.addCase(loginUser.fulfilled, (state) => {
+    builder.addCase(loginUser.fulfilled, (state, action) => {
       state.loading = false;
-      //state.token = payload.token
+      state.token = action.payload;
+      state.success = true; // Activar el estado de éxito
     });
-    builder.addCase(loginUser.rejected, (state) => {
+    builder.addCase(loginUser.rejected, (state, action) => {
       state.loading = false;
       state.error = true;
-      //   state.error = action.error.message;
+      state.errorMessage = action.payload;
     });
   },
 });
 
+export const { resetLoginState } = loginSlice.actions;
 export default loginSlice.reducer;
