@@ -45,7 +45,8 @@ export const getPaginationData = createAsyncThunk(
   }
 );
 
-//Filtro Marcasssol
+//Filtro Marcas Sol
+
 export const getBrands = createAsyncThunk('products/getBrands', async () => {
   try {
     const response = await axios.get(
@@ -63,8 +64,6 @@ export const productSlice = createSlice({
   name: 'productState',
   initialState,
   reducers: {},
-    
-    //*Nuevos Filtros
   //*GetData
   extraReducers: (builder) => {
     //Cargando productos
