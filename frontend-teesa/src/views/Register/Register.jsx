@@ -2,25 +2,106 @@ import React from 'react'
 import {useForm} from 'react-hook-form'
 import logo from '../../img/SVGs/TeesaAll.svg'
 import { registerUser } from '../../features/reduxReducer/registerSlice'
+import { setUser } from '../../features/reduxReducer/userSlice';
 import { useDispatch, useSelector } from 'react-redux'
 import googleIcon from '../../assets/icon/Google.svg';
 import {useNavigate} from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import Swal from 'sweetalert2';
+import jwt_decode from 'jwt-decode';
+
 
 function Register() {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.registerState.loading);
   const error= useSelector((state) => state.registerState.error);
+  const errorMessage = useSelector((state) => state.registerState.errorMessage);
+  const userData = useSelector((state) => state.userState.userData);
   const nav= useNavigate()
   console.log(loading);
+
+  //Data del Usuario - Token.
+
+  const [tokenValue, setTokenValue] = useState('');
+
+  const token = useSelector((state) => state.loginState.token);
   
+  const setUserWithTokenData = () => {
+    if (tokenValue) {
+      //Decodificamos el Token
+      const decodedToken = jwt_decode(tokenValue);
+      //Sacamos la data.
+      const userId = decodedToken.sub;
+      const userName = decodedToken.nombre;
+      const userType = decodedToken.tipo;
+      //Despachamos la action.
+      dispatch(setUser({ userId, userName, userType }));
+    }
+  };
+
+
+
+  const alertErrorMessage = (errorMessage) => {
+    Swal.fire({
+      title: 'Sucedió un error',
+      text: JSON.stringify(errorMessage),
+      icon: 'error',
+      confirmButtonText: 'Ok.',
+      confirmButtonColor: '#192C8C',
+    });
+  };
+  useEffect(() => {
+    if (errorMessage) {
+      alertErrorMessage(errorMessage);
+    }
+  }, [errorMessage]);
+
+
+  const alertSucess = () => {
+    Swal.fire({
+      title: '¡Felicidades!',
+      text: 'Se ha creado tu cuenta con exito',
+      icon: 'success',
+      confirmButtonText: 'Ok.',
+      confirmButtonColor: '#192C8C',
+    });
+  };
+
       //Ejecutar el Reducer Post.
-      const onSubmit = (data) => {
-        dispatch(registerUser(data));
-        reset();
-        if(loading===false){
-          nav('/home')
-        }
-      };
+      const onSubmit =(data) => {
+        const resultAction = dispatch(registerUser(data));
+        if (resultAction.error) {
+          const errorMessage = resultAction.error.response.data.message;
+          alertErrorMessage(errorMessage);
+      } else {
+        const ntoken = resultAction.payload;
+        setTokenValue(ntoken);
+        dispatch(
+          setUser({
+            userId: data.userId,
+            userName: data.userName,
+            userType: data.userType,
+      }))
+        alertSucess();
+        nav('/home');
+      }
+      reset();
+      
+    };
+
+      //Llamar a la  función Token Data.
+
+  useEffect(() => {
+    if (tokenValue) {
+      setUserWithTokenData();
+    }
+  }, [tokenValue]);
+
+  useEffect(() => {
+    if (userData) {
+      //console.log(`User Data: ${JSON.stringify(userData)}`);
+    }
+  }, [userData]);
 
 
       const {
@@ -183,7 +264,7 @@ function Register() {
               type='submit'>
               <img src={googleIcon} className='w-5 h-5 mx-3 my-auto' /> Ingresar con Google</button>
               </a>
-          </div>
+          </div> 
         </div>
       </div>
 

@@ -5,24 +5,27 @@ import axios from 'axios';
 const initialState = {
   loading: false,
   error: null,
-  token: [],
+  errorMessage: '',
+  success: false,
+  token:'',
+  googleAuthLink: 'https://servidor-teesa.onrender.com/google/signup'
 };
 
 // Comunicación con BACK.
 export const registerUser = createAsyncThunk(
   'product/registerUser',
-  async ({ nit, nombre, direccion, telefono, correo,  contrasena, confirmarContrasena, tipo  }) => {
+  async ({ nit, nombre, direccion, telefono, correo,  contrasena, confirmarContrasena, tipo  }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
         'https://servidor-teesa.onrender.com/signup',
         { nit, nombre, direccion, telefono, correo, contrasena, confirmarContrasena, tipo }
       );
-      return response.data;
+      console.log(response.data.token);
+      return response.data.token;
     } catch (error) {
       // Manejar cualquier error aquí
-      console.log(error.response.data)
-      throw new Error(error.response.data);
-      
+      console.log(error.response.data.message)
+      return rejectWithValue(error.response.data.message);
     }
   }
 );
@@ -38,16 +41,18 @@ const registerSlice = createSlice({
     builder.addCase(registerUser.pending, (state) => {
       state.loading = true;
       state.error = null;
+      state.errorMessage = null; 
     });
-    builder.addCase(registerUser.fulfilled, (state) => {
+    builder.addCase(registerUser.fulfilled, (state, action) => {
       state.loading = false;
-      //state.token = payload.token
+      state.token = action.payload;
       state.error = null;
+      state.success = true;
     });
-    builder.addCase(registerUser.rejected, (state) => {
+    builder.addCase(registerUser.rejected, (state, action) => {
       state.loading = false;
       state.error = true;
-      //   state.error = action.error.message;
+      state.errorMessage = action.payload;
     });
   },
 });

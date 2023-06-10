@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 //Estados
 const initialState = {
-  user: false,
+  user: null,
   userData: {
     userId: null,
     userName: null,
@@ -16,13 +16,13 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
-      state.user = true;
-      state.userData.userId = action.payload.userId;
-      state.userData.userName = action.payload.userName;
-      state.userData.userType = action.payload.userType;
+      console.log(action.payload); // Verificar los datos recibidos
+    state.user = true;
+    state.userData = action.payload; // Asignar los datos al estado
+    },
     },
   },
-});
+);
 
 export const { setUser } = userSlice.actions;
 
