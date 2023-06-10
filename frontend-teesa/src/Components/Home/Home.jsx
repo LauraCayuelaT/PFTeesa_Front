@@ -14,9 +14,12 @@ import {
 } from '../../features/reduxReducer/productSlice';
 
 import { NavLink } from 'react-router-dom';
+
+
 //Gif
 import loadingGif from '../../assets/icon/Loading.gif';
 //Componentes:
+import { SearchBar } from '../SearchBar/SearchBar';
 import { Card } from '../Card/Card';
 import FilterComponent from './FilterComponent';
 import NoRepuestosDisponibles from '../NoHayRep/NoRepuestos';
@@ -55,9 +58,32 @@ function Home() {
 
   //Tiago y Juan - Paginación.
 
+
   useEffect(() => {
     dispatch(getPaginationData(currentPage));
   }, [dispatch, currentPage]);
+
+  const allProducts = useSelector(
+    (state) => state?.productState?.general?.products
+  );
+
+  const general = useSelector((state) => state?.productState?.general);
+
+  function arrayPaginas(total) {
+    let pages = [];
+    for (let index = 1; index < total + 1; index++) {
+      pages.push(index);
+    }
+    return pages;
+  }
+
+
+  let paginasFinal = arrayPaginas(general.totalPages);
+
+
+  let pagesChange = (number) => {
+    setCurrentPage(number);
+  };
 
   //isLoading
   let loading = useSelector((state) => state.productState.loading);
@@ -97,18 +123,7 @@ function Home() {
         <h2 className='mx-4 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>
           Repuestos
         </h2>
-        <div className='flex items-center w-[30%] justify-evenly '>
-          <input
-            className='w-[60%] h-[50%] outline-none text-black'
-            type='search'
-            placeholder='Buscar...'
-          />
-          <NavLink className='buttonadd' to='/home'>
-            <button type='submit'>
-              <box-icon name='search-alt' color='#fbfef8'></box-icon>
-            </button>
-          </NavLink>
-        </div>
+        <SearchBar />
       </div>
       {/* Hero */}
       <div className='heroContainer flex w-full h-[800px]'>
@@ -131,7 +146,7 @@ function Home() {
           )}
           {status === 'succeeded' && (
             <div className='flex flex-wrap m-auto justify-center'>
-              {products.products.map((product) => (
+              {products.products?.map((product) => (
                 <Card
                   id={product.id}
                   key={product.id}
@@ -143,6 +158,7 @@ function Home() {
                 />
               ))}
             </div>
+            
           )}
           <Pagination />
 
