@@ -63,7 +63,7 @@ const Contact = () => {
   const sendEmail = (e) => {};
 
   return (
-    <div className='w-full h-full'>
+    <div className='w-full h-full mt-0'>
       <section className='mb-32 w-full'>
         <div className=" flex items-center justify-center relative mx-auto h-[300px] overflow-hidden bg-cover bg-[50%] bg-no-repeat -mt-1 bg-[url('https://images.pexels.com/photos/213162/pexels-photo-213162.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')]">
           <h1 className='font-bold text-7xl text-white mt-[-80px] drop-shadow-xl shadow-black'>

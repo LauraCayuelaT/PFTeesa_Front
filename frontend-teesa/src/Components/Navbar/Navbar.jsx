@@ -2,10 +2,38 @@ import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import title from '../../title.png';
 import 'boxicons/css/boxicons.min.css';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { resetLoginState } from '../../features/reduxReducer/loginSlice';
+import { resetUserState } from '../../features/reduxReducer/userSlice';
 
 export default function NavBar() {
-  const userData = useSelector((state) => state.userState.userData);
-  console.log(userData);
+  //Traer Data del User
+  const userData = useSelector((state) => state.userState);
+
+  const {
+    user,
+    userData: { userName },
+  } = userData;
+
+  //Log Out Button
+
+  const handleLogout = () => {
+    // Vaciar estados de Login, Register y vaciar data del User.
+    resetLoginState();
+    resetUserState();
+    //*Aqui va el resetRegisterState();
+    navigate('/home', { replace: true });
+    window.location.reload();
+  };
+
+  //Mostrar Botón
+  const navigate = useNavigate();
+  const [showTooltip, setShowTooltip] = useState(false);
+
+  const handleTooltipToggle = () => {
+    setShowTooltip(!showTooltip);
+  };
 
   return (
     <div className='flex flex-row justify-between items-center w-full h-[4em] border-b-2 border-gray-300 bg-teesaBlueDark text-white text-xl sm:text-l'>
@@ -44,14 +72,47 @@ export default function NavBar() {
       </div>
 
       <div className='flex items-end justify-end xl:mr-[4%] lg:mr-[4%] md:mr-[3%] sm:mr-[3%] '>
-        <NavLink
-          to='/login'
-          className='mr-5 transition duration-300 ease-in-out transform hover:text-teesaGreen focus:text-teesaGreen'
-        >
-          Login
-        </NavLink>
+        {user ? (
+          <div
+            className='mr-5 cursor-pointer relative flex items-center'
+            onMouseEnter={handleTooltipToggle}
+            onMouseLeave={handleTooltipToggle}
+          >
+            <span className='hover:text-teesaGreen transition duration-300 ease-in-out'>
+              {userName}
+            </span>
+            <i
+              className='bx bxs-user ml-5 flex transition duration-300 ease-in-out transform hover:text-teesaGreen'
+              style={{ fontSize: '1.5rem' }}
+            ></i>
+
+            {showTooltip && (
+              <div
+                onClick={handleLogout}
+                className='absolute top-full right-0 w-40 bg-gray-100 text-gray-700 py-1 px-2 rounded text-center hover:text-gray-900
+                hover:font-medium'
+              >
+                Cerrar sesión
+              </div>
+            )}
+          </div>
+        ) : (
+          <NavLink
+            to='/login'
+            className='mr-5 transition duration-300 ease-in-out transform hover:text-teesaGreen focus:text-teesaGreen'
+          >
+            Ingresar
+          </NavLink>
+        )}
+        {!user && (
+          <NavLink
+            to='/login'
+            className='flex transition duration-300 ease-in-out transform hover:text-teesaGreen'
+          >
+            <i className='bx bxs-user mr-6' style={{ fontSize: '1.5rem' }}></i>
+          </NavLink>
+        )}
         <i className='bx bx-cart mr-6' style={{ fontSize: '1.5rem' }}></i>
-        <i className='bx bxs-user' style={{ fontSize: '1.5rem' }}></i>
       </div>
     </div>
   );
