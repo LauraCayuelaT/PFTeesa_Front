@@ -1,8 +1,12 @@
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import title from '../../title.png';
 import 'boxicons/css/boxicons.min.css';
 
 export default function NavBar() {
+  const userData = useSelector((state) => state.userState.userData);
+  console.log(userData);
+
   return (
     <div className='flex flex-row justify-between items-center w-full h-[4em] border-b-2 border-gray-300 bg-teesaBlueDark text-white text-xl sm:text-l'>
       <div className='flex items-center'>
@@ -36,15 +40,16 @@ export default function NavBar() {
           >
             Nosotros
           </NavLink>
-          <NavLink
-            to='/login'
-            className='transition duration-300 ease-in-out transform hover:text-teesaGreen focus:text-teesaGreen'
-          >
-            Login
-          </NavLink>
         </div>
       </div>
+
       <div className='flex items-end justify-end xl:mr-[4%] lg:mr-[4%] md:mr-[3%] sm:mr-[3%] '>
+        <NavLink
+          to='/login'
+          className='mr-5 transition duration-300 ease-in-out transform hover:text-teesaGreen focus:text-teesaGreen'
+        >
+          Login
+        </NavLink>
         <i className='bx bx-cart mr-6' style={{ fontSize: '1.5rem' }}></i>
         <i className='bx bxs-user' style={{ fontSize: '1.5rem' }}></i>
       </div>

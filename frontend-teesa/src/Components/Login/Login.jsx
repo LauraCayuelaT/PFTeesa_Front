@@ -4,7 +4,7 @@ import { loginUser } from '../../features/reduxReducer/loginSlice';
 import { setUser } from '../../features/reduxReducer/userSlice';
 import { useRef, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import axios from 'axios';
 //NPMs
@@ -118,7 +118,7 @@ const Login = () => {
       alertSucess();
     }
     reset();
-    //navigate('/home');
+    navigate('/home');
   };
 
   //Llamar a la  función Token Data.
@@ -131,7 +131,7 @@ const Login = () => {
 
   useEffect(() => {
     if (userData) {
-      console.log(`User Data: ${JSON.stringify(userData)}`);
+      //console.log(`User Data: ${JSON.stringify(userData)}`);
     }
   }, [userData]);
 
@@ -198,9 +198,7 @@ const Login = () => {
             <div className='h-[24px]'></div>
           )}
         </div>
-        <p className='text-teesaBlueLight hover:cursor-pointer text-end font-bold mt-3'>
-          ¿Olvidaste tu contraseña?
-        </p>
+
         <div className='flex justify-center '>
           <button
             className='mb-[5px]  w-full rounded bg-teesaBlueLight   px-6 p-2.5  text-md font-medium uppercase leading-normal text-white shadow-lg hover:bg-teesaBlueDark cursor-pointer'
@@ -211,9 +209,11 @@ const Login = () => {
         </div>
         <p className='text-end mt-2'>
           ¿No tienes cuenta?{' '}
-          <span className='text-teesaBlueLight hover:cursor-pointer font-bold'>
-            Registrate.
-          </span>
+          <Link to='/signup'>
+            <span className='text-teesaBlueLight hover:cursor-pointer font-bold'>
+              Registrate.
+            </span>
+          </Link>
         </p>
       </form>
       <div className='w-1/5 border-t-2 border-black mb-4'></div>

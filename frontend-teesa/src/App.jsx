@@ -16,15 +16,15 @@ import Error404 from './views/Error404/Error404';
 
 function App() {
   const location = useLocation();
-  const isLanding = location.pathname === '/';
-  const isRegister=location.pathname === '/signup'
-  const isError404 = location.pathname === '/error404';
+  const { pathname } = location;
+
+  const hideNavbar =
+    pathname === '/' || pathname === '/signup' || pathname === '/error404';
 
   return (
-    
     <div>
-      {!isLanding && !isRegister && <Navbar />}
-      {!isLanding && !isError404 && <Navbar />}
+      {/* Solucionar doble navbar */}
+      {!hideNavbar && <Navbar />}
       <Routes>
         <Route path='/' element={<Landing />} />
         <Route path='home' element={<Home />} />
@@ -37,7 +37,6 @@ function App() {
         <Route path='pagination' element={<Pagination />} />
         <Route path='homeprueba' element={<HomePrueba />} />
         <Route path='error404' element={<Error404 />} />
-
         <Route path='*' element={<Navigate to='error404' />} />
       </Routes>
     </div>
