@@ -25,16 +25,9 @@ const Login = () => {
   //Data del Usuario - Token.
 
   const [tokenValue, setTokenValue] = useState('');
+  const [isUserLoaded, setIsUserLoaded] = useState(false);
 
   const token = useSelector((state) => state.loginState.token);
-
-  // useEffect(() => {
-  //   if (token) {
-  //     console.log('Token actualizado:', token);
-  //   }
-  // }, [token]);
-
-  //El boton sirve, pero tengo que crear una forma de que esta funcion se ejecute con el submit y no con el boton.
 
   const setUserWithTokenData = () => {
     if (tokenValue) {
@@ -57,7 +50,7 @@ const Login = () => {
 
   const handleGoogleLogin = () => {
     if (googleAuthLink) {
-      window.open(googleAuthLink, '_blank');
+      window.open(googleAuthLink);
     }
   };
 
@@ -108,17 +101,19 @@ const Login = () => {
   };
 
   const onSubmit = async (data) => {
+    console.log(data);
     const resultAction = await dispatch(loginUser(data));
     if (resultAction.error) {
       const errorMessage = resultAction.error.response.data.message;
       alertErrorMessage(errorMessage);
     } else {
       const ntoken = resultAction.payload;
-      setTokenValue(ntoken);
       alertSucess();
+      setTokenValue(ntoken);
+      await setUserWithTokenData();
+      setIsUserLoaded(true);
     }
     reset();
-    navigate('/home');
   };
 
   //Llamar a la  función Token Data.
@@ -127,6 +122,7 @@ const Login = () => {
     if (tokenValue) {
       setUserWithTokenData();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tokenValue]);
 
   useEffect(() => {
@@ -135,25 +131,31 @@ const Login = () => {
     }
   }, [userData]);
 
+  useEffect(() => {
+    if (isUserLoaded) {
+      navigate('/home');
+    }
+  }, [isUserLoaded, navigate]);
+
   //Prueba Token
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(
-        'https://servidor-teesa.onrender.com/loginCheck',
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log(response.data);
-      // Aquí puedes manejar la respuesta de la API
-    } catch (error) {
-      console.error(error.response.data);
-      // Aquí puedes manejar cualquier error ocurrido durante la solicitud
-    }
-  };
+  // const fetchData = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       'https://servidor-teesa.onrender.com/loginCheck',
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
+  //     console.log(response.data);
+  //      Aquí puedes manejar la respuesta de la API
+  //   } catch (error) {
+  //     console.error(error.response.data);
+  //      Aquí puedes manejar cualquier error ocurrido durante la solicitud
+  //   }
+  // };
 
   //Tengo que llamar la funcion dos veces o no actualiza la data.
 
@@ -207,11 +209,11 @@ const Login = () => {
             {loading ? 'Cargando...' : 'Ingresar'}
           </button>
         </div>
-        <p className='text-end mt-2'>
+        <p className='text-end my-2'>
           ¿No tienes cuenta?{' '}
           <Link to='/signup'>
-            <span className='text-teesaBlueLight hover:cursor-pointer font-bold'>
-              Registrate.
+            <span className='text-teesaBlueLight hover:cursor-pointer hover:text-teesaBlueDark font-bold'>
+              Registrate
             </span>
           </Link>
         </p>
@@ -219,7 +221,7 @@ const Login = () => {
       <div className='w-1/5 border-t-2 border-black mb-4'></div>
       <div className='flex justify-center items-center mt-2 w-1/5'>
         <button
-          className='flex mb-[5px]  w-full rounded bg-teesaWhite  py-2.5 text-md font-medium uppercase leading-normal text-black shadow-lg  cursor-pointer border-2 border-black'
+          className='flex mb-[5px]  w-full rounded bg-teesaWhite  py-2.5 text-md font-medium uppercase leading-normal text-black shadow-lg  cursor-pointer border-2 border-black hover:bg-gray-300'
           type='submit'
           onClick={handleGoogleLogin}
         >
@@ -228,12 +230,12 @@ const Login = () => {
         </button>
       </div>
 
-      <button
+      {/* <button
         className='mt-5 border-2 border-teesaBlueLight rounded-md px-2 hover:border-teesaBlueDark'
         onClick={fetchData}
       >
         Solucitud del Token
-      </button>
+      </button> */}
     </div>
   );
 };

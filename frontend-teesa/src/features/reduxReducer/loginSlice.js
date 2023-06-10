@@ -36,7 +36,10 @@ const loginSlice = createSlice({
   name: 'loginState',
   initialState,
 
-  reducers: {},
+  reducers: {
+    // eslint-disable-next-line no-unused-vars
+    resetLoginState: (state) => initialState,
+  },
   extraReducers: (builder) => {
     // Acciones relacionadas con el inicio de sesión
     builder.addCase(loginUser.pending, (state) => {
@@ -57,4 +60,5 @@ const loginSlice = createSlice({
   },
 });
 
+export const { resetLoginState } = loginSlice.actions;
 export default loginSlice.reducer;
