@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 
 // import { useSelector } from 'react-redux';
 import {
-  addFilter,
   fetchProducts,
   sortByName,
   sortByPrice,
