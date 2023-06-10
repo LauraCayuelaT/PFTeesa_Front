@@ -22,7 +22,6 @@ export const getPaginationData = createAsyncThunk(
       const response = await axios.get(
         `https://servidor-teesa.onrender.com/products?page=${number}`
       );
-      console.log(response.data.products);
       return response.data;
     } catch (error) {
       console.error('Error fetching products:', error);
