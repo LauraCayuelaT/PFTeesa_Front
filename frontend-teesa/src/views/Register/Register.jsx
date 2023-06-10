@@ -9,6 +9,8 @@ import {useNavigate} from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import Swal from 'sweetalert2';
 import jwt_decode from 'jwt-decode';
+import { loginUser } from '../../features/reduxReducer/loginSlice';
+import Cookies from 'universal-cookie'
 
 
 function Register() {
@@ -23,7 +25,7 @@ function Register() {
   //Data del Usuario - Token.
 
   const [tokenValue, setTokenValue] = useState('');
-
+  const [isUserLoaded, setIsUserLoaded] = useState(false);
   const token = useSelector((state) => state.loginState.token);
   
   const setUserWithTokenData = () => {
@@ -68,26 +70,38 @@ function Register() {
   };
 
       //Ejecutar el Reducer Post.
-      const onSubmit =(data) => {
-        const resultAction = dispatch(registerUser(data));
+      const onSubmit = async (data) => {
+        const resultAction = await dispatch(registerUser(data));
+      
         if (resultAction.error) {
           const errorMessage = resultAction.error.response.data.message;
           alertErrorMessage(errorMessage);
-      } else {
-        const ntoken = resultAction.payload;
-        setTokenValue(ntoken);
-        dispatch(
-          setUser({
-            userId: data.userId,
-            userName: data.userName,
-            userType: data.userType,
-      }))
-        alertSucess();
+        } else {
+          const { correo, contrasena } = data; // Obtener correo y contraseña del formulario de registro
+          const loginData = { correo, contrasena };
+          console.log(loginData)
+          const loginAction = await dispatch(loginUser(loginData)); // Hacer el inicio de sesión automático
+      
+          if (loginAction.error) {
+            const errorMessage = loginAction.error.response.data.message;
+            alertErrorMessage(errorMessage);
+          } else {
+            const ntoken = loginAction.payload;
+            setTokenValue(ntoken);
+            await setUserWithTokenData();
+            setIsUserLoaded(true);
+            alertSucess();
+            const cookies= new Cookies()
+            const tokenExists = cookies.get('token');
+      if (tokenExists) {
         nav('/home');
       }
-      reset();
+          }
+        }
       
-    };
+        reset();
+      };
+      
 
       //Llamar a la  función Token Data.
 
