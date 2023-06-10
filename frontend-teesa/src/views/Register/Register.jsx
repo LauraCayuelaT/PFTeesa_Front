@@ -4,19 +4,24 @@ import logo from '../../img/SVGs/TeesaAll.svg'
 import { registerUser } from '../../features/reduxReducer/registerSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import googleIcon from '../../assets/icon/Google.svg';
+import {useNavigate} from 'react-router-dom'
 
 function Register() {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.registerState.loading);
   const error= useSelector((state) => state.registerState.error);
+  const nav= useNavigate()
   console.log(loading);
   
       //Ejecutar el Reducer Post.
       const onSubmit = (data) => {
-        console.log(data);
         dispatch(registerUser(data));
         reset();
+        if(loading===false){
+          nav('/home')
+        }
       };
+
 
       const {
         register,
@@ -36,16 +41,16 @@ function Register() {
 
 
     return (
-      <div className="w-full bg-teesaBlueDark h-screen flex flex-row gap-[10%] justify-center align-center items-center">
-        <div className='flex flex-col justify-center align-center items-center mt-[-15em]'>
-          <img src={logo} alt="logo" className='xl:h-[600px]'/>
-          <h1 className='text-center text-teesaWhite text-3xl mt-[-5em]'>Tecnología en Equipos Alimenticios</h1>
+      <div className="w-full bg-teesaBlueDark h-screen flex flex-row justify-center align-center items-center gap-[10%]">
+        <div className='flex flex-col justify-center align-center items-center my-auto xl:mb-[14%] xl:mr-[8%] lg:mb-[14%] lg:mr-[8%]'>
+          <img src={logo} alt="logo" className='xl:h-[700px] lg:h-[500px] '/>
+          <h1 className='text-center text-teesaWhite xl:text-3xl xl:mt-[-6em] lg:text-2xl lg:mt-[-6em]'>Tecnología en Equipos Alimenticios</h1>
         </div>
         
-        <div className=' xl:w-[30%] bg-gradient-to-r from-teesaGreenDark to-teesaGreen rounded-lg h-[35em] flex flex-col justify-center align-center items-center mb-[5%]'>
-          <h1 className='font-bold  xl:text-4xl lg:text-4xl text-teesaGrey mb-[10px] '>Registrate</h1>
+        <div className='bg-gradient-to-r from-teesaGreenDark to-teesaGreen rounded-lg flex flex-col justify-center align-center items-center my-auto xl:w-[25%] xl:h-[95%] lg:w-[25%] lg:h-[95%]'>
+          <h1 className='font-bold  xl:text-4xl lg:text-3xl text-teesaGrey mb-[10px] '>Registrate</h1>
             <div className='flex flex-col justify-center align-center items-center'>
-              <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col justify-center align-center items-center gap-[1em]'>
+              <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col justify-center align-center items-center gap-[0.5em]'>
                 <label className="flex flex-col justify-center align-center items-center ">
                 <input type="text" name="nombre" placeholder=' Nombre' className="bg-teesaBlueDark text-teesaGrey rounded-md h-[2em] w-[15em]" {...register('nombre', { 
                   required: 'Este campo es obligatorio',
@@ -172,10 +177,12 @@ function Register() {
             </div>
       <div className='w-[50%] mt-[1em] border-t-2 border-black mb-4'></div>
           <div className='flex justify-center items-center align-center text-center mt-2 w-[70%]'>
+            <a href="https://servidor-teesa.onrender.com/google/signup">
             <button
-              className='flex mb-[5px] w-full justify-center rounded  bg-teesaWhite  py-3 text-md font-medium uppercase leading-normal text-black shadow-lg  cursor-pointer border-2 border-black hover-'
+              className='flex mb-[5px] w-full justify-center rounded  bg-teesaWhite text-md font-medium uppercase leading-normal text-black shadow-lg border-2 border-black hover:bg-gray-300 hover:transform hover:scale-105'
               type='submit'>
               <img src={googleIcon} className='w-5 h-5 mx-3 my-auto' /> Ingresar con Google</button>
+              </a>
           </div>
         </div>
       </div>

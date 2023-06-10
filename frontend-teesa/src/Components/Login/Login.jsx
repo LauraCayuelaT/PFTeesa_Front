@@ -63,7 +63,7 @@ const Login = () => {
               pattern: {
                 value: /^\S+@\S+$/i,
                 message: 'Ingresa un email válido',
-              },dss
+              },
             })}
             onBlur={() => handleBlur('user_email')}
           />
