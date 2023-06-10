@@ -137,7 +137,11 @@ const FilterComponent = () => {
 
       <label className='mb-4'>
         Precio (no funcional):
-        <select value={precio} onChange={(e) => setPrecio(e.target.value)}>
+        <select
+          className='w-full border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-teesaGreen'
+          value={precio}
+          onChange={(e) => setPrecio(e.target.value)}
+        >
           <option value='0-10000000'>0 - 10,000,000</option>
           <option value='10000000-20000000'>10,000,000 - 20,000,000</option>
           <option value='20000000-30000000'>20,000,000 - 30,000,000</option>
