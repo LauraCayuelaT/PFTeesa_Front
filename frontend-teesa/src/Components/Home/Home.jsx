@@ -14,6 +14,8 @@ import {
 } from '../../features/reduxReducer/productSlice';
 
 import { NavLink } from 'react-router-dom';
+
+
 //Gif
 import loadingGif from '../../assets/icon/Loading.gif';
 //Componentes:
@@ -55,6 +57,7 @@ function Home() {
 
   //Tiago y Juan - Paginación.
 
+
   useEffect(() => {
     dispatch(getPaginationData(currentPage));
   }, [dispatch, currentPage]);
@@ -73,7 +76,9 @@ function Home() {
     return pages;
   }
 
+
   let paginasFinal = arrayPaginas(general.totalPages);
+
 
   let pagesChange = (number) => {
     setCurrentPage(number);

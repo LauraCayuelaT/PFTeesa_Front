@@ -1,10 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+
+// import { useSelector } from 'react-redux';
 import {
+  addFilter,
   fetchProducts,
   sortByName,
   sortByPrice,
 } from '../../features/reduxReducer/filterSlice';
+// import NoRepuestosDisponibles from '../NoHayRep/NoRepuestos';
+// import NoHayProductosRango from '../NoHayProductosRango/NoHayProductosRango';
+
 
 const FilterComponent = () => {
   const [estado, setEstado] = useState('');
