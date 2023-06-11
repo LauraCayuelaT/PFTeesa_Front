@@ -14,9 +14,12 @@ import {
 } from '../../features/reduxReducer/productSlice';
 
 import { NavLink } from 'react-router-dom';
+
+
 //Gif
 import loadingGif from '../../assets/icon/Loading.gif';
 //Componentes:
+import { SearchBar } from '../SearchBar/SearchBar';
 import { Card } from '../Card/Card';
 import FilterComponent from './FilterComponent';
 import NoRepuestosDisponibles from '../NoHayRep/NoRepuestos';
@@ -41,6 +44,10 @@ function Home() {
   };
 
   // Tiago y Juan - Estado de Páginación:
+
+  //Tiago y Juan - Paginación.
+
+
   const [currentPage, setCurrentPage] = useState(1);
 
   const allBrands = useSelector(
@@ -52,12 +59,10 @@ function Home() {
   );
   // Codigo de Sol:
   const [orden, setOrden] = useState('');
-
-  //Tiago y Juan - Paginación.
-
   useEffect(() => {
     dispatch(getPaginationData(currentPage));
   }, [dispatch, currentPage]);
+
 
   //isLoading
   let loading = useSelector((state) => state.productState.loading);
@@ -97,18 +102,7 @@ function Home() {
         <h2 className='mx-4 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>
           Repuestos
         </h2>
-        <div className='flex items-center w-[30%] justify-evenly '>
-          <input
-            className='w-[60%] h-[50%] outline-none text-black'
-            type='search'
-            placeholder='Buscar...'
-          />
-          <NavLink className='buttonadd' to='/home'>
-            <button type='submit'>
-              <box-icon name='search-alt' color='#fbfef8'></box-icon>
-            </button>
-          </NavLink>
-        </div>
+        <SearchBar />
       </div>
       {/* Hero */}
       <div className='heroContainer flex w-full h-[800px]'>
@@ -131,7 +125,7 @@ function Home() {
           )}
           {status === 'succeeded' && (
             <div className='flex flex-wrap m-auto justify-center'>
-              {products.products.map((product) => (
+              {products.products?.map((product) => (
                 <Card
                   id={product.id}
                   key={product.id}
@@ -143,6 +137,7 @@ function Home() {
                 />
               ))}
             </div>
+            
           )}
           <Pagination />
 

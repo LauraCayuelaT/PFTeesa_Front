@@ -1,62 +1,49 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+
+// import { useSelector } from 'react-redux';
 import {
-  addFilter,
   fetchProducts,
   sortByName,
   sortByPrice,
 } from '../../features/reduxReducer/filterSlice';
+// import NoRepuestosDisponibles from '../NoHayRep/NoRepuestos';
+// import NoHayProductosRango from '../NoHayProductosRango/NoHayProductosRango';
+
 
 const FilterComponent = () => {
-  //Filtrado General
   const [estado, setEstado] = useState('');
   const [tipo, setTipo] = useState('');
   const [marca, setMarca] = useState('');
   const [precio, setPrecio] = useState('');
+  
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     const filters = {
       estado: estado,
-      tipo: tipo,
+      tipo: tipo, 
       marca: marca,
       // precio: precio,
+      precioMinimo: precio.split('-')[0],
+      precioMaximo: precio.split('-')[1],
+
     };
 
-    // const [precioMin, precioMax] = precio.split('-');
-    // const precioQuery = `?precioMinimo=${precioMin}&&precioMaximo=${precioMax}`;
-    //   dispatch(addFilter(filters));
-    //   dispatch(fetchProducts(filters));
-    // }, [estado, tipo, marca, precio, dispatch]);
 
-    dispatch(addFilter(filters));
-    dispatch(fetchProducts(filters));
-  }, [estado, tipo, marca, dispatch]);
-
-  //Sol
-  //agrego ordenamientos y filtror- sol - componentes ultimos
-  // const [selectedType, setSelectedType] = useState('');
-  // const [showNoProductsInRange, setShowNoProductsInRange] = useState(false);
-  // eslint-disable-next-line no-unused-vars
-  const [orden, setOrden] = useState('');
-
-  // const handleFilterPrice = (e) => {
-  //   e.preventDefault();
-  //   const selectedPrice = e.target.value;
-  //   const [minPrice, maxPrice] = selectedPrice.split(',')
+    // dispatch(addFilter(filters));
+    dispatch(fetchProducts( filters ));
+  }, [estado, tipo, marca, precio, dispatch]);
 
   const handleSort = (e) => {
     e.preventDefault();
-    dispatch(sortByName(e.target.value)); // Pasa el valor directamente
-    setOrden(`Ordenado ${e.target.value}`);
+    dispatch(sortByName(e.target.value));
   };
 
   const handleSortPrices = (e) => {
     e.preventDefault();
-    dispatch(sortByPrice({ minPrice: 100000000, maxPrice: 500000000 }));
     dispatch(sortByPrice(e.target.value.toLowerCase()));
-    setOrden(`Ordenado por precio ${e.target.value}`);
   };
 
   return (
@@ -136,12 +123,13 @@ const FilterComponent = () => {
       <br />
 
       <label className='mb-4'>
-        Precio (no funcional):
+        Precio:
         <select
-          className='w-full border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-teesaGreen'
           value={precio}
           onChange={(e) => setPrecio(e.target.value)}
+          className='w-full border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-teesaGreen'
         >
+          <option value=''>Todos</option>
           <option value='0-10000000'>0 - 10,000,000</option>
           <option value='10000000-20000000'>10,000,000 - 20,000,000</option>
           <option value='20000000-30000000'>20,000,000 - 30,000,000</option>
