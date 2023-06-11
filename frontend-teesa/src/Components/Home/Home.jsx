@@ -44,6 +44,10 @@ function Home() {
   };
 
   // Tiago y Juan - Estado de Páginación:
+
+  //Tiago y Juan - Paginación.
+
+
   const [currentPage, setCurrentPage] = useState(1);
 
   const allBrands = useSelector(
@@ -55,35 +59,10 @@ function Home() {
   );
   // Codigo de Sol:
   const [orden, setOrden] = useState('');
-
-  //Tiago y Juan - Paginación.
-
-
   useEffect(() => {
     dispatch(getPaginationData(currentPage));
   }, [dispatch, currentPage]);
 
-  const allProducts = useSelector(
-    (state) => state?.productState?.general?.products
-  );
-
-  const general = useSelector((state) => state?.productState?.general);
-
-  function arrayPaginas(total) {
-    let pages = [];
-    for (let index = 1; index < total + 1; index++) {
-      pages.push(index);
-    }
-    return pages;
-  }
-
-
-  let paginasFinal = arrayPaginas(general.totalPages);
-
-
-  let pagesChange = (number) => {
-    setCurrentPage(number);
-  };
 
   //isLoading
   let loading = useSelector((state) => state.productState.loading);
