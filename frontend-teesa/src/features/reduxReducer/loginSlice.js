@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import Cookies from 'universal-cookie';
 
 //Estados
 const initialState = {
@@ -20,7 +21,8 @@ export const loginUser = createAsyncThunk(
         'https://servidor-teesa.onrender.com/login',
         { correo, contrasena }
       );
-      console.log(response.data.token);
+      const cookies = new Cookies();
+      cookies.set('token', response.data.token, { path: '/' });
       return response.data.token;
     } catch (error) {
       console.log(error.response.data.message);
@@ -36,10 +38,7 @@ const loginSlice = createSlice({
   name: 'loginState',
   initialState,
 
-  reducers: {
-    // eslint-disable-next-line no-unused-vars
-    resetLoginState: (state) => initialState,
-  },
+  reducers: {},
   extraReducers: (builder) => {
     // Acciones relacionadas con el inicio de sesión
     builder.addCase(loginUser.pending, (state) => {

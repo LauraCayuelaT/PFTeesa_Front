@@ -18,6 +18,7 @@ import FilterComponent from "./FilterComponent";
 import Pagination from "../Pagination/Pagination";
 
 function Home() {
+
   const [currentPage, setCurrentPage] = useState(1);
 
   const dispatch = useDispatch();
@@ -25,6 +26,16 @@ function Home() {
   const { filters, products, status, error } = useSelector(
     (state) => state.filters
   );
+
+  //useEffect para evitar errores al momento de la carga de información
+  useEffect(() => {
+    const cookies = new Cookies()
+
+    if (cookies.get('token', {path:'/'}) && !effectExecuted) {
+      dispatch(getUserDataFromCookie());
+      setEffectExecuted(true);
+    }
+  }, [dispatch, effectExecuted]);
 
   useEffect(() => {
     if (Object.keys(filters).length > 0) {
