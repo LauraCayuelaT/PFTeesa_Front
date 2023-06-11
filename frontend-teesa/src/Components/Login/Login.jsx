@@ -101,7 +101,6 @@ const Login = () => {
   };
 
   const onSubmit = async (data) => {
-    console.log(data);
     const resultAction = await dispatch(loginUser(data));
     if (resultAction.error) {
       const errorMessage = resultAction.error.response.data.message;

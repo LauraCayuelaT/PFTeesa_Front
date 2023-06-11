@@ -13,10 +13,18 @@ import Register from './views/Register/Register';
 import Pagination from './Components/Pagination/Pagination';
 import HomePrueba from './Components/Prueba/HomePrueba';
 import Error404 from './views/Error404/Error404';
+import { getUserDataFromCookie } from './features/reduxReducer/userSlice';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 
 function App() {
   const location = useLocation();
   const { pathname } = location;
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getUserDataFromCookie());
+  }, [dispatch]);
 
   const hideNavbar =
     pathname === '/' || pathname === '/signup' || pathname === '/error404';
