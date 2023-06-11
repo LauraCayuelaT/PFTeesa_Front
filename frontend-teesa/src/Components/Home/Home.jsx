@@ -25,8 +25,11 @@ import FilterComponent from './FilterComponent';
 import NoRepuestosDisponibles from '../NoHayRep/NoRepuestos';
 import NoHayProductosRango from '../NoHayProductosRango/NoHayProductosRango';
 import Pagination from '../Pagination/Pagination';
+import { getUserDataFromCookie } from '../../features/reduxReducer/userSlice';
+import Cookies from 'universal-cookie';
 
 function Home() {
+  const [effectExecuted, setEffectExecuted] = useState(false);
   //Sol - Ordenamientos:
   //FUNCIONANDO PERFECTO
   const handleSort = (e) => {
@@ -72,6 +75,16 @@ function Home() {
   const { filters, products, status, error } = useSelector(
     (state) => state.filters
   );
+
+  //useEffect para evitar errores al momento de la carga de información
+  useEffect(() => {
+    const cookies = new Cookies()
+
+    if (cookies.get('token', {path:'/'}) && !effectExecuted) {
+      dispatch(getUserDataFromCookie());
+      setEffectExecuted(true);
+    }
+  }, [dispatch, effectExecuted]);
 
   useEffect(() => {
     if (Object.keys(filters).length > 0) {

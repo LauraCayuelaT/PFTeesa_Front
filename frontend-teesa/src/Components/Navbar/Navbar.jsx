@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { resetLoginState } from '../../features/reduxReducer/loginSlice';
 import { resetUserState } from '../../features/reduxReducer/userSlice';
+import Cookies from 'universal-cookie'
 
 export default function NavBar() {
   //Traer Data del User
@@ -20,7 +21,8 @@ export default function NavBar() {
 
   const handleLogout = () => {
     // Vaciar estados de Login, Register y vaciar data del User.
-    resetLoginState();
+    const cookies = new Cookies();
+    cookies.remove('token', { path: '/' });
     resetUserState();
     //*Aqui va el resetRegisterState();
     navigate('/home', { replace: true });
