@@ -8,12 +8,10 @@ export const fetchProducts = createAsyncThunk(
       // const { marcaQuery } = filters;
       // const { precioQuery } = filters;
       const queryParams = new URLSearchParams(filters).toString();
-      console.log(`https://servidor-teesa.onrender.com/products?${queryParams}`);
       const response = await axios.get(
         `https://servidor-teesa.onrender.com/products?${queryParams}`
       );
-      console.log(response + 'respuesta filtros');
-      return response.data.products;
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
