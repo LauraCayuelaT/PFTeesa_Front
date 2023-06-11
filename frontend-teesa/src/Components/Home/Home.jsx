@@ -11,13 +11,37 @@ import {
 //Gif
 import loadingGif from "../../assets/icon/Loading.gif";
 //Componentes:
-import { SearchBar } from "../SearchBar/SearchBar";
-import { Card } from "../Card/Card";
-import FilterComponent from "./FilterComponent";
-
-import Pagination from "../Pagination/Pagination";
+import { SearchBar } from '../SearchBar/SearchBar';
+import { Card } from '../Card/Card';
+import FilterComponent from './FilterComponent';
+import NoRepuestosDisponibles from '../NoHayRep/NoRepuestos';
+import NoHayProductosRango from '../NoHayProductosRango/NoHayProductosRango';
+import Pagination from '../Pagination/Pagination';
+import { getUserDataFromCookie } from '../../features/reduxReducer/userSlice';
+import Cookies from 'universal-cookie';
 
 function Home() {
+  const [effectExecuted, setEffectExecuted] = useState(false);
+  //Sol - Ordenamientos:
+  //FUNCIONANDO PERFECTO
+  const handleSort = (e) => {
+    e.preventDefault();
+    dispatch(sortByName(e.target.value)); // Pasa el valor directamente
+    setOrden(`Ordenado ${e.target.value}`);
+  };
+
+  //FUNCIONANDO PERFECTO
+  const handleSortPrices = (e) => {
+    e.preventDefault();
+    dispatch(sortByPrice({ minPrice: 100000000, maxPrice: 500000000 }));
+    dispatch(sortByPrice(e.target.value.toLowerCase()));
+    setOrden(`Ordenado por precio ${e.target.value}`);
+  };
+
+  // Tiago y Juan - Estado de Páginación:
+
+  //Tiago y Juan - Paginación.
+
 
   const [currentPage, setCurrentPage] = useState(1);
 
