@@ -63,7 +63,6 @@ export const productSlice = createSlice({
   name: 'productState',
   initialState,
   reducers: {},
-
   //*GetData
   extraReducers: (builder) => {
     //Cargando productos
