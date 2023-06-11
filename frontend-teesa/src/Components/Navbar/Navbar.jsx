@@ -36,7 +36,7 @@ export default function NavBar() {
   };
 
   return (
-    <div className='flex flex-row justify-between items-center w-full h-[4em] border-b-2 border-gray-300 bg-teesaBlueDark text-white text-xl sm:text-l'>
+    <div className='flex flex-row justify-between items-center w-full h-[4em] border-b-2 border-gray-300 bg-teesaBlueDark text-white text-xl sm:text-l '>
       <div className='flex items-center'>
         <img
           className='xl:w-[10%] lg:w-[10%] md:w-[10%] sm:w-[10%] my-0 '
