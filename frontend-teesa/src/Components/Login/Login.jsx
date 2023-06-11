@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
 //Icon & Images
 import kichen from '../../assets/kitchen.jpg';
 import googleIcon from '../../assets/icon/Google.svg';
+import waves from '../../assets/icon/waves.svg';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -51,12 +52,9 @@ const Login = () => {
 
   const handleGoogleLogin = () => {
     if (googleAuthLink) {
-      window.open(googleAuthLink);
+      window.location.href = googleAuthLink;
     }
   };
-
-  //  console.log(errorMessage);
-  //  console.log(success);
 
   //Alerts
 
@@ -160,27 +158,34 @@ const Login = () => {
   //Tengo que llamar la funcion dos veces o no actualiza la data.
 
   return (
-    <div className='allContainer flex flex-col justify-center items-center w-full h-screen  bg-teesaGrey'>
-      <div className='formContainer flex flex-row w-3/4 0 p-5 '>
-        <div className='w-2/3 h-full'>
+    <div
+      style={{
+        backgroundImage: `url(${waves})`,
+        backgroundPosition: 'bottom',
+        backgroundRepeat: 'no-repeat',
+      }}
+      className='allContainer flex flex-col justify-center items-center w-full h-screen bg-bottom bg-cover -mt-1'
+    >
+      <div className='formContainer flex justify-center items-center flex-col-reverse sm:flex-col-reverse  lg:flex-row w-3/4 p-5 -mt-36'>
+        <div className='hidden w-2/3 h-full lg:flex -mr-5'>
           <img
             className='filter-green-500 rounded-l-xl'
             src={kichen}
             alt='kitchen'
           />
         </div>
-        <div className=' flex flex-col justify-center items-center bg-blue-900 p-5 rounded-r-xl w-1/3 h-full'>
+        <div className=' flex flex-col justify-center items-center bg-teesaWhite p-5 w-full h-full rounded-lg  md:w-2/4 lg:w-1/4 '>
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className='w-full h-fit bg-blue-900'
+            className='w-full h-fit bg-teesaWhite '
           >
-            <h1 className='font-bold text-4xl m-2 -mt-4 text-teesaWhite'>
-              Ingresar
+            <h1 className='font-bold text-sm lg:text-2xl 2xl:text-4xl  -mt-4 mb-2 text-teesaBlueDark'>
+              Ingresa
             </h1>
             <div className='flex flex-col'>
               <input
                 placeholder='Email'
-                className=' min-h-[auto] w-full rounded border-10 bg-transparent py-[0.32rem] px-3 outline-none border-2 border-teesaGrey shadow-sm shadow-bg-teesaBlueDark bg-teesaGrey'
+                className=' min-h-[auto] w-full rounded border-10 bg-transparent py-[0.32rem] px-3 outline-none border-2 border-teesaBlueLight   bg-teesaGrey'
                 type='email'
                 {...register('correo', {
                   required: 'Este campo es obligatorio',
@@ -192,7 +197,9 @@ const Login = () => {
                 onBlur={() => handleBlur('correo')}
               />
               {errors.correo ? (
-                <span className='text-white'>{errors.correo.message}</span>
+                <span className='text-teesaBlueDark'>
+                  {errors.correo.message}
+                </span>
               ) : (
                 <div className='h-[24px]'></div>
               )}
@@ -201,7 +208,7 @@ const Login = () => {
             <div className='flex flex-col mt-3'>
               <input
                 placeholder='Contraseña'
-                className=' min-h-[auto] w-full rounded border-10 bg-transparent py-[0.32rem] px-3 outline-none border-2 border-teesaGrey shadow-sm shadow-teesaBlueLight bg-teesaGrey'
+                className=' min-h-[auto] w-full rounded border-10 bg-transparent py-[0.32rem] px-3 outline-none border-2 border-teesaBlueLight  bg-teesaGrey'
                 type='password'
                 {...register('contrasena', {
                   required: 'Este campo es obligatorio',
@@ -209,13 +216,15 @@ const Login = () => {
                 onBlur={() => handleBlur('contrasena')}
               />
               {errors.contrasena ? (
-                <span className='text-white'>{errors.contrasena.message}</span>
+                <span className='text-text-teesaBlueDark'>
+                  {errors.contrasena.message}
+                </span>
               ) : (
                 <div className='h-[24px]'></div>
               )}
             </div>
 
-            <div className='flex justify-center '>
+            <div className='flex justify-center mt-1'>
               <button
                 className='mb-[5px]  w-full rounded bg-green-600  px-6 p-2.5  text-md font-medium uppercase leading-normal text-white shadow-lg hover:bg-green-800  cursor-pointer'
                 type='submit'
@@ -223,23 +232,29 @@ const Login = () => {
                 {loading ? 'Cargando...' : 'Ingresar'}
               </button>
             </div>
-            <p className='text-end my-2 text-white'>
+            <p className='text-end my-2 text-black text-sm lg:text-sm 2xl:text-lg'>
               ¿No tienes cuenta?{' '}
               <Link to='/signup'>
-                <span className='text-green-600  hover:cursor-pointer hover:text-teesaGreenDark font-bold'>
-                  Registrate
+                <span
+                  style={{
+                    textShadow:
+                      '0 1px 2px rgba(0, 0, 0, 0.2), 0 0 0.5em rgba(0, 128, 0, 0.1)',
+                  }}
+                  className='text-green-600 hover:cursor-pointer hover:text-teesaGreenDark font-bold'
+                >
+                  Regístrate
                 </span>
               </Link>
             </p>
           </form>
-          <div className='w-full border-t-2 border-green-600 mb-4'></div>
+          <div className='w-full border-t-2 border-teesaBlueLight mb-4'></div>
           <div className='flex justify-center items-center mt-2 w-full'>
             <button
-              className='flex mb-[5px]  w-full rounded bg-teesaWhite  py-2.5 text-md font-medium uppercase leading-normal text-black shadow-lg  cursor-pointer border-2 border-gray-400 hover:bg-gray-300 justify-center'
+              className='flex mb-[5px]  w-full rounded bg-teesaWhite  py-2.5 text-sm 2xl:text-lg  font-medium uppercase leading-normal text-black shadow-lg  cursor-pointer border-2 border-teesaBlueLight hover:bg-gray-300 justify-center'
               type='submit'
               onClick={handleGoogleLogin}
             >
-              <img src={googleIcon} className='w-5 h-5 mx-3 my-auto' /> Ingresar
+              <img src={googleIcon} className='w-5 h-5 mx-3 my-auto' /> Ingresa
               con Google
             </button>
           </div>
