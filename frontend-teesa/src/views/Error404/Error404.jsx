@@ -1,21 +1,14 @@
 import React from "react";
-import error404 from "../../img/imgs/404.jpg";
-import { NavLink } from "react-router-dom";
+import error404 from "../../img/imgs/404.png";
 
 function Error404() {
   return (
-    <div className="flex h-screen">
-      <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center">
-        <img src={error404} alt="Error 404" className="object-cover h-full w-full" />
+    <div className="flex flex-row justify-center h-screen bg-teesaBlueDark overflow-hidden">
+        <div className="flex flex-col m-auto bg-red-200">
+        <h1 className="font-bold text-teesaWhite">Esta página no existe.</h1>
+        <h2>No pudimos encontrar la página que estabas buscando.</h2>
       </div>
-      <div className="absolute ml-20 top-0 left-0 right-30 bottom-0 flex items-center justify-center">
-        <NavLink
-          to="/home"
-          className="px-6 ml-20 py-3  text-white font-bold transition duration-300 ease-in-out transform hover:text-teesaGreen focus:text-teesaGreen"
-          >
-          IR ATRÁS
-        </NavLink>
-      </div>
+      <img src={error404} alt="Error 404" className=" bg-red-200 w-[50%]"/>
     </div>
   );
 }
