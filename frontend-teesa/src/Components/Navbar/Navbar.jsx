@@ -4,9 +4,9 @@ import title from '../../title.png';
 import 'boxicons/css/boxicons.min.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { resetLoginState } from '../../features/reduxReducer/loginSlice';
+//import { resetLoginState } from '../../features/reduxReducer/loginSlice';
 import { resetUserState } from '../../features/reduxReducer/userSlice';
-import Cookies from 'universal-cookie'
+import Cookies from 'universal-cookie';
 
 export default function NavBar() {
   //Traer Data del User
@@ -24,7 +24,6 @@ export default function NavBar() {
     const cookies = new Cookies();
     cookies.remove('token', { path: '/' });
     resetUserState();
-    //*Aqui va el resetRegisterState();
     navigate('/home', { replace: true });
     window.location.reload();
   };
@@ -38,7 +37,7 @@ export default function NavBar() {
   };
 
   return (
-    <div className='flex flex-row justify-between items-center w-full h-[4em] border-b-2 border-gray-300 bg-teesaBlueDark text-white text-xl sm:text-l'>
+    <div className='flex flex-row justify-between items-center w-full h-[4em] border-b-2 border-gray-300 bg-teesaBlueDark text-white text-xl sm:text-l '>
       <div className='flex items-center'>
         <img
           className='xl:w-[10%] lg:w-[10%] md:w-[10%] sm:w-[10%] my-0 '
