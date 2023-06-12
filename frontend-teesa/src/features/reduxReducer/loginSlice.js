@@ -38,12 +38,9 @@ export const fetchGoogleProfile = createAsyncThunk(
   'login/fetchGoogleProfile',
   async () => {
     try {
-      console.log('Estoy iniciando la accion.');
       const response = await axios.get(
         'https://servidor-teesa.onrender.com/auth/google/perfil'
       );
-      console.log(response);
-      console.log('Estoy terminando la accion.');
       return response;
     } catch (error) {
       console.log(error.response.data.message);
@@ -74,7 +71,7 @@ const loginSlice = createSlice({
       state.error = true;
       state.errorMessage = action.payload;
     });
-    //Google Data
+    //*Google Data
     builder.addCase(fetchGoogleProfile.pending, (state) => {
       state.loading = true;
       state.error = null;
@@ -83,7 +80,6 @@ const loginSlice = createSlice({
     builder.addCase(fetchGoogleProfile.fulfilled, (state, action) => {
       state.loading = false;
       state.googleUser = action.payload; // Actualizar el estado con los datos del usuario de Google
-      console.log(state.googleUser);
     });
     builder.addCase(fetchGoogleProfile.rejected, (state, action) => {
       state.loading = false;
