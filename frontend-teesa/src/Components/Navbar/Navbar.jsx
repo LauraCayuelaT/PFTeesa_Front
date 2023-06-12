@@ -1,11 +1,14 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import title from '../../title.png';
 import 'boxicons/css/boxicons.min.css';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 //import { resetLoginState } from '../../features/reduxReducer/loginSlice';
-import { resetUserState } from '../../features/reduxReducer/userSlice';
+import {
+  resetUserState,
+  saveUserNameToCookie,
+} from '../../features/reduxReducer/userSlice';
 import Cookies from 'universal-cookie';
 
 export default function NavBar() {
@@ -14,6 +17,7 @@ export default function NavBar() {
   //Google
   const [nombreGoogle, setNombreGoogle] = useState(null);
   const cookies = new Cookies();
+  const dispatch = useDispatch();
 
   const {
     user,
@@ -22,12 +26,13 @@ export default function NavBar() {
 
   //Traer Data del User - Google Auth
 
-  // useEffect(() => {
-  //   const nombreGoogleCookie = cookies.get('nombreGoogle');
-  //   if (nombreGoogleCookie) {
-  //     setNombreGoogle(nombreGoogleCookie);
-  //   }
-  // }, []);
+  useEffect(() => {
+    const nombreGoogleCookie = cookies.get('nombreGoogle');
+    if (nombreGoogleCookie && !user) {
+      dispatch(saveUserNameToCookie({ nombre: nombreGoogleCookie }));
+      setNombreGoogle(nombreGoogleCookie);
+    }
+  }, []);
 
   //Log Out Button
 
@@ -93,7 +98,7 @@ export default function NavBar() {
             onMouseLeave={handleTooltipToggle}
           >
             <span className='hover:text-teesaGreen transition duration-300 ease-in-out'>
-              {nombreGoogle ? 'nombreGoogle' : userName}
+              {nombreGoogle ? nombreGoogle : userName}
             </span>
             <i
               className='bx bxs-user ml-5 flex transition duration-300 ease-in-out transform hover:text-teesaGreen'
