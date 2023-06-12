@@ -25,9 +25,11 @@ const CardDetail = ({
           <Carrusel />
         </div>
         <div className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 px-8 py-6">
+
           <div className="text-teesaBlueDark font-bold text-4xl mb-6">
             {categoria} {marca}
           </div>
+
           <h2 className="text-teesaBlueDark text-3xl font-light mb-4">{nombre}</h2>
           <p className="text-gray-700 text-xl mb-6">Descripcion: {descripcion}</p>
           <p className="text-gray-700 text-xl mb-6">Caracteristicas: {caracteristicas}</p>
