@@ -22,12 +22,12 @@ export default function NavBar() {
 
   //Traer Data del User - Google Auth
 
-  useEffect(() => {
-    const nombreGoogleCookie = cookies.get('nombreGoogle');
-    if (nombreGoogleCookie) {
-      setNombreGoogle(nombreGoogleCookie);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const nombreGoogleCookie = cookies.get('nombreGoogle');
+  //   if (nombreGoogleCookie) {
+  //     setNombreGoogle(nombreGoogleCookie);
+  //   }
+  // }, []);
 
   //Log Out Button
 
