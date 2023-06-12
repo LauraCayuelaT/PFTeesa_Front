@@ -1,11 +1,12 @@
 /* eslint-disable no-unused-vars */
 //Instalaciones:
-import { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 //Redux:
 import {
   addFilter,
   fetchProducts,
+
 } from '../../features/reduxReducer/filterSlice';
 import {
   sortByName,
@@ -13,7 +14,7 @@ import {
   getPaginationData,
 } from '../../features/reduxReducer/productSlice';
 //Gif
-import loadingGif from '../../assets/icon/Loading.gif';
+import loadingGif from "../../assets/icon/Loading.gif";
 //Componentes:
 import { SearchBar } from '../SearchBar/SearchBar';
 import { Card } from '../Card/Card';
@@ -50,10 +51,8 @@ function Home() {
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  const allBrands = useSelector(
-    (state) => state?.productState?.allProducts.products
-  );
   const dispatch = useDispatch();
+
   const isDataLoaded = useSelector(
     (state) => state.productState.allProducts.length > 0
   );
@@ -68,6 +67,7 @@ function Home() {
   let googleUser = useSelector((state) => state.loginState.loading);
 
   //*Filtros Nuevos:
+
 
   const { filters, products, status, error } = useSelector(
     (state) => state.filters
@@ -105,47 +105,47 @@ function Home() {
   }, [dispatch]);
 
   return (
-    <div className='flex w-full h-full flex-col flex-wrap'>
+    <div className="flex w-full h-full flex-col flex-wrap">
       {/* Second Navbar */}
-      <div className='flex bg-teesaBlueDark w-full m-0 items-center justify-center mt-[-1px] border-t-4 border-teesaGreen text-teesaWhite h-[60px] text-[16px]'>
-        <h2 className='mx-4 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>
+      <div className="flex bg-teesaBlueDark w-full m-0 items-center justify-center mt-[-1px] border-t-4 border-teesaGreen text-teesaWhite h-[60px] text-[16px]">
+        <h2 className="mx-4 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer">
           Eléctrico
         </h2>
-        <h2 className='mx-4 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>
+        <h2 className="mx-4 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer">
           Gas
         </h2>
-        <h2 className='mx-4 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>
+        <h2 className="mx-4 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer">
           Refrigeración
         </h2>
-        <h2 className='mx-4 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>
+        <h2 className="mx-4 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer">
           Hornos
         </h2>
-        <h2 className='mx-4 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>
+        <h2 className="mx-4 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer">
           Repuestos
         </h2>
         <SearchBar />
       </div>
       {/* Hero */}
-      <div className='heroContainer flex w-full h-[800px]'>
+      <div className="heroContainer flex w-full h-[800px]">
         {/* Inicia parte de Sol. */} {/* FILTROS */}
-        <div className='filters w-1/6 m-4 bg-gray-100 p-4 rounded-lg'>
-          <h1 className='text-xl font-bold mb-4'>Filtros</h1>
-          <FilterComponent onApplyFilters={handleApplyFilters} />
+        <div className="filters w-1/6 m-4 bg-gray-100 p-4 rounded-lg">
+          <h1 className="text-xl font-bold mb-4">Filtros</h1>
+          <FilterComponent currentPage={currentPage} setCurrentPage={setCurrentPage} onApplyFilters={handleApplyFilters} />
         </div>
         {/* Termina parte de Sol. */}
         {/* Inicia parte de Juan. */}
         {/* Cards */}
-        <div className='cardsContainer w-5/6 h-fit m-5 bg-teesaWhite  items-end '>
-          {status === 'loading' && (
-            <div className='flex justify-center items-center w-full h-[800px]'>
-              <img src={loadingGif} alt='gif' />
+        <div className="cardsContainer w-5/6 h-fit m-5 bg-teesaWhite  items-end ">
+          {status === "loading" && (
+            <div className="flex justify-center items-center w-full h-[800px]">
+              <img src={loadingGif} alt="gif" />
             </div>
           )}
-          {status === 'failed' && (
+          {status === "failed" && (
             <div>Error al cargar los productos: {error}</div>
           )}
-          {status === 'succeeded' && (
-            <div className='flex flex-wrap m-auto justify-center'>
+          {status === "succeeded" && (
+            <div className="flex flex-wrap m-auto justify-center">
               {products.products?.map((product) => (
                 <Card
                   id={product.id}
@@ -159,45 +159,12 @@ function Home() {
               ))}
             </div>
           )}
-          <Pagination />
-
-          {/* Termina parte de Juan. */}
-          {/* sol */}
-
-          {/* {filteredProducts.length === 0 && selectedType === 'repuesto' && (
-            <NoRepuestosDisponibles />
-          )} */}
-
-          {/* {filteredProducts.length === 0 &&
-            showNoProductsInRange &&
-            selectedType !== 'repuesto' && <NoHayProductosRango />} */}
+          <Pagination
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
         </div>
       </div>
-      {/* //paginacion */}
-      {/* <div>
-      <div className="flex flex-wrap m-auto justify-center">
-        {allProducts?.map((product) => (
-          <Card
-            id={product?.id}
-            key={product?.id}
-            nombre={product?.nombre}
-            categoria={product?.categoria}
-            precio={product?.precio}
-            imagen={product?.imagen}
-            marca={product?.marca}
-          />
-        ))}
-      </div>
-      {paginasFinal?.map((pagina) => (
-        <button
-          onClick={() => pagesChange(pagina)}
-          className="w-5"
-          key={pagina}
-        >
-          {pagina}
-        </button>
-      ))}
-    </div> */}
     </div>
   );
 }
