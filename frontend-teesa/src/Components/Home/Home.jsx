@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 //Redux:
+import { fetchGoogleProfile } from '../../features/reduxReducer/loginSlice';
 import {
   addFilter,
   fetchProducts,
@@ -12,10 +13,7 @@ import {
   sortByPrice,
   getPaginationData,
 } from '../../features/reduxReducer/productSlice';
-
 import { NavLink } from 'react-router-dom';
-
-
 //Gif
 import loadingGif from '../../assets/icon/Loading.gif';
 //Componentes:
@@ -50,7 +48,6 @@ function Home() {
 
   //Tiago y Juan - Paginación.
 
-
   const [currentPage, setCurrentPage] = useState(1);
 
   const allBrands = useSelector(
@@ -66,7 +63,6 @@ function Home() {
     dispatch(getPaginationData(currentPage));
   }, [dispatch, currentPage]);
 
-
   //isLoading
   let loading = useSelector((state) => state.productState.loading);
 
@@ -78,9 +74,9 @@ function Home() {
 
   //useEffect para evitar errores al momento de la carga de información
   useEffect(() => {
-    const cookies = new Cookies()
+    const cookies = new Cookies();
 
-    if (cookies.get('token', {path:'/'}) && !effectExecuted) {
+    if (cookies.get('token', { path: '/' }) && !effectExecuted) {
       dispatch(getUserDataFromCookie());
       setEffectExecuted(true);
     }
@@ -95,6 +91,11 @@ function Home() {
   const handleApplyFilters = (selectedFilters) => {
     dispatch(addFilter(selectedFilters));
   };
+
+  //Google Auth:
+  useEffect(() => {
+    dispatch(fetchGoogleProfile());
+  }, [dispatch]);
 
   return (
     <div className='flex w-full h-full flex-col flex-wrap'>
@@ -150,7 +151,6 @@ function Home() {
                 />
               ))}
             </div>
-            
           )}
           <Pagination />
 

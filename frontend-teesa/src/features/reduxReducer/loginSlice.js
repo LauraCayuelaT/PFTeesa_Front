@@ -10,11 +10,12 @@ const initialState = {
   success: false,
   token: '',
   googleAuthLink: 'https://servidor-teesa.onrender.com/auth/google/login',
+  googleUser: null,
 };
 
 // Login Back:
 export const loginUser = createAsyncThunk(
-  'product/loginUser',
+  'login/loginUser',
   async ({ correo, contrasena }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
@@ -32,6 +33,20 @@ export const loginUser = createAsyncThunk(
 );
 
 //Login Google:
+
+export const fetchGoogleProfile = createAsyncThunk(
+  'login/fetchGoogleProfile',
+  async () => {
+    try {
+      const response = await axios.get(
+        'https://servidor-teesa.onrender.com/auth/google/perfil'
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
+  }
+);
 
 // Slice Login
 const loginSlice = createSlice({
@@ -52,6 +67,22 @@ const loginSlice = createSlice({
       state.success = true; // Activar el estado de éxito
     });
     builder.addCase(loginUser.rejected, (state, action) => {
+      state.loading = false;
+      state.error = true;
+      state.errorMessage = action.payload;
+    });
+    //Google Data
+    builder.addCase(fetchGoogleProfile.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+      state.errorMessage = null;
+    });
+    builder.addCase(fetchGoogleProfile.fulfilled, (state, action) => {
+      state.loading = false;
+      state.googleUser = action.payload; // Actualizar el estado con los datos del usuario de Google
+      console.log(state.googleUser);
+    });
+    builder.addCase(fetchGoogleProfile.rejected, (state, action) => {
       state.loading = false;
       state.error = true;
       state.errorMessage = action.payload;
