@@ -11,6 +11,7 @@ import {
 // import NoRepuestosDisponibles from '../NoHayRep/NoRepuestos';
 // import NoHayProductosRango from '../NoHayProductosRango/NoHayProductosRango';
 
+
 const FilterComponent = ({currentPage, setCurrentPage}) => {
   const [estado, setEstado] = useState("");
   const [tipo, setTipo] = useState("");
@@ -22,6 +23,7 @@ const FilterComponent = ({currentPage, setCurrentPage}) => {
   const pageState = useSelector((state) => state?.filters?.page);
 
 
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -30,17 +32,21 @@ const FilterComponent = ({currentPage, setCurrentPage}) => {
       estado: estado,
       tipo: tipo,
       marca: marca,
+
       precioMinimo: precio.split("-")[0],
       precioMaximo: precio.split("-")[1],
+
     };
     dispatch(fetchProducts(filters));
   }, [pageState, estado, tipo, marca, precio, dispatch]);
+
 
 
   const handleChange = () => {
    dispatch(changePage(1))
    
   }
+
 
   const handleSort = (e) => {
     e.preventDefault();
@@ -90,6 +96,7 @@ const FilterComponent = ({currentPage, setCurrentPage}) => {
         Estado:
         <select
           value={estado}
+
           className="w-full border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-teesaGreen"
           onChange={(e) => {setEstado(e.target.value); handleChange()}}
         >

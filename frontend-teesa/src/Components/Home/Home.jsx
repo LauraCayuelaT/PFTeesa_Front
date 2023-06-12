@@ -3,10 +3,17 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 //Redux:
+import { fetchGoogleProfile } from '../../features/reduxReducer/loginSlice';
 import {
   addFilter,
   fetchProducts,
-} from "../../features/reduxReducer/filterSlice";
+} from '../../features/reduxReducer/filterSlice';
+import {
+  sortByName,
+  sortByPrice,
+  getPaginationData,
+} from '../../features/reduxReducer/productSlice';
+import { NavLink } from 'react-router-dom';
 
 //Gif
 import loadingGif from "../../assets/icon/Loading.gif";
@@ -19,6 +26,7 @@ import NoHayProductosRango from '../NoHayProductosRango/NoHayProductosRango';
 import Pagination from '../Pagination/Pagination';
 import { getUserDataFromCookie } from '../../features/reduxReducer/userSlice';
 import Cookies from 'universal-cookie';
+import axios from 'axios';
 
 function Home() {
   const [effectExecuted, setEffectExecuted] = useState(false);
@@ -42,10 +50,26 @@ function Home() {
 
   //Tiago y Juan - Paginación.
 
-
   const [currentPage, setCurrentPage] = useState(1);
 
   const dispatch = useDispatch();
+
+  const isDataLoaded = useSelector(
+    (state) => state.productState.allProducts.length > 0
+  );
+  // Codigo de Sol:
+  const [orden, setOrden] = useState('');
+  useEffect(() => {
+    dispatch(getPaginationData(currentPage));
+  }, [dispatch, currentPage]);
+
+  //isLoading
+  let loading = useSelector((state) => state.productState.loading);
+  let googleUser = useSelector((state) => state.loginState.loading);
+  console.log(googleUser);
+
+  //*Filtros Nuevos:
+
 
   const { filters, products, status, error } = useSelector(
     (state) => state.filters
@@ -53,9 +77,9 @@ function Home() {
 
   //useEffect para evitar errores al momento de la carga de información
   useEffect(() => {
-    const cookies = new Cookies()
+    const cookies = new Cookies();
 
-    if (cookies.get('token', {path:'/'}) && !effectExecuted) {
+    if (cookies.get('token', { path: '/' }) && !effectExecuted) {
       dispatch(getUserDataFromCookie());
       setEffectExecuted(true);
     }
@@ -70,6 +94,24 @@ function Home() {
   const handleApplyFilters = (selectedFilters) => {
     dispatch(addFilter(selectedFilters));
   };
+
+  //Google Auth:
+  useEffect(() => {
+    const fetchGoogleProfile = async () => {
+      try {
+        console.log('Estoy iniciando la accion.');
+        const response = await axios.get(
+          'https://servidor-teesa.onrender.com/auth/google/perfil'
+        );
+        console.log(response);
+        console.log('Estoy terminando la accion.');
+        return response;
+      } catch (error) {
+        console.log(error.response.data.message);
+      }
+    };
+    fetchGoogleProfile();
+  }, []);
 
   return (
     <div className="flex w-full h-full flex-col flex-wrap">
