@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getPaginationData } from "../../features/reduxReducer/filterSlice";
+import { fetchProducts,changePage } from "../../features/reduxReducer/filterSlice";
 
 const Pagination = () => {
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
+  const page = useSelector((state) => state?.filters?.page);
+  console.log(page);
 
-  useEffect(() => {
-    dispatch(getPaginationData(currentPage));
-  }, [dispatch, currentPage]);
+  // useEffect(() => {
+  //   dispatch(getPaginationData(currentPage));
+  // }, [dispatch, currentPage]);
 
   const general = useSelector((state) => state?.filters?.products);
+  const total = useSelector((state) => state?.filters);
+
+
 
   function arrayPaginas(total) {
     let pages = [];
@@ -20,21 +25,21 @@ const Pagination = () => {
     return pages;
   }
 
-  let paginasFinal = arrayPaginas(general.totalPages);
+  const paginasFinal = arrayPaginas(general.totalPages);
 
-  let pagesChange = (number) => {
-    setCurrentPage(number);
+  const pagesChange = (number) => {
+    dispatch(changePage(number));
   };
 
   const handlePrevClick = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
+    if (page > 0) {
+      dispatch(changePage(  (page - 1)));
     }
   };
 
   const handleNextClick = () => {
-    if (currentPage < general.totalPages) {
-      setCurrentPage(currentPage + 1);
+    if (page < general.totalPages) {
+      dispatch(changePage( (page + 1)));
     }
   };
 
@@ -45,17 +50,24 @@ const Pagination = () => {
           currentPage 
             ? "bg-teesaBlueDark text-teesaWhite"
             : "bg-gray-300 text-teesaBlueDark"
-        }`}
+            
+            
+        } ${page === 1
+          ? "hidden"
+          : "flex"
+        }` 
+    }
         onClick={handlePrevClick}
+
       >
         {" "}
-        Back
+        Atras
       </button>
       {paginasFinal?.map((pagina) => (
         <button
           onClick={() => pagesChange(pagina)}
           className={`px-4 py-2 mx-1 rounded-lg ${
-            currentPage === pagina
+           page  === pagina
               ? "bg-teesaBlueDark text-teesaWhite"
               : "bg-gray-300 text-teesaBlueDark"
           }`}
@@ -69,11 +81,15 @@ const Pagination = () => {
           currentPage 
             ? "bg-teesaBlueDark text-teesaWhite"
             : "bg-gray-300 text-teesaBlueDark"
-        }`}
+        }
+        ${page === general.totalPages
+           ? "hidden" 
+           : "flex"}` 
+    }
         onClick={handleNextClick}
       >
         {" "}
-        Next
+        Siguiente
       </button>
     </div>
   );

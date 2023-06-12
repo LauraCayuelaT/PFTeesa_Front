@@ -1,12 +1,15 @@
 import { NavLink } from "react-router-dom";
-
+import React from 'react';
+// import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';     
+import Carrusel from "../Carrusel/Carrusel"
 /* eslint-disable react/prop-types */
 const CardDetail = ({
   nombre,
+  imagenes,
   descripcion,
   caracteristicas,
   categoria,
-  imagen,
   precio,
   stock,
   marca,
@@ -19,7 +22,7 @@ const CardDetail = ({
         <button>Volver al listado</button>
       </NavLink>
       <div className="w-8/2 lg:w-1/3 xl:w-1/4 flex items-center justify-center ">
-        <img className="w-full h-auto object-cover rounded-lg" src={imagen} alt={nombre} />
+      <Carrusel/>
       </div>
       <div className="w-1/2 lg:w-2/3 xl:w-3/4 px-8 py-6">
         <div className="text-teesaBlueDark font-bold text-4xl mb-6">

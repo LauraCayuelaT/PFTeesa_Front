@@ -20,5 +20,8 @@ export default {
       },
     },
   },
+  corePlugins: {
+    filter: true,
+  },
   plugins: [],
 };

@@ -12,21 +12,19 @@ import {
   sortByPrice,
   getPaginationData,
 } from '../../features/reduxReducer/productSlice';
-
-import { NavLink } from 'react-router-dom';
-
-
 //Gif
 import loadingGif from '../../assets/icon/Loading.gif';
 //Componentes:
 import { SearchBar } from '../SearchBar/SearchBar';
 import { Card } from '../Card/Card';
 import FilterComponent from './FilterComponent';
-import NoRepuestosDisponibles from '../NoHayRep/NoRepuestos';
-import NoHayProductosRango from '../NoHayProductosRango/NoHayProductosRango';
 import Pagination from '../Pagination/Pagination';
-import { getUserDataFromCookie } from '../../features/reduxReducer/userSlice';
+import {
+  getUserDataFromCookie,
+  saveUserNameToCookie,
+} from '../../features/reduxReducer/userSlice';
 import Cookies from 'universal-cookie';
+import axios from 'axios';
 
 function Home() {
   const [effectExecuted, setEffectExecuted] = useState(false);
@@ -50,13 +48,10 @@ function Home() {
 
   //Tiago y Juan - Paginación.
 
-
   const [currentPage, setCurrentPage] = useState(1);
 
-  const allBrands = useSelector(
-    (state) => state?.productState?.allProducts.products
-  );
   const dispatch = useDispatch();
+
   const isDataLoaded = useSelector(
     (state) => state.productState.allProducts.length > 0
   );
@@ -66,9 +61,9 @@ function Home() {
     dispatch(getPaginationData(currentPage));
   }, [dispatch, currentPage]);
 
-
   //isLoading
   let loading = useSelector((state) => state.productState.loading);
+  let googleUser = useSelector((state) => state.loginState.loading);
 
   //*Filtros Nuevos:
 
@@ -78,9 +73,9 @@ function Home() {
 
   //useEffect para evitar errores al momento de la carga de información
   useEffect(() => {
-    const cookies = new Cookies()
+    const cookies = new Cookies();
 
-    if (cookies.get('token', {path:'/'}) && !effectExecuted) {
+    if (cookies.get('token', { path: '/' }) && !effectExecuted) {
       dispatch(getUserDataFromCookie());
       setEffectExecuted(true);
     }
@@ -95,6 +90,17 @@ function Home() {
   const handleApplyFilters = (selectedFilters) => {
     dispatch(addFilter(selectedFilters));
   };
+
+  //*Google Auth
+
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    const nombre = url.searchParams.get('nombre');
+    console.log(`Nombre Google: ${nombre}`);
+    if (nombre) {
+      dispatch(saveUserNameToCookie({ nombre }));
+    }
+  }, [dispatch]);
 
   return (
     <div className='flex w-full h-full flex-col flex-wrap'>
@@ -122,7 +128,11 @@ function Home() {
         {/* Inicia parte de Sol. */} {/* FILTROS */}
         <div className='filters w-1/6 m-4 bg-gray-100 p-4 rounded-lg'>
           <h1 className='text-xl font-bold mb-4'>Filtros</h1>
-          <FilterComponent onApplyFilters={handleApplyFilters} />
+          <FilterComponent
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            onApplyFilters={handleApplyFilters}
+          />
         </div>
         {/* Termina parte de Sol. */}
         {/* Inicia parte de Juan. */}
@@ -145,52 +155,18 @@ function Home() {
                   nombre={product.nombre}
                   categoria={product.categoria}
                   precio={product.precio}
-                  imagen={product.imagen}
+                  imagenes={product.imagenes}
                   marca={product.marca}
                 />
               ))}
             </div>
-            
           )}
-          <Pagination />
-
-          {/* Termina parte de Juan. */}
-          {/* sol */}
-
-          {/* {filteredProducts.length === 0 && selectedType === 'repuesto' && (
-            <NoRepuestosDisponibles />
-          )} */}
-
-          {/* {filteredProducts.length === 0 &&
-            showNoProductsInRange &&
-            selectedType !== 'repuesto' && <NoHayProductosRango />} */}
+          <Pagination
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
         </div>
       </div>
-      {/* //paginacion */}
-      {/* <div>
-      <div className="flex flex-wrap m-auto justify-center">
-        {allProducts?.map((product) => (
-          <Card
-            id={product?.id}
-            key={product?.id}
-            nombre={product?.nombre}
-            categoria={product?.categoria}
-            precio={product?.precio}
-            imagen={product?.imagen}
-            marca={product?.marca}
-          />
-        ))}
-      </div>
-      {paginasFinal?.map((pagina) => (
-        <button
-          onClick={() => pagesChange(pagina)}
-          className="w-5"
-          key={pagina}
-        >
-          {pagina}
-        </button>
-      ))}
-    </div> */}
     </div>
   );
 }
