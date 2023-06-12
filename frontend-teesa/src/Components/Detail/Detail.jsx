@@ -16,7 +16,8 @@ function Detail() {
   const dispatch = useDispatch();
   const detail = useSelector((state) => state?.detailState?.productDetail);
   let loading = useSelector((state) => state.detailState.loading); // Cambia state.productState.loading por state.detailState.loading
-
+ 
+  
   useEffect(() => {
     dispatch(getProductById(id));
 
@@ -46,7 +47,7 @@ function Detail() {
               caracteristicas={detail?.caracteristicas}
               categoria={detail?.categoria}
               precio={detail?.precio}
-              imagen={detail?.imagen}
+              imagenes={detail?.imagenes}
               marca={detail?.marca}
               stock={detail?.stock}
               estado={detail?.estado}

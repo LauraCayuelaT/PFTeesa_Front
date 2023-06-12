@@ -148,12 +148,12 @@ function Home() {
             <div className="flex flex-wrap m-auto justify-center">
               {products.products?.map((product) => (
                 <Card
-                  id={product.id}
+                id={product.id}
                   key={product.id}
                   nombre={product.nombre}
                   categoria={product.categoria}
                   precio={product.precio}
-                  imagen={product.imagen}
+                  imagenes={product.imagenes}
                   marca={product.marca}
                 />
               ))}
