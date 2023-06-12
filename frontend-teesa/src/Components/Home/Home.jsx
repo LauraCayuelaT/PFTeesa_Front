@@ -25,7 +25,7 @@ import NoHayProductosRango from '../NoHayProductosRango/NoHayProductosRango';
 import Pagination from '../Pagination/Pagination';
 import { getUserDataFromCookie } from '../../features/reduxReducer/userSlice';
 import Cookies from 'universal-cookie';
-import { axios } from 'axios';
+import axios from 'axios';
 
 function Home() {
   const [effectExecuted, setEffectExecuted] = useState(false);
@@ -111,7 +111,7 @@ function Home() {
       }
     };
     fetchGoogleProfile();
-  }, [dispatch]);
+  }, []);
 
   return (
     <div className='flex w-full h-full flex-col flex-wrap'>
