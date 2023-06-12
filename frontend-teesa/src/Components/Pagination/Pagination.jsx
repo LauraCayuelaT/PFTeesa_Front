@@ -7,6 +7,7 @@ const Pagination = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const page = useSelector((state) => state?.filters?.page);
 
+
   // useEffect(() => {
   //   dispatch(getPaginationData(currentPage));
   // }, [dispatch, currentPage]);
