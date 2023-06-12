@@ -17,6 +17,7 @@ const FilterComponent = () => {
   const [marca, setMarca] = useState('');
   const [precio, setPrecio] = useState('');
   
+  
 
   const dispatch = useDispatch();
 
@@ -117,7 +118,6 @@ const FilterComponent = () => {
           <option value='fagor'>Fagor</option>
           <option value='winterhalter'>WinterHalter</option>
           <option value='lainox'>Lainox</option>
-          <option value='uniox'>Uniox</option>
         </select>
       </label>
       <br />
