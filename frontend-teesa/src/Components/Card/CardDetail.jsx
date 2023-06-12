@@ -19,7 +19,7 @@ const CardDetail = ({
     <div className="mt-12 flex justify-center items-start">
       <div className="max-w-6xl rounded overflow-hidden shadow-lg flex flex-col md:flex-row justify-between relative">
         <NavLink className="mb-1 transition duration-300 ease-in-out transform hover:text-teesaGreen  focus:text-teesaGreen" to="/home">
-          <button>Volver al listado</button>
+          <button className="bg-green-500 text-white px-4 py-2 rounded-md">Volver al listado</button>
         </NavLink>
         <div className="w-full md:w-1/2 lg:w-2/3 xl:w-3/4 flex items-center justify-center">
           <Carrusel />
