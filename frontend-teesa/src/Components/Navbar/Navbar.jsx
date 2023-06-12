@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import title from '../../title.png';
 import 'boxicons/css/boxicons.min.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 //import { resetLoginState } from '../../features/reduxReducer/loginSlice';
 import { resetUserState } from '../../features/reduxReducer/userSlice';
@@ -11,6 +11,9 @@ import Cookies from 'universal-cookie';
 export default function NavBar() {
   //Traer Data del User - Nuestro Login y Register
   const userData = useSelector((state) => state.userState);
+  //Google
+  const [nombreGoogle, setNombreGoogle] = useState(null);
+  const cookies = new Cookies();
 
   const {
     user,
@@ -19,8 +22,12 @@ export default function NavBar() {
 
   //Traer Data del User - Google Auth
 
-  const cookies = new Cookies();
-  const nombreGoogle = cookies.get('nombreGoogle');
+  useEffect(() => {
+    const nombreGoogleCookie = cookies.get('nombreGoogle');
+    if (nombreGoogleCookie) {
+      setNombreGoogle(nombreGoogleCookie);
+    }
+  }, []);
 
   //Log Out Button
 
