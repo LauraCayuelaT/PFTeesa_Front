@@ -9,7 +9,7 @@ import { resetUserState } from '../../features/reduxReducer/userSlice';
 import Cookies from 'universal-cookie';
 
 export default function NavBar() {
-  //Traer Data del User
+  //Traer Data del User - Nuestro Login y Register
   const userData = useSelector((state) => state.userState);
 
   const {
@@ -17,12 +17,18 @@ export default function NavBar() {
     userData: { userName },
   } = userData;
 
+  //Traer Data del User - Google Auth
+
+  const cookies = new Cookies();
+  const nombreGoogle = cookies.get('nombreGoogle');
+
   //Log Out Button
 
   const handleLogout = () => {
     // Vaciar estados de Login, Register y vaciar data del User.
     const cookies = new Cookies();
     cookies.remove('token', { path: '/' });
+    cookies.remove('nombreGoogle', { path: '/' });
     resetUserState();
     navigate('/home', { replace: true });
     window.location.reload();
@@ -73,14 +79,14 @@ export default function NavBar() {
       </div>
 
       <div className='flex items-end justify-end xl:mr-[4%] lg:mr-[4%] md:mr-[3%] sm:mr-[3%] '>
-        {user ? (
+        {user || nombreGoogle ? (
           <div
             className='mr-5 cursor-pointer relative flex items-center'
             onMouseEnter={handleTooltipToggle}
             onMouseLeave={handleTooltipToggle}
           >
             <span className='hover:text-teesaGreen transition duration-300 ease-in-out'>
-              {userName}
+              {nombreGoogle ? 'nombreGoogle' : userName}
             </span>
             <i
               className='bx bxs-user ml-5 flex transition duration-300 ease-in-out transform hover:text-teesaGreen'

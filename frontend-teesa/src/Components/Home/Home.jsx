@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 //Redux:
-import { fetchGoogleProfile } from '../../features/reduxReducer/loginSlice';
 import {
   addFilter,
   fetchProducts,
@@ -14,18 +13,17 @@ import {
   sortByPrice,
   getPaginationData,
 } from '../../features/reduxReducer/productSlice';
-import { NavLink } from 'react-router-dom';
-
 //Gif
 import loadingGif from "../../assets/icon/Loading.gif";
 //Componentes:
 import { SearchBar } from '../SearchBar/SearchBar';
 import { Card } from '../Card/Card';
 import FilterComponent from './FilterComponent';
-import NoRepuestosDisponibles from '../NoHayRep/NoRepuestos';
-import NoHayProductosRango from '../NoHayProductosRango/NoHayProductosRango';
 import Pagination from '../Pagination/Pagination';
-import { getUserDataFromCookie } from '../../features/reduxReducer/userSlice';
+import {
+  getUserDataFromCookie,
+  saveUserNameToCookie,
+} from '../../features/reduxReducer/userSlice';
 import Cookies from 'universal-cookie';
 import axios from 'axios';
 
@@ -67,7 +65,6 @@ function Home() {
   //isLoading
   let loading = useSelector((state) => state.productState.loading);
   let googleUser = useSelector((state) => state.loginState.loading);
-  console.log(googleUser);
 
   //*Filtros Nuevos:
 
@@ -96,23 +93,16 @@ function Home() {
     dispatch(addFilter(selectedFilters));
   };
 
-  //Google Auth:
+  //*Google Auth
+
   useEffect(() => {
-    const fetchGoogleProfile = async () => {
-      try {
-        console.log('Estoy iniciando la accion.');
-        const response = await axios.get(
-          'https://servidor-teesa.onrender.com/auth/google/perfil'
-        );
-        console.log(response);
-        console.log('Estoy terminando la accion.');
-        return response;
-      } catch (error) {
-        console.log(error.response.data.message);
-      }
-    };
-    fetchGoogleProfile();
-  }, []);
+    const url = new URL(window.location.href);
+    const nombre = url.searchParams.get('nombre');
+    console.log(`Nombre Google: ${nombre}`);
+    if (nombre) {
+      dispatch(saveUserNameToCookie({ nombre }));
+    }
+  }, [dispatch]);
 
   return (
     <div className="flex w-full h-full flex-col flex-wrap">
