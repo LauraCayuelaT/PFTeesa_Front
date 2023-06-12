@@ -60,13 +60,13 @@ function Home() {
       setEffectExecuted(true);
     }
   }, [dispatch, effectExecuted]);
-
+  
   useEffect(() => {
     if (Object.keys(filters).length > 0) {
       dispatch(fetchProducts(filters));
     }
   }, [filters, dispatch]);
-
+  
   const handleApplyFilters = (selectedFilters) => {
     dispatch(addFilter(selectedFilters));
   };
@@ -120,7 +120,7 @@ function Home() {
                   nombre={product.nombre}
                   categoria={product.categoria}
                   precio={product.precio}
-                  imagen={product.imagen}
+                  imagenes={product.imagenes}
                   marca={product.marca}
                 />
               ))}
