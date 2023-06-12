@@ -6,9 +6,7 @@ import { addFilter, fetchProducts } from '../../features/reduxReducer/filterSlic
 
 export const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [showNoResults, setShowNoResults] = useState(false);
-
-
+  
   const dispatch = useDispatch();
 
   const handleSearch = () => {
