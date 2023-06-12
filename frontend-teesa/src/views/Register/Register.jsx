@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 import jwt_decode from 'jwt-decode';
 import { loginUser } from '../../features/reduxReducer/loginSlice';
 import Cookies from 'universal-cookie'
+import { Link } from 'react-router-dom';
 
 
 function Register() {
@@ -136,15 +137,15 @@ function Register() {
 
 
     return (
-      <div className="w-full bg-teesaBlueDark h-screen flex flex-row justify-center align-center items-center gap-[10%]">
-        <div className='flex flex-col justify-center align-center items-center my-auto xl:mb-[14%] xl:mr-[8%] lg:mb-[14%] lg:mr-[8%]'>
-          <img src={logo} alt="logo" className='xl:h-[800px] lg:h-[500px] '/>
-          <h1 className='text-center text-teesaWhite xl:text-3xl xl:mt-[-6em] lg:text-2xl lg:mt-[-6em]'>Tecnología en Equipos Alimenticios</h1>
+      <div className="w-screen bg-teesaBlueDark h-screen flex flex-row justify-center align-center items-center xl:gap-[15em] lg:gap-[12em] md:gap-[5em] overflow-hidden m-auto">
+        <div className='flex-col xl:mb-[18%] lg:mb-[10%]'>
+          <img src={logo} alt="logo" className='  xl:h-[700px] lg:h-[500px] md:h-[400px]'/>
+          <h1 className='text-center text-teesaWhite xl:text-3xl xl:mt-[-6em] lg:text-2xl lg:mt-[-6em] md:text-xl md:mt-[-6em]'>Tecnología en Equipos Alimenticios</h1>
         </div>
         
-        <div className='bg-gradient-to-r from-teesaGreenDark to-teesaGreen rounded-lg flex flex-col justify-center align-center items-center my-auto xl:w-[25%] xl:h-[95%] lg:w-[25%] lg:h-[95%]'>
-          <h1 className='font-bold  xl:text-4xl lg:text-3xl text-teesaGrey mb-[10px] '>Registrate</h1>
-            <div className='flex flex-col justify-center align-center items-center'>
+        <div className='bg-gradient-to-r from-teesaGreenDark to-teesaGreen rounded-lg flex flex-col justify-center align-center items-center h-auto mb-[12%] lg:mt-[12%]'>
+          <h1 className='font-bold  xl:text-4xl lg:text-3xl text-teesaGrey  mt-[5%] '>Registrate</h1>
+            <div className='flex flex-col justify-center align-center items-center p-8'>
               <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col justify-center align-center items-center gap-[0.5em]'>
                 <label className="flex flex-col justify-center align-center items-center ">
                 <input type="text" name="nombre" placeholder=' Nombre' className="bg-teesaBlueDark text-teesaGrey rounded-md h-[2em] w-[15em]" {...register('nombre', { 
@@ -268,17 +269,27 @@ function Register() {
           )}
         </label>
                 <button className='bg-teesaGreen font-bold h-[2em] w-[12em] hover:bg-green-600 hover:transform hover:scale-105 rounded-md'>Crear Cuenta</button>
-              </form>
-            </div>
-      <div className='w-[50%] mt-[1em] border-t-2 border-black mb-4'></div>
-          <div className='flex justify-center items-center align-center text-center mt-2 w-[70%]'>
+                <p className='text-end'>
+          ¿Ya tienes cuenta?{' '}
+          <Link to='/login'>
+            <span className='text-teesaBlueDark hover:cursor-pointer hover:text-teesaBlueLight font-bold'>
+              Log In
+            </span>
+          </Link>
+        </p>
+      <div className='w-[75%] border-t-2 border-black '></div>
+      <div className='flex justify-center items-center align-center text-center mt-2 w-[70%]'>
             <a href="https://servidor-teesa.onrender.com/google/signup">
             <button
-              className='flex mb-[5px] w-full justify-center rounded  bg-teesaWhite text-md font-medium uppercase leading-normal text-black shadow-lg border-2 border-black hover:bg-gray-300 hover:transform hover:scale-105'
+              className='flex mb-[5px] w-[100%] justify-center rounded  bg-teesaWhite text-md font-medium uppercase leading-normal text-black shadow-lg border-2 border-black hover:bg-gray-300 hover:transform hover:scale-105'
               type='submit'>
               <img src={googleIcon} className='w-5 h-5 mx-3 my-auto' /> Ingresar con Google</button>
               </a>
           </div> 
+              </form>
+            </div>
+            
+          
         </div>
       </div>
 

@@ -1,7 +1,6 @@
 import { NavLink } from "react-router-dom";
 import React from 'react';
-// eslint-disable-next-line no-unused-vars
-import { Carousel } from 'react-responsive-carousel';
+// import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';     
 import Carrusel from "../Carrusel/Carrusel"
 /* eslint-disable react/prop-types */
