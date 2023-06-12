@@ -10,30 +10,26 @@ import {
 // import NoRepuestosDisponibles from '../NoHayRep/NoRepuestos';
 // import NoHayProductosRango from '../NoHayProductosRango/NoHayProductosRango';
 
-
 const FilterComponent = () => {
   const [estado, setEstado] = useState('');
   const [tipo, setTipo] = useState('');
   const [marca, setMarca] = useState('');
   const [precio, setPrecio] = useState('');
-  
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     const filters = {
       estado: estado,
-      tipo: tipo, 
+      tipo: tipo,
       marca: marca,
       // precio: precio,
       precioMinimo: precio.split('-')[0],
       precioMaximo: precio.split('-')[1],
-
     };
 
-
     // dispatch(addFilter(filters));
-    dispatch(fetchProducts( filters ));
+    dispatch(fetchProducts(filters));
   }, [estado, tipo, marca, precio, dispatch]);
 
   const handleSort = (e) => {
@@ -83,7 +79,9 @@ const FilterComponent = () => {
         <select
           value={estado}
           className='w-full border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-teesaGreen'
-          onChange={(e) => setEstado(e.target.value)}
+          onChange={(e) => {
+            setEstado(e.target.value);
+          }}
         >
           <option value=''>Todos</option>
           <option value='usado'>Usado</option>
