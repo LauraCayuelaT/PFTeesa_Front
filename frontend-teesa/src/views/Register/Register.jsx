@@ -278,7 +278,9 @@ function Register() {
           </Link>
         </p>
       <div className='w-[75%] border-t-2 border-black '></div>
-      <div className='flex justify-center items-center align-center text-center mt-2 w-[70%]'>
+      
+              </form>
+              <div className='flex justify-center items-center align-center text-center mt-2 w-[70%]'>
             <a href="https://servidor-teesa.onrender.com/google/signup">
             <button
               className='flex mb-[5px] w-[100%] justify-center rounded  bg-teesaWhite text-md font-medium uppercase leading-normal text-black shadow-lg border-2 border-black hover:bg-gray-300 hover:transform hover:scale-105'
@@ -286,7 +288,6 @@ function Register() {
               <img src={googleIcon} className='w-5 h-5 mx-3 my-auto' /> Ingresar con Google</button>
               </a>
           </div> 
-              </form>
             </div>
             
           
