@@ -25,6 +25,7 @@ import NoHayProductosRango from '../NoHayProductosRango/NoHayProductosRango';
 import Pagination from '../Pagination/Pagination';
 import { getUserDataFromCookie } from '../../features/reduxReducer/userSlice';
 import Cookies from 'universal-cookie';
+import axios from 'axios';
 
 function Home() {
   const [effectExecuted, setEffectExecuted] = useState(false);
@@ -96,8 +97,21 @@ function Home() {
 
   //Google Auth:
   useEffect(() => {
-    dispatch(fetchGoogleProfile());
-  }, [dispatch]);
+    const fetchGoogleProfile = async () => {
+      try {
+        console.log('Estoy iniciando la accion.');
+        const response = await axios.get(
+          'https://servidor-teesa.onrender.com/auth/google/perfil'
+        );
+        console.log(response);
+        console.log('Estoy terminando la accion.');
+        return response;
+      } catch (error) {
+        console.log(error.response.data.message);
+      }
+    };
+    fetchGoogleProfile();
+  }, []);
 
   return (
     <div className='flex w-full h-full flex-col flex-wrap'>
