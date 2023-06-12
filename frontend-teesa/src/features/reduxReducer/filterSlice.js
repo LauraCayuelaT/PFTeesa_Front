@@ -17,26 +17,27 @@ export const fetchProducts = createAsyncThunk(
     }
   }
 );
-export const getPaginationData = createAsyncThunk(
-  'products/getPaginationData',
-  async (number) => {
-    try {
-      const response = await axios.get(
-        `https://servidor-teesa.onrender.com/products?page=${number}`
-      );
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching products:', error);
-      throw error;
-    }
-  }
-);
+// export const getPaginationData = createAsyncThunk(
+//   'products/getPaginationData',
+//   async (number) => {
+//     try {
+//       const response = await axios.get(
+//         `https://servidor-teesa.onrender.com/products?page=${number}`
+//       );
+//       return response.data;
+//     } catch (error) {
+//       console.error('Error fetching products:', error);
+//       throw error;
+//     }
+//   }
+// );
 
 const filtersSlice = createSlice({
   name: 'filters',
   initialState: {
     filters: {},
     products: [],
+    page: 1,
     status: 'idle',
     error: null,
   },
@@ -44,6 +45,12 @@ const filtersSlice = createSlice({
     addFilter: (state, action) => {
       state.filters = action.payload;
     },
+    
+    changePage: (state, action) => {
+      state.page = action.payload;
+      console.log(state.page);
+    },
+
     sortByName: (state, action) => {
       state.products.products.sort((a, b) => {
         if (action.payload === 'ascendente') {
@@ -66,11 +73,8 @@ const filtersSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getPaginationData.fulfilled, (state, action) => {
-      state.products = action.payload;
-    });
     builder
-      .addCase(fetchProducts.pending, (state) => {
+    .addCase(fetchProducts.pending, (state) => {
         state.status = 'loading';
         state.error = null;
       })
@@ -82,9 +86,15 @@ const filtersSlice = createSlice({
         state.status = 'failed';
         state.error = action.payload;
       });
-  },
+      // builder.addCase(getPaginationData.fulfilled, (state, action) => {
+      //   state.status = 'succeeded';
+      //   state.products = action.payload;
+      //   state.filters = { ...state.filters };
+      
+      // });
+    },
 });
 
-export const { addFilter, sortByName, sortByPrice } = filtersSlice.actions;
+export const { addFilter, sortByName, sortByPrice,changePage } = filtersSlice.actions;
 
 export default filtersSlice.reducer;
