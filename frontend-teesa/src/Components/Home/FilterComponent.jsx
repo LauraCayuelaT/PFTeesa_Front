@@ -127,13 +127,12 @@ const FilterComponent = ({currentPage, setCurrentPage}) => {
           value={marca}
           onChange={(e) => {setMarca(e.target.value); handleChange()}}
         >
-          <option value="">Todas</option>
-          <option value="unox">Unox</option>
-          <option value="rational">Rational</option>
-          <option value="fagor">Fagor</option>
-          <option value="winterhalter">WinterHalter</option>
-          <option value="lainox">Lainox</option>
-          <option value="uniox">Uniox</option>
+          <option value=''>Todas</option>
+          <option value='unox'>Unox</option>
+          <option value='rational'>Rational</option>
+          <option value='fagor'>Fagor</option>
+          <option value='winterhalter'>WinterHalter</option>
+          <option value='lainox'>Lainox</option>
         </select>
       </label>
       <br />

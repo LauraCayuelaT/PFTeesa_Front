@@ -28,28 +28,35 @@ const CardDetail = ({
         <div className="text-teesaBlueDark font-bold text-4xl mb-6">
           {categoria} {marca}
         </div>
-        <h2 className="text-teesaBlueDark text-3xl  font-light mb-4">{nombre}</h2>
-        <p className="text-gray-700 text-xl mb-6">Descripcion: {descripcion}</p>
-        <p className="text-gray-700 text-xl mb-6">Caracteristicas: {caracteristicas}</p>
-        <div className="flex justify-between mb-6">
-          <div className="text-teesaGreenDark text-3xl font-bold">${precio}</div>
-          <div className="text-xl" style={{ color: stock === 0 ? 'darkRed' : 'teesaGreenDark' }}>
-             Stock: {stock === 0 ? 'Bajo pedido' : stock}
-          </div> 
-          <div className="text-gray-700 text-xl">Estado: {estado}</div>
-        </div>
-        <div className="mt-6">
-          <a
-            href="#"
-            className="block text-center text-white font-medium py-3 px-6 bg-blue-600 rounded-md text-2xl hover:bg-blue-700 flex justify-center w-45 m-auto"
-          >
-            Agregar <i className="fas fa-shopping-cart"></i>
-          </a>
+        <div className="w-full md:w-2/3 xl:w-3/4 px-8 py-6">
+          <div className="text-teesaBlueDark font-bold text-4xl mb-6">
+            {categoria} {marca}
+          </div>
+          <h2 className="text-teesaBlueDark text-3xl font-light mb-4">{nombre}</h2>
+          <p className="text-gray-700 text-xl mb-6">Descripcion: {descripcion}</p>
+          <p className="text-gray-700 text-xl mb-6">Caracteristicas: {caracteristicas}</p>
+          <div className="flex flex-col md:flex-row justify-between mb-6">
+            <div className="text-teesaGreenDark text-3xl font-bold">${precio}</div>
+            <div
+              className="text-xl"
+              style={{ color: stock === 0 ? 'darkRed' : 'teesaGreenDark' }}
+            >
+              Stock: {stock === 0 ? 'Bajo pedido' : stock}
+            </div>
+            <div className="text-gray-700 text-xl">Estado: {estado}</div>
+          </div>
+          <div className="mt-6">
+            <a
+              href="#"
+              className="block text-center text-white font-medium py-3 px-6 bg-blue-600 rounded-md text-2xl hover:bg-blue-700 flex justify-center w-45 m-auto"
+            >
+              Agregar <i className="fas fa-shopping-cart"></i>
+            </a>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-
+    </div>
   );
 };
 

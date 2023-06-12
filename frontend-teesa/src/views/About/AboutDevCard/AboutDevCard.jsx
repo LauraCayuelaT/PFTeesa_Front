@@ -49,6 +49,7 @@ const AboutDevCard = ({ name, country, role, linkedin, github, image }) => {
   );
 };
 
+
 export default AboutDevCard;
 
 
