@@ -42,9 +42,9 @@ export const fetchGoogleProfile = createAsyncThunk(
       const response = await axios.get(
         'https://servidor-teesa.onrender.com/auth/google/perfil'
       );
-      console.log(response.data);
+      console.log(response);
       console.log('Estoy terminando la accion.');
-      return response.data;
+      return response;
     } catch (error) {
       console.log(error.response.data.message);
     }
