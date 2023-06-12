@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import Cookies from 'universal-cookie';
 
 //Estados
 const initialState = {
@@ -9,18 +10,20 @@ const initialState = {
   success: false,
   token: '',
   googleAuthLink: 'https://servidor-teesa.onrender.com/auth/google/login',
+  googleUser: null,
 };
 
 // Login Back:
 export const loginUser = createAsyncThunk(
-  'product/loginUser',
+  'login/loginUser',
   async ({ correo, contrasena }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
         'https://servidor-teesa.onrender.com/login',
         { correo, contrasena }
       );
-      console.log(response.data.token);
+      const cookies = new Cookies();
+      cookies.set('token', response.data.token, { path: '/' });
       return response.data.token;
     } catch (error) {
       console.log(error.response.data.message);
@@ -31,15 +34,26 @@ export const loginUser = createAsyncThunk(
 
 //Login Google:
 
+export const fetchGoogleProfile = createAsyncThunk(
+  'login/fetchGoogleProfile',
+  async () => {
+    try {
+      const response = await axios.get(
+        'https://servidor-teesa.onrender.com/auth/google/perfil'
+      );
+      return response;
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
+  }
+);
+
 // Slice Login
 const loginSlice = createSlice({
   name: 'loginState',
   initialState,
 
-  reducers: {
-    // eslint-disable-next-line no-unused-vars
-    resetLoginState: (state) => initialState,
-  },
+  reducers: {},
   extraReducers: (builder) => {
     // Acciones relacionadas con el inicio de sesión
     builder.addCase(loginUser.pending, (state) => {
@@ -53,6 +67,21 @@ const loginSlice = createSlice({
       state.success = true; // Activar el estado de éxito
     });
     builder.addCase(loginUser.rejected, (state, action) => {
+      state.loading = false;
+      state.error = true;
+      state.errorMessage = action.payload;
+    });
+    //*Google Data
+    builder.addCase(fetchGoogleProfile.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+      state.errorMessage = null;
+    });
+    builder.addCase(fetchGoogleProfile.fulfilled, (state, action) => {
+      state.loading = false;
+      state.googleUser = action.payload; // Actualizar el estado con los datos del usuario de Google
+    });
+    builder.addCase(fetchGoogleProfile.rejected, (state, action) => {
       state.loading = false;
       state.error = true;
       state.errorMessage = action.payload;
