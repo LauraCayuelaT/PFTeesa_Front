@@ -6,7 +6,7 @@ import { addFilter, fetchProducts } from '../../features/reduxReducer/filterSlic
 
 export const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState('');
-
+  
   const dispatch = useDispatch();
 
   const handleSearch = () => {
@@ -18,6 +18,9 @@ export const SearchBar = () => {
     dispatch(fetchProducts(filters));
   };
 
+
+
+  
   return (
     <div className='flex items-center justify-evenly md:justify-start w-full md:w-auto'>
       <input
