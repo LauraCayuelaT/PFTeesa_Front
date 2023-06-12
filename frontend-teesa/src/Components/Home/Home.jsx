@@ -65,6 +65,8 @@ function Home() {
 
   //isLoading
   let loading = useSelector((state) => state.productState.loading);
+  let googleUser = useSelector((state) => state.loginState.loading);
+  console.log(googleUser);
 
   //*Filtros Nuevos:
 
