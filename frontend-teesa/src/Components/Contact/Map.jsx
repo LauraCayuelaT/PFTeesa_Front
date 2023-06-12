@@ -1,6 +1,6 @@
 const Map = () => {
   return (
-    <div className='ml-10 md:px-0 w-[500px] shadow-gray-400 shadow-md rounded-lg'>
+    <div className='ml-10 md:px-0 w-[300px] md:w-[500px] shadow-gray-400 shadow-md rounded-lg'>
       <section className='mb-32 text-center'>
         <div className='relative h-[705px] rounded-lg shadow-lg '>
           <iframe
