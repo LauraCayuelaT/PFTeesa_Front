@@ -5,12 +5,14 @@ import { setUser } from '../../features/reduxReducer/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import googleIcon from '../../assets/icon/Google.svg';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Swal from 'sweetalert2';
 import jwt_decode from 'jwt-decode';
 import { loginUser } from '../../features/reduxReducer/loginSlice';
 import Cookies from 'universal-cookie';
 import { Link } from 'react-router-dom';
+//EmailJS - Mailer
+import emailjs from '@emailjs/browser';
 
 function Register() {
   const dispatch = useDispatch();
@@ -92,6 +94,22 @@ function Register() {
         if (tokenExists) {
           nav('/home');
         }
+        //EmailJS - Mailer
+        const user_email = data.correo;
+        const user_name = data.nombre;
+        emailjs
+          .send(
+            'service_2rp9duo',
+            'template_ogrchsj',
+            { user_email, user_name },
+            'W5KJUGxF4wBdmUA3v'
+          )
+          .then((result) => {
+            console.log(result.text);
+          })
+          .catch((error) => {
+            console.log(error.text);
+          });
       }
     }
 
