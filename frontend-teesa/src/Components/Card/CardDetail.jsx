@@ -14,7 +14,6 @@ const CardDetail = ({
   estado,
 }) => {
   return (
-
     <div className='mt-12 flex justify-center items-start'>
       <div className='max-w-6xl rounded overflow-hidden shadow-lg flex relative'>
         <NavLink
@@ -58,11 +57,10 @@ const CardDetail = ({
             <div className='mt-6'>
               <a
                 href='#'
-                className='block text-center text-white font-medium py-3 px-6 bg-blue-600 rounded-md text-2xl hover:bg-blue-700 flex justify-center w-45 m-auto'
+                className='block text-center text-white font-medium py-3 px-6 bg-blue-600 rounded-md text-2xl hover:bg-blue-700  justify-center w-45 m-auto'
               >
                 Agregar <i className='fas fa-shopping-cart'></i>
               </a>
-
             </div>
           </div>
         </div>
