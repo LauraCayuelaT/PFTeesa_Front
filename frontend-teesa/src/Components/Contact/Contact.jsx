@@ -66,12 +66,18 @@ const Contact = () => {
     <div className='w-full h-full mt-0'>
       <section className='mb-32 w-full'>
         <div className=" flex items-center justify-center relative mx-auto h-[300px] overflow-hidden bg-cover bg-[50%] bg-no-repeat -mt-1 bg-[url('https://images.pexels.com/photos/213162/pexels-photo-213162.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')]">
-          <h1 className='font-bold text-7xl text-white mt-[-80px] drop-shadow-xl shadow-black'>
+          <h1
+            style={{
+              textShadow:
+                '0 2px 2px rgba(0, 0, 0, 0.2), 0 0 0.5em rgba(0, 128, 0, 0.1)',
+            }}
+            className='font-bold text-5xl md:text-5xl lg:text-7xl text-white mt-[-80px] drop-shadow-xl shadow-black'
+          >
             Contáctanos
           </h1>
         </div>
         {/* Si le ponemos m-auto se centra el form */}
-        <div className='m-auto flex w-11/12 px-6 justify-center'>
+        <div className='m-auto flex flex-col lg:flex-row w-11/12 px-6 justify-center '>
           <div className='flex rounded-lg bg-teesaWhite px-6 py-12  border-[3px] border-teesaBlueLight md:py-16 md:px-4 -mt-[100px] backdrop-blur-[30px] shadow-lg h-fit justify-center'>
             <div className='flex flex-wrap  flex-row justify-center'>
               <div className='mb-12  shrink-0 grow-0 basis-auto md:px-3 lg:mb-0 lg:w-5/12 lg:px-0'>
@@ -79,9 +85,9 @@ const Contact = () => {
                 <form
                   ref={form}
                   onSubmit={handleSubmit(onSubmit)}
-                  className='w-full -m-1'
+                  className='w-1/2 m-auto md:w-full lg:-m-1'
                 >
-                  <h1 className='font-bold text-3xl text-teesaBlueDark my-1'>
+                  <h1 className='font-bold text-2xl md:text-3xl text-teesaBlueDark my-1'>
                     ¿Quieres tener más información?
                   </h1>
                   <h2 className='my-3 font-medium text-20px'>
@@ -189,14 +195,14 @@ const Contact = () => {
                 {/* FORM */}
               </div>
               {/* DESING */}
-              <div className='w-full lg:w-6/12'>
+              <div className='w-1/2 -ml-40 md:w-6/12 md:m-0'>
                 <div className='flex flex-wrap flex-col'>
                   <div className='mb-12  shrink-0 grow-0 basis-auto '>
                     <div className='flex items-start'>
                       <div className='shrink-0'>
-                        <div className='inline-block rounded-md bg-primary-100 p-1 text-primary'>
+                        <div className='inline-block rounded-md bg-primary-100 md:p-1 text-primary'>
                           <i
-                            className='fa-solid fa-square-phone fa-3x '
+                            className='hidden md:flex fa-solid fa-square-phone fa-3x '
                             style={{ color: '#192c8c' }}
                           ></i>
                         </div>
@@ -210,7 +216,8 @@ const Contact = () => {
                           Celular: 3182581421
                         </p>
                         <p className='text-neutral-800 text-xl'>
-                          gerencia.teesasas@gmail.com
+                          gerencia.teesasas <br className='flex md:hidden' />{' '}
+                          @gmail.com
                         </p>
                       </div>
                     </div>
@@ -221,7 +228,7 @@ const Contact = () => {
                       <div className='shrink-0'>
                         <div className='inline-block rounded-md bg-primary-100 p-0 text-primary'>
                           <i
-                            className='fa-solid fa-location-dot fa-3x m-2'
+                            className=' hidden md:flex  fa-solid fa-location-dot fa-3x m-2'
                             style={{ color: '#192c8c' }}
                           ></i>
                         </div>
@@ -244,7 +251,7 @@ const Contact = () => {
                 <div className='flex justify-start mb-12 w-full shrink-0 grow-0 basis-auto md:w-6/12 md:px-3 lg:w-full lg:px-6 xl:w-6/12 ml-2'>
                   <div className='flex items-start'>
                     <div className='shrink-0'>
-                      <div className='inline-block rounded-md bg-primary-100 p-4 text-primary'></div>
+                      <div className='inline-block rounded-md bg-primary-100 md:p-4 text-primary'></div>
                     </div>
                     <div className='flex grow flex-col text-center'>
                       <p className='mb-2 font-bold text-3xl'>Redes Sociales</p>
@@ -286,7 +293,7 @@ const Contact = () => {
               </div>
             </div>
           </div>
-          <div className='-mt-[100px]'>
+          <div className='-ml-10 mt-5 md:mx-auto lg:-mt-[100px]'>
             <Map />
           </div>
         </div>

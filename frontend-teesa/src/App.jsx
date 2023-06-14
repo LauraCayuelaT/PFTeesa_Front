@@ -11,6 +11,7 @@ import Contact from './Components/Contact/Contact';
 import About from './views/About/About';
 import Register from './views/Register/Register';
 import Error404 from './views/Error404/Error404';
+import UserProfile from './views/UserProfile/UserProfile';
 import { getUserDataFromCookie } from './features/reduxReducer/userSlice';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
@@ -41,6 +42,7 @@ function App() {
         <Route path='contact' element={<Contact />} />
         <Route path='/signup' element={<Register />} />
         <Route path='error404' element={<Error404 />} />
+        <Route path='/profile' element={<UserProfile />} />
         <Route path='*' element={<Navigate to='error404' />} />
       </Routes>
     </div>

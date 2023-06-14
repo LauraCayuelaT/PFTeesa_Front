@@ -19,22 +19,29 @@ export const SearchBar = () => {
   };
 
 
-return (
-  <div className='flex items-center justify-evenly w-1/3'>
-    <input
-      className='w-3/5 h-8 px-2 outline-none text-black bg-blue-200 rounded'
-      type='search'
-      placeholder='Buscar...'
-      value={searchTerm}
-      onChange={(e) => setSearchTerm(e.target.value)}
-    />
-    <div>
-      <button 
-        type='submit'
-        className='bg-green-500 text-white px-4 py-2 rounded-md'
-        onClick={handleSearch}>Buscar</button>
-      
-     </div>   
-  </div>
-);
+
+  
+  return (
+    <div className='flex items-center justify-evenly md:justify-start w-full md:w-auto'>
+      <input
+        className='w-full md:w-56 h-8 px-2 outline-none text-black bg-blue-200 rounded-md mb-2 md:mb-0 md:mr-2'
+        type='search'
+        placeholder='Buscar productos...'
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+      <div>
+        <button
+          type='submit'
+          className='bg-green-500 text-white px-4 py-2 rounded-md'
+          onClick={handleSearch}
+        >
+          Buscar
+        </button>
+      </div>
+    </div>
+  );
 };
+
+
+
