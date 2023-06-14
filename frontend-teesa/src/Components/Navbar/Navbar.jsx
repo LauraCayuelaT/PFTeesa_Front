@@ -122,11 +122,21 @@ export default function NavBar() {
         ></i>
 
         {showTooltip && (
+          <div className='absolute flex-col h-auto bg-black top-full'>
+              <div
+              className=" right-0 w-40 bg-gray-100 text-gray-700 py-1 px-2 rounded-sm text-center hover:text-gray-900 hover:font-medium text-sm">
+          <NavLink
+          to='/profile'>
+          <p>Mi Perfil</p>
+          </NavLink>
+            </div>
+            
           <div
             onClick={handleLogout}
-            className="absolute top-full right-0 w-40 bg-gray-100 text-gray-700 py-1 px-2 rounded text-center hover:text-gray-900 hover:font-medium text-sm"
+            className=" right-0 w-40 bg-gray-100 text-gray-700 py-1 px-2 rounded-sm text-center hover:text-gray-900 hover:font-medium text-sm"
           >
             Cerrar sesión
+          </div>
           </div>
         )}
       </div>
