@@ -16,6 +16,7 @@ import {
 import loadingGif from '../../assets/icon/Loading.gif';
 //Componentes:
 import { SearchBar } from '../SearchBar/SearchBar';
+// import { NoHayProductosSearch } from '../../Components/NoHayProductosSearch/'
 import { Card } from '../Card/Card';
 import FilterComponent from './FilterComponent';
 import Pagination from '../Pagination/Pagination';
@@ -25,6 +26,7 @@ import {
 } from '../../features/reduxReducer/userSlice';
 import Cookies from 'universal-cookie';
 import axios from 'axios';
+import NoHayProductosSearch from '../NoHayProductosSearch/NoHayProductosSearch';
 
 function Home() {
   const [effectExecuted, setEffectExecuted] = useState(false);
@@ -43,6 +45,25 @@ function Home() {
     dispatch(sortByPrice(e.target.value.toLowerCase()));
     setOrden(`Ordenado por precio ${e.target.value}`);
   };
+
+  // const [noResults, setNoResults] = useState(false);
+
+  // const handleApplyFilterss = (selectedFilters) => {
+  //   dispatch(addFilter(selectedFilters));
+  //   dispatch(fetchProducts(selectedFilters))
+  //     .then((response) => {
+  //       if (response.payload.products.length === 0) {
+  //         setNoResults(true);
+  //       } else {
+  //         setNoResults(false);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.log('Error fetching products:', error);
+  //       setNoResults(true);
+  //     });
+  // };
+
 
   // Tiago y Juan - Estado de Páginación:
 
@@ -105,28 +126,28 @@ function Home() {
   return (
     <div className='flex w-full h-full flex-col flex-wrap'>
       {/* Second Navbar */}
-      <div className='flex bg-teesaBlueDark w-full m-0 items-center justify-center mt-[-1px] border-t-4 border-teesaGreen text-teesaWhite h-[60px] text-[16px]'>
-        <h2 className='mx-4 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>
-          Eléctrico
-        </h2>
-        <h2 className='mx-4 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>
-          Gas
-        </h2>
-        <h2 className='mx-4 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>
-          Refrigeración
-        </h2>
-        <h2 className='mx-4 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>
-          Hornos
-        </h2>
-        <h2 className='mx-4 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>
-          Repuestos
-        </h2>
+      <div className='flex flex-col md:flex-row bg-teesaBlueDark w-full m-0 items-center justify-center md:justify-start mt-[-1px] border-t-4 border-teesaGreen text-teesaWhite text-[16px]'>
+  <h2 className='mx-4 my-2 md:my-0 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>
+    Eléctrico
+  </h2>
+  <h2 className='mx-4 my-2 md:my-0 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>
+    Gas
+  </h2>
+  <h2 className='mx-4 my-2 md:my-0 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>
+    Refrigeración
+  </h2>
+  <h2 className='mx-4 my-2 md:my-0 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>
+    Hornos
+  </h2>
+  <h2 className='mx-4 my-2 md:my-0 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>
+    Repuestos
+  </h2>
         <SearchBar />
       </div>
       {/* Hero */}
       <div className='heroContainer flex w-full h-[800px]'>
         {/* Inicia parte de Sol. */} {/* FILTROS */}
-        <div className='filters w-1/6 m-4 bg-gray-100 p-4 rounded-lg'>
+        <div className='filters w-full md:w-1/6 m-4 bg-gray-100 p-4 rounded-lg'>
           <h1 className='text-xl font-bold mb-4 text-teesaBlueDark'>Filtrar por:</h1>
           <FilterComponent
             currentPage={currentPage}
@@ -140,8 +161,8 @@ function Home() {
         <div className='cardsContainer w-5/6 h-fit m-5 bg-teesaWhite  items-end '>
           {status === 'loading' && (
             <div className='flex justify-center items-center w-full h-[800px]'>
-              <img src={loadingGif} alt='gif' />
-            </div>
+              <img src={loadingGif} alt='gif' />    
+            </div>  
           )}
           {status === 'failed' && (
             <div>Error al cargar los productos: {error}</div>
@@ -166,8 +187,8 @@ function Home() {
             setCurrentPage={setCurrentPage}
           />
         </div>
+    </div>  
       </div>
-    </div>
   );
 }
 

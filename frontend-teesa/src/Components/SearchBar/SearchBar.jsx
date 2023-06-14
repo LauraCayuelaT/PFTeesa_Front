@@ -6,21 +6,34 @@ import { addFilter, fetchProducts } from '../../features/reduxReducer/filterSlic
 
 export const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  
+  const [noResults, setNoResults] = useState(false);
+
   const dispatch = useDispatch();
 
   const handleSearch = () => {
     const filters = {
-      nombre: searchTerm,
+      nombre: searchTerm,      
     };
 
     dispatch(addFilter(filters));
-    dispatch(fetchProducts(filters));
+    dispatch(fetchProducts(filters))
+      .then((response) => {
+        if (response.payload.products.length === 0) {
+          setNoResults(true);
+        } else {
+          setNoResults(false);
+        }
+      })
+      .catch((error) => {
+        console.log('Error fetching products:', error);
+        setNoResults(true);
+      });
   };
 
+  const clearSearch = () => {
+    setSearchTerm('');
+  };
 
-
-  
   return (
     <div className='flex items-center justify-evenly md:justify-start w-full md:w-auto'>
       <input
@@ -34,14 +47,21 @@ export const SearchBar = () => {
         <button
           type='submit'
           className='bg-green-500 text-white px-4 py-2 rounded-md'
-          onClick={handleSearch}
+          onClick={() => {
+            handleSearch();
+            clearSearch(); // Limpia el input de búsqueda después de aplicar el filtro
+          }}
         >
           Buscar
         </button>
       </div>
+      {noResults && (
+        <div className="flex items-center justify-evenly md:justify-start w-full md:w-auto">
+          <p>No hay productos con ese nombre en este momento.</p>
+        </div>
+      )}
     </div>
   );
 };
-
 
 
