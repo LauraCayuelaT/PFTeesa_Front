@@ -14,6 +14,7 @@ const CardDetail = ({
   estado,
 }) => {
   return (
+
     <div className='mt-12 flex justify-center items-start'>
       <div className='max-w-6xl rounded overflow-hidden shadow-lg flex relative'>
         <NavLink
@@ -61,6 +62,7 @@ const CardDetail = ({
               >
                 Agregar <i className='fas fa-shopping-cart'></i>
               </a>
+
             </div>
           </div>
         </div>
