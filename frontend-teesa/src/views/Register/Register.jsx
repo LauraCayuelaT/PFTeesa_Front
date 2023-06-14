@@ -73,7 +73,7 @@ function Register() {
       //Ejecutar el Reducer Post.
       const onSubmit = async (data) => {
         const resultAction = await dispatch(registerUser(data));
-      
+        console.log(data)
         if (resultAction.error) {
           const errorMessage = resultAction.error.response.data.message;
           alertErrorMessage(errorMessage);
@@ -93,7 +93,7 @@ function Register() {
             setIsUserLoaded(true);
             alertSucess();
             const cookies= new Cookies()
-            const tokenExists = cookies.get('token');
+            const tokenExists = cookies.get('token'); 
       if (tokenExists) {
         nav('/home');
       }
@@ -138,8 +138,8 @@ function Register() {
 
     return (
       <div className="w-screen bg-teesaBlueDark h-screen flex flex-row justify-center align-center items-center xl:gap-[15em] lg:gap-[12em] md:gap-[5em] overflow-hidden m-auto">
-        <div className='flex-col xl:mb-[18%] lg:mb-[10%]'>
-          <img src={logo} alt="logo" className='  xl:h-[700px] lg:h-[500px] md:h-[400px]'/>
+        <div className='flex-col xl:mb-[] lg:mb-[]'>
+          <img src={logo} alt="logo" className=' xl:h-[600px] lg:h-[500px] md:h-[400px]'/>
           <h1 className='text-center text-teesaWhite xl:text-3xl xl:mt-[-6em] lg:text-2xl lg:mt-[-6em] md:text-xl md:mt-[-6em]'>Tecnología en Equipos Alimenticios</h1>
         </div>
         
@@ -178,54 +178,7 @@ function Register() {
                 <div className='h-[5px]'></div>
               )}
                 </label>
-                <label className="flex flex-col justify-center align-center items-center gap-[3%]">
-                <input type="num" name="nit" placeholder=' NIT/Cédula' className="bg-teesaBlueDark border-teesaGrey text-teesaGrey rounded-md h-[2em] w-[15em]" {...register('nit', { 
-                  required: 'Este campo es obligatorio',
-                    pattern: {
-                      value:  /^\d+$/,
-                      message: 'Ingresa un NIT válido',
-                    },
-                })} 
-                onBlur={() => handleBlur('nit')}/>
-                {errors.nit ? (
-                <span className='text-red-500'>{errors.nit.message}</span>
-              ) : (
-                <div className='h-[5px]'></div>
-              )}
-                </label>
-                <label className="flex flex-col justify-center align-center items-center gap-[3%]">
-                <input type="text" name="direccion" placeholder=' Dirección' className="bg-teesaBlueDark text-teesaGrey rounded-md h-[2em] w-[15em]"
-                {...register('direccion', { 
-                  required: 'Este campo es obligatorio',
-                    pattern: {
-                      value: /^[a-zA-Z0-9\s]+$/,
-                      message: 'Ingresa una dirección válido',
-                    },
-                })} 
-                onBlur={() => handleBlur('direccion')}
-                />
-                {errors.direccion ? (
-                <span className='text-red-500'>{errors.direccion.message}</span>
-              ) : (
-                <div className='h-[5px]'></div>
-              )}
-                </label>
-                <label className="flex flex-col justify-center align-center items-center gap-[3%]">
-                <input type="tel" name="telefono" placeholder=' Teléfono' className="bg-teesaBlueDark text-teesaGrey rounded-md h-[2em] w-[15em]" 
-                 {...register('telefono', { 
-                  required: 'Este campo es obligatorio',
-                    pattern: {
-                      value: /^\d+$/,
-                      message: 'Ingresa una número de telefono válido',
-                    },
-                })} 
-                onBlur={() => handleBlur('telefono')} />
-                {errors.telefono ? (
-                <span className='text-red-500'>{errors.telefono.message}</span>
-              ) : (
-                <div className='h-[5px]'></div>
-              )}
-                </label>
+              
                 <label className="flex flex-col justify-center align-center items-center gap-[3%]">
                 <input type="password" name="contrasena" placeholder=' Contraseña' className="bg-teesaBlueDark text-teesaGrey rounded-md h-[2em] w-[15em]"
                 {...register('contrasena', { 
@@ -268,7 +221,7 @@ function Register() {
             <span className="text-red-500">{errors.confirmarContrasena.message}</span>
           )}
         </label>
-                <button className='bg-teesaGreen font-bold h-[2em] w-[12em] hover:bg-green-600 hover:transform hover:scale-105 rounded-md'>Crear Cuenta</button>
+                <button className='bg-teesaGreen font-bold h-[2em] w-[12em] hover:bg-green-600 hover:transform hover:scale-105 rounded-md'>INGRESAR</button>
                 <p className='text-end'>
           ¿Ya tienes cuenta?{' '}
           <Link to='/login'>
