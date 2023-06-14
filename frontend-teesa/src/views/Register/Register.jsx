@@ -1,26 +1,26 @@
-import React from 'react'
-import {useForm} from 'react-hook-form'
-import logo from '../../img/SVGs/TeesaAll.svg'
-import { registerUser } from '../../features/reduxReducer/registerSlice'
+import { useForm } from 'react-hook-form';
+import logo from '../../img/SVGs/TeesaAll.svg';
+import { registerUser } from '../../features/reduxReducer/registerSlice';
 import { setUser } from '../../features/reduxReducer/userSlice';
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
 import googleIcon from '../../assets/icon/Google.svg';
-import {useNavigate} from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useState, useRef } from 'react';
 import Swal from 'sweetalert2';
 import jwt_decode from 'jwt-decode';
 import { loginUser } from '../../features/reduxReducer/loginSlice';
-import Cookies from 'universal-cookie'
+import Cookies from 'universal-cookie';
 import { Link } from 'react-router-dom';
-
+//EmailJS - Mailer
+import emailjs from '@emailjs/browser';
 
 function Register() {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.registerState.loading);
-  const error= useSelector((state) => state.registerState.error);
+  const error = useSelector((state) => state.registerState.error);
   const errorMessage = useSelector((state) => state.registerState.errorMessage);
   const userData = useSelector((state) => state.userState.userData);
-  const nav= useNavigate()
+  const nav = useNavigate();
   console.log(loading);
 
   //Data del Usuario - Token.
@@ -28,7 +28,7 @@ function Register() {
   const [tokenValue, setTokenValue] = useState('');
   const [isUserLoaded, setIsUserLoaded] = useState(false);
   const token = useSelector((state) => state.loginState.token);
-  
+
   const setUserWithTokenData = () => {
     if (tokenValue) {
       //Decodificamos el Token
@@ -41,8 +41,6 @@ function Register() {
       dispatch(setUser({ userId, userName, userType }));
     }
   };
-
-
 
   const alertErrorMessage = (errorMessage) => {
     Swal.fire({
@@ -59,7 +57,6 @@ function Register() {
     }
   }, [errorMessage]);
 
-
   const alertSucess = () => {
     Swal.fire({
       title: '¡Felicidades!',
@@ -69,7 +66,7 @@ function Register() {
       confirmButtonColor: '#192C8C',
     });
   };
-
+  
       //Ejecutar el Reducer Post.
       const onSubmit = async (data) => {
         const resultAction = await dispatch(registerUser(data));
@@ -98,13 +95,31 @@ function Register() {
         nav('/home');
       }
           }
-        }
-      
-        reset();
-      };
-      
 
-      //Llamar a la  función Token Data.
+        }
+        //EmailJS - Mailer
+        const user_email = data.correo;
+        const user_name = data.nombre;
+        emailjs
+          .send(
+            'service_2rp9duo',
+            'template_ogrchsj',
+            { user_email, user_name },
+            'W5KJUGxF4wBdmUA3v'
+          )
+          .then((result) => {
+            console.log(result.text);
+          })
+          .catch((error) => {
+            console.log(error.text);
+          });
+      }
+    }
+
+    reset();
+  };
+
+  //Llamar a la  función Token Data.
 
   useEffect(() => {
     if (tokenValue) {
@@ -118,22 +133,34 @@ function Register() {
     }
   }, [userData]);
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    trigger,
+    watch,
+  } = useForm();
 
-      const {
-        register,
-        handleSubmit,
-        formState: { errors },
-        reset,
-        trigger,
-        watch
-      } = useForm();
+  const handleBlur = (fieldName) => {
+    trigger(fieldName);
+  };
 
-      const handleBlur = (fieldName) => {
-        trigger(fieldName);
-      };
-    
-      const contrasena = watch('contrasena');
-      const confirmarContrasena = watch('confirmarContrasena');
+  const contrasena = watch('contrasena');
+  const confirmarContrasena = watch('confirmarContrasena');
+
+  return (
+    <div className='w-screen bg-teesaBlueDark h-screen flex flex-row justify-center align-center items-center xl:gap-[15em] lg:gap-[12em] md:gap-[5em] overflow-hidden m-auto'>
+      <div className='flex-col xl:mb-[18%] lg:mb-[10%]'>
+        <img
+          src={logo}
+          alt='logo'
+          className='  xl:h-[700px] lg:h-[500px] md:h-[400px]'
+        />
+        <h1 className='text-center text-teesaWhite xl:text-3xl xl:mt-[-6em] lg:text-2xl lg:mt-[-6em] md:text-xl md:mt-[-6em]'>
+          Tecnología en Equipos Alimenticios
+        </h1>
+      </div>
 
 
     return (
@@ -149,58 +176,71 @@ function Register() {
               <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col justify-center align-center items-center gap-[0.5em]'>
                 <label className="flex flex-col justify-center align-center items-center ">
                 <input type="text" name="nombre" placeholder=' Nombre' className="bg-teesaBlueDark text-teesaGrey rounded-md h-[2em] w-[15em]" {...register('nombre', { 
+
                   required: 'Este campo es obligatorio',
-                    pattern: {
-                      value: /^[a-zA-Z\s]+$/,
-                      message: 'Solo se aceptan letras y espacios',
-                    },
-                })} 
+                  pattern: {
+                    value: /^[a-zA-Z\s]+$/,
+                    message: 'Solo se aceptan letras y espacios',
+                  },
+                })}
                 onBlur={() => handleBlur('nombre')}
-                />
-                {errors.nombre ? (
+              />
+              {errors.nombre ? (
                 <span className='text-red-500'>{errors.nombre.message}</span>
               ) : (
                 <div className='h-[5px]'></div>
               )}
-                </label>
-                <label className="flex flex-col justify-center align-center items-center gap-[3%]">
-                <input type="text" name="correo" placeholder=' Email' className="bg-teesaBlueDark border-teesaGrey text-teesaGrey rounded-md h-[2em] w-[15em]" {...register('correo', { 
+            </label>
+            <label className='flex flex-col justify-center align-center items-center gap-[3%]'>
+              <input
+                type='text'
+                name='correo'
+                placeholder=' Email'
+                className='bg-teesaBlueDark border-teesaGrey text-teesaGrey rounded-md h-[2em] w-[15em]'
+                {...register('correo', {
                   required: 'Este campo es obligatorio',
-                    pattern: {
-                      value:  /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                      message: 'Ingresa un email válido',
-                    },
-                })} 
-                onBlur={() => handleBlur('correo')}/>
-                {errors.correo ? (
+                  pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: 'Ingresa un email válido',
+                  },
+                })}
+                onBlur={() => handleBlur('correo')}
+              />
+              {errors.correo ? (
                 <span className='text-red-500'>{errors.correo.message}</span>
               ) : (
                 <div className='h-[5px]'></div>
               )}
+
                 </label>
               
                 <label className="flex flex-col justify-center align-center items-center gap-[3%]">
                 <input type="password" name="contrasena" placeholder=' Contraseña' className="bg-teesaBlueDark text-teesaGrey rounded-md h-[2em] w-[15em]"
                 {...register('contrasena', { 
+
                   required: 'Este campo es obligatorio',
                   minLength: {
                     value: 6,
-                    message: "La contraseña debe tener al menos 6 caracteres",
+                    message: 'La contraseña debe tener al menos 6 caracteres',
                   },
                   maxLength: {
                     value: 20,
-                    message: "La contraseña debe tener como máximo 20 caracteres",
+                    message:
+                      'La contraseña debe tener como máximo 20 caracteres',
                   },
                   pattern: {
-                    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()])[a-zA-Z\d!@#$%^&*()]+$/,
+                    value:
+                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()])[a-zA-Z\d!@#$%^&*()]+$/,
                     message:
-                      "La contraseña debe contener al menos una mayúscula, un número y un caracter especial",
+                      'La contraseña debe contener al menos una mayúscula, un número y un caracter especial',
                   },
-                })} 
+                })}
                 onBlur={() => handleBlur('contrasena')}
-                />
-                {errors.contrasena ? (
-                <span className='text-red-500'>{errors.contrasena.message}</span>
+              />
+              {errors.contrasena ? (
+                <span className='text-red-500'>
+                  {errors.contrasena.message}
+                </span>
               ) : (
                 <div className='h-[5px]'></div>
               )}
@@ -242,12 +282,10 @@ function Register() {
               </a>
           </div> 
             </div>
-            
-          
         </div>
       </div>
+    </div>
+  );
+}
 
-    );
-  }
-  
-  export default Register;
+export default Register;
