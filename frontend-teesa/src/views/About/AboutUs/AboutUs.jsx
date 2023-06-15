@@ -76,7 +76,7 @@ const AboutUs = () => {
         </div>
       </section>
 
-      <section className='flex flex-col-reverse md:flex-row items-center md:items-start py-20 bg-gray-100 xl:h-screen font-poppins -mt-40 md:-mt-60 lg:-mt-[400px] 2xl:-mt-[600px]'>
+      <section className='flex flex-col-reverse md:flex-row items-center md:items-start py-20 bg-gray-100 xl:h-screen font-poppins -mt-40 md:-mt-60 lg:-mt-[250px] 2xl:-mt-[600px]'>
         <div className='justify-center flex-1 max-w-6xl px-4 py-4 mx-auto lg:py-6 md:px-6'>
           <div className='relative max-w-xl mx-auto'>
             <div className=' lg:bottom-0 z-40 md:mt-10 md:-mb-20 lg:absolute lg:left-0 lg:-ml-44 lg:mt-0'>
