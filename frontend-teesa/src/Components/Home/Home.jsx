@@ -96,7 +96,7 @@ function Home() {
   useEffect(() => {
     const url = new URL(window.location.href);
     const nombre = url.searchParams.get('nombre');
-    console.log(`Nombre Google: ${nombre}`);
+    //console.log(`Nombre Google: ${nombre}`);
     if (nombre) {
       dispatch(saveUserNameToCookie({ nombre }));
     }
@@ -127,7 +127,9 @@ function Home() {
       <div className='heroContainer flex w-full h-[800px]'>
         {/* Inicia parte de Sol. */} {/* FILTROS */}
         <div className='filters w-1/6 m-4 bg-gray-100 p-4 rounded-lg'>
-          <h1 className='text-xl font-bold mb-4 text-teesaBlueDark'>Filtrar por:</h1>
+          <h1 className='text-xl font-bold mb-4 text-teesaBlueDark'>
+            Filtrar por:
+          </h1>
           <FilterComponent
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
