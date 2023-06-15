@@ -1,9 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  fetchProducts,
-  changePage,
-} from '../../features/reduxReducer/filterSlice';
+import { changePage } from '../../features/reduxReducer/filterSlice';
 
 const Pagination = () => {
   const dispatch = useDispatch();
@@ -44,7 +41,7 @@ const Pagination = () => {
   };
 
   return (
-    <div className='flex justify-center mt-4'>
+    <div className='flex justify-center mt-4 mb-4'>
       <button
         className={`px-4 py-2 mx-1 rounded-lg ${
           currentPage

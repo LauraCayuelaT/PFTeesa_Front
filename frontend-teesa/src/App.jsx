@@ -9,7 +9,8 @@ import Login from './Components/Login/Login';
 import Services from './views/Services/Services';
 import Contact from './Components/Contact/Contact';
 import CheckoutAlerts from './Components/CheckoutAlerts/CheckoutAlerts';
-import About from './views/About/About';
+import About from './views/About/AboutUs/AboutUs';
+import AboutDevs from './views/About/AboutDevs';
 import Register from './views/Register/Register';
 import Error404 from './views/Error404/Error404';
 import UserProfile from './views/UserProfile/UserProfile';
@@ -39,6 +40,7 @@ function App() {
         <Route path='home/:id' element={<Detail />} />
         <Route path='login' element={<Login />} />
         <Route path='services' element={<Services />} />
+        <Route path='aboutdevs' element={<AboutDevs />} />
         <Route path='about' element={<About />} />
         <Route path='contact' element={<Contact />} />
         <Route path='/signup' element={<Register />} />
