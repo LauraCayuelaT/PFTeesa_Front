@@ -13,7 +13,11 @@ import About from './views/About/AboutUs/AboutUs';
 import AboutDevs from './views/About/AboutDevs';
 import Register from './views/Register/Register';
 import Error404 from './views/Error404/Error404';
+import CheckoutSucess from './views/Checkout/CheckoutSucess';
+import CheckoutPending from './views/Checkout/CheckoutPending';
+import CheckoutFailed from './views/Checkout/CheckoutFailed';
 import UserProfile from './views/UserProfile/UserProfile';
+//Redux
 import { getUserDataFromCookie } from './features/reduxReducer/userSlice';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
@@ -48,6 +52,10 @@ function App() {
         <Route path='checkalerts' element={<CheckoutAlerts />} />
         <Route path='/profile' element={<UserProfile />} />
         <Route path='*' element={<Navigate to='error404' />} />
+        {/* Checkout */}
+        <Route path='checkoutsuccess' element={<CheckoutSucess />} />
+        <Route path='checkoutpending' element={<CheckoutPending />} />
+        <Route path='checkoutfailed' element={<CheckoutFailed />} />
       </Routes>
     </div>
   );

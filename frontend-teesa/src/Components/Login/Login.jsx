@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 //Redux
 import { loginUser } from '../../features/reduxReducer/loginSlice';
-import { setUser } from '../../features/reduxReducer/userSlice';
+import { setUser, saveUserEmail } from '../../features/reduxReducer/userSlice';
 import { useRef, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
@@ -105,6 +105,8 @@ const Login = () => {
       const errorMessage = resultAction.error.response.data.message;
       alertErrorMessage(errorMessage);
     } else {
+      let userCorreo = data.correo;
+      dispatch(saveUserEmail(userCorreo));
       const ntoken = resultAction.payload;
       alertSucess();
       setTokenValue(ntoken);

@@ -1,37 +1,45 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { NavLink } from 'react-router-dom';
-import title from '../../title.png';
-import 'boxicons/css/boxicons.min.css';
-import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-//import { resetLoginState } from '../../features/reduxReducer/loginSlice';
+import { useState, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
+import Cookies from 'universal-cookie';
+import 'boxicons/css/boxicons.min.css';
+import title from '../../title.png';
 import {
   resetUserState,
-  saveUserNameToCookie,
+  updateUserDataFromCookie,
 } from '../../features/reduxReducer/userSlice';
-import Cookies from 'universal-cookie';
 
 export default function NavBar() {
   //Traer Data del User - Nuestro Login y Register
   const userData = useSelector((state) => state.userState);
-  //Google
-  const [nombreGoogle, setNombreGoogle] = useState(null);
-  const cookies = new Cookies();
-  const dispatch = useDispatch();
-
   const {
     user,
     userData: { userName },
   } = userData;
 
-  //Traer Data del User - Google Auth
+  //Google
+  const [nombreGoogle, setNombreGoogle] = useState(null);
+  const cookies = new Cookies();
+  const dispatch = useDispatch();
+
+  //Sesión Continúa: Data del User - Google Auth
 
   useEffect(() => {
     const nombreGoogleCookie = cookies.get('nombreGoogle');
-    if (nombreGoogleCookie && !user) {
-      dispatch(saveUserNameToCookie({ nombre: nombreGoogleCookie }));
+    // const idGoogleCookie = cookies.get('idGoogle');
+    // const emailGoogleCookie = cookies.get('correoGoogle');
+
+    if (nombreGoogleCookie) {
+      dispatch(updateUserDataFromCookie());
       setNombreGoogle(nombreGoogleCookie);
     }
+
+    //Parte Original:
+    // if (nombreGoogleCookie && !user) {
+    //   dispatch(saveUserDataToCookie({ nombre: nombreGoogleCookie }));
+    //   setNombreGoogle(nombreGoogleCookie);
+    // }
   }, []);
 
   //Log Out Button
@@ -40,7 +48,9 @@ export default function NavBar() {
     // Vaciar estados de Login, Register y vaciar data del User.
     const cookies = new Cookies();
     cookies.remove('token', { path: '/' });
+    cookies.remove('idGoogle', { path: '/' });
     cookies.remove('nombreGoogle', { path: '/' });
+    cookies.remove('correoGoogle', { path: '/' });
     resetUserState();
     navigate('/home', { replace: true });
     window.location.reload();

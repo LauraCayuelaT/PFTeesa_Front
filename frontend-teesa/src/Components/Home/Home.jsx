@@ -21,10 +21,9 @@ import FilterComponent from './FilterComponent';
 import Pagination from '../Pagination/Pagination';
 import {
   getUserDataFromCookie,
-  saveUserNameToCookie,
+  saveUserDataToCookie,
 } from '../../features/reduxReducer/userSlice';
 import Cookies from 'universal-cookie';
-import axios from 'axios';
 
 function Home() {
   const [effectExecuted, setEffectExecuted] = useState(false);
@@ -71,7 +70,7 @@ function Home() {
     (state) => state.filters
   );
 
-  //useEffect para evitar errores al momento de la carga de información
+  //*Nuestro Login: Comprobar token - Cargar Datos del User (userSlice).
   useEffect(() => {
     const cookies = new Cookies();
 
@@ -96,9 +95,10 @@ function Home() {
   useEffect(() => {
     const url = new URL(window.location.href);
     const nombre = url.searchParams.get('nombre');
-    //console.log(`Nombre Google: ${nombre}`);
+    const correo = url.searchParams.get('correo');
+    const id = url.searchParams.get('id');
     if (nombre) {
-      dispatch(saveUserNameToCookie({ nombre }));
+      dispatch(saveUserDataToCookie({ nombre, correo, id }));
     }
   }, [dispatch]);
 
