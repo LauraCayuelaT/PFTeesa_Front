@@ -51,6 +51,7 @@ export default function NavBar() {
     cookies.remove('idGoogle', { path: '/' });
     cookies.remove('nombreGoogle', { path: '/' });
     cookies.remove('correoGoogle', { path: '/' });
+    cookies.remove('OursUserEmail', { path: '/' });
     resetUserState();
     navigate('/home', { replace: true });
     window.location.reload();

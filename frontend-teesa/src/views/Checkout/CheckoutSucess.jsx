@@ -13,22 +13,16 @@ const CheckoutSucess = () => {
   const handleNavigateToHome = () => {
     navigate('/home');
   };
-  //Tareas:
 
-  //TODO: 0. Preeliminar: Verificar si funciona mi alternativa para guardar email en Query.
-  //*1.Verifico si está logeado (Google o Nuestro)
-  //*2. Si sí está logeado, saco el nombre y el email (Google o nuestro).
-  //*3. Con el nombre y el user, le envío el mail.
+  //Enviar Mail:
 
-  //Traer Data del User - Nuestro Login y Register (si no funciona así lo traemos de cookies).
   const allUser = useSelector((state) => state.userState);
-  //1. - Si no detecta el user de Google - comprobamos con las cookies.
+
   useEffect(() => {
     if (allUser.user) {
-      //2.
       const user_name = allUser.userData.userName;
       const user_email = allUser.userData.userEmail;
-      //3.
+      console.log(user_email);
       emailjs
         .send(
           'service_2rp9duo',

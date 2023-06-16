@@ -8,7 +8,7 @@ import Detail from './Components/Detail/Detail';
 import Login from './Components/Login/Login';
 import Services from './views/Services/Services';
 import Contact from './Components/Contact/Contact';
-import CheckoutAlerts from './Components/CheckoutAlerts/CheckoutAlerts';
+import Mercado from './Components/Mercado/Mercado';
 import About from './views/About/AboutUs/AboutUs';
 import AboutDevs from './views/About/AboutDevs';
 import Register from './views/Register/Register';
@@ -49,7 +49,7 @@ function App() {
         <Route path='contact' element={<Contact />} />
         <Route path='/signup' element={<Register />} />
         <Route path='error404' element={<Error404 />} />
-        <Route path='checkalerts' element={<CheckoutAlerts />} />
+        <Route path='mercado' element={<Mercado />} />
         <Route path='/profile' element={<UserProfile />} />
         <Route path='*' element={<Navigate to='error404' />} />
         {/* Checkout */}
