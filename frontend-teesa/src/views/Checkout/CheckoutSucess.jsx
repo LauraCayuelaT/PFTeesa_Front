@@ -1,11 +1,10 @@
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import waves from '../../assets/icon/waveschecklow.svg';
 import Button from '@mui/material/Button';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import emailjs from '@emailjs/browser';
-import Cookies from 'universal-cookie';
 
 const CheckoutSucess = () => {
   //R-R-D
@@ -16,15 +15,14 @@ const CheckoutSucess = () => {
   };
   //Tareas:
 
-  //TODO: 0. Preeliminar: Preguntarle a Jhonny como traer el correo con nuestro login (si con Token o Query).
+  //TODO: 0. Preeliminar: Verificar si funciona mi alternativa para guardar email en Query.
   //*1.Verifico si está logeado (Google o Nuestro)
   //*2. Si sí está logeado, saco el nombre y el email (Google o nuestro).
   //*3. Con el nombre y el user, le envío el mail.
 
   //Traer Data del User - Nuestro Login y Register (si no funciona así lo traemos de cookies).
   const allUser = useSelector((state) => state.userState);
-  //1.
-  //Si no detecta el user de Google - comprobamos con las cookies.
+  //1. - Si no detecta el user de Google - comprobamos con las cookies.
   useEffect(() => {
     if (allUser.user) {
       //2.

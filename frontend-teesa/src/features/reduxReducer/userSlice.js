@@ -48,10 +48,18 @@ const userSlice = createSlice({
         state.userData.userName = userData.nombre;
         state.userData.userType = userData.tipo;
         state.userData.userId = userData.sub;
+        //Email:
+        const userEmail = cookies.get('OursUserEmail');
+        state.userData.userEmail = userEmail;
       }
+    },
+    saveUserEmail: (state, action) => {
+      cookies.set('OursUserEmail', action.payload, { path: '/' });
+      state.userData.userEmail = action.payload;
     },
 
     //*Google Login - Guardar Data en Cookies
+
     saveUserDataToCookie: (state, action) => {
       const { nombre, correo, id } = action.payload;
       cookies.set('idGoogle', id, { path: '/', overwrite: true });
@@ -82,6 +90,7 @@ const userSlice = createSlice({
 
 export const {
   setUser,
+  saveUserEmail,
   resetUserState,
   getUserDataFromCookie,
   saveUserDataToCookie,
