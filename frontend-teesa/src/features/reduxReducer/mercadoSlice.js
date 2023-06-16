@@ -14,7 +14,7 @@ export const postLinkMercado = createAsyncThunk(
       const response = await axios.post(
         `https://servidor-teesa.onrender.com/mercadopago/create_order/${id}`
       );
-      const { link } = response.data;
+      const link = response.data;
       return link;
     } catch (error) {
       throw Error('Error al realizar la petición');
