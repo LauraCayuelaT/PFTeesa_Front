@@ -1,28 +1,9 @@
 import emailjs from '@emailjs/browser';
-import Swal from 'sweetalert2';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { postLinkMercado } from '../../features/reduxReducer/mercadoSlice';
 
 const CheckoutAlerts = () => {
-  //Alerts:
-  const alertSucess = () => {
-    Swal.fire({
-      title: '¡Felicidades!',
-      text: 'Tu compra ha sido procesada con éxito.',
-      icon: 'success',
-      confirmButtonText: 'Ok.',
-      confirmButtonColor: '#192C8C',
-    });
-  };
-
-  const alertError = () => {
-    Swal.fire({
-      title: 'Sucedió un error',
-      text: 'Por favor, inténta realizar la compra de nuevo.',
-      icon: 'error',
-      confirmButtonText: 'Ok.',
-      confirmButtonColor: '#192C8C',
-    });
-  };
-
   //Mailer Compra Exitosa:
   let data = {
     nombre: 'Juan',
@@ -42,16 +23,31 @@ const CheckoutAlerts = () => {
       )
       .then((result) => {
         console.log(result.text);
-        alertSucess();
       })
       .catch((error) => {
         console.log(error.text);
       });
   };
 
-  let errorBuy = () => {
-    alertError();
-  };
+  //MercadoPago - Botón.
+
+  const userId = useSelector((state) => state.userState.userData.userId);
+  console.log(userId);
+
+  const linkMercado = useSelector((state) => state.mercadoState.linkMercado);
+  console.log(linkMercado);
+  const status = useSelector((state) => state.mercadoState.status);
+  const error = useSelector((state) => state.mercadoState.error);
+
+  const dispatch = useDispatch();
+
+  //*Al hacer la peticion me sale error: 404
+
+  useEffect(() => {
+    if (userId !== null) {
+      dispatch(postLinkMercado(userId));
+    }
+  }, [dispatch, userId]);
 
   return (
     <div>
@@ -60,15 +56,21 @@ const CheckoutAlerts = () => {
         className='m-4 p-4 border-2 border-blue-500 rounded-lg hover:bg-gray-300'
         onClick={successBuy}
       >
-        {' '}
         Compra Exitosa
       </button>
-      <button
-        className='m-4 p-4 border-2 border-blue-500 rounded-lg hover:bg-gray-300'
-        onClick={errorBuy}
-      >
-        Fallo en la compra
-      </button>
+      <h1>Mercado:</h1>
+      <div>
+        {status === 'pending' && <p>Cargando...</p>}
+        {status === 'fulfilled' && (
+          <p>
+            Enlace del mercado:{' '}
+            <a href={linkMercado} target='_blank' rel='noopener noreferrer'>
+              Ir al MercadoPago
+            </a>
+          </p>
+        )}
+        {status === 'rejected' && <p>Error: {error}</p>}
+      </div>
     </div>
   );
 };

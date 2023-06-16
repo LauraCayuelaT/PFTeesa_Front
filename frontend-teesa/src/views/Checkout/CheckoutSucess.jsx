@@ -13,6 +13,7 @@ const CheckoutSucess = () => {
   const handleNavigateToHome = () => {
     navigate('/home');
   };
+
   //Tareas:
 
   //TODO: 0. Preeliminar: Verificar si funciona mi alternativa para guardar email en Query.
@@ -28,6 +29,7 @@ const CheckoutSucess = () => {
       //2.
       const user_name = allUser.userData.userName;
       const user_email = allUser.userData.userEmail;
+      console.log(user_email);
       //3.
       emailjs
         .send(
