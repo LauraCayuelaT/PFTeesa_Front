@@ -33,6 +33,15 @@ const CardDetail = ({
     minimumFractionDigits: 0,
   };
 
+  function capitalizeWord(word) {
+    if (!word) {
+      return '';
+    }
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  }
+
+  const estadoMayus = capitalizeWord(estado || '');
+
   //*Datos
 
   //General Reviews
@@ -80,24 +89,23 @@ const CardDetail = ({
             />
             <span className='ml-2 text-teesaBlueDark '>{`(${reviews})`}</span>
           </div>
-          <p className='text-gray-700 text-xl mb-6'>
+          <p className='text-gray-900 text-xl mb-6'>
             Descripcion: {descripcion}
           </p>
-          <p className='text-gray-700 text-xl mb-6'>
+          <p className='text-gray-900 text-xl mb-6'>
             Caracteristicas: {caracteristicas}
           </p>
           <div className='flex flex-col mb-6'>
-            <h2 className='text-black text-2xl font-bold'>{`$${
+            <h2 className='text-teesaBlueDark text-2xl font-bold'>{`$${
               precio ? precio.toLocaleString('es-ES', options) : ''
             }`}</h2>
 
-            <h2
-              className='text-xl'
-              style={{ color: stock === 0 ? 'darkRed' : 'teesaGreenDark' }}
-            >
+            <h2 className='text-xl text-teesaBlueDark'>
               Stock: {stock === 0 ? 'Bajo Pedido.' : stock}
             </h2>
-            <h2 className='text-gray-700 text-xl'>Estado: {estado}.</h2>
+            <h2 className='text-teesaBlueDark text-xl'>
+              Estado: {estadoMayus}.
+            </h2>
           </div>
           <div className='mt-6'>
             <a
