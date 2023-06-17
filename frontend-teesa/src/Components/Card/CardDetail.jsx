@@ -3,10 +3,10 @@ import { useNavigate, NavLink } from 'react-router-dom';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import Carrusel from '../Carrusel/Carrusel';
 //Reviews
+import Review from './Review';
 import Rating from '@mui/material/Rating';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 /* eslint-disable react/prop-types */
 const CardDetail = ({
@@ -44,33 +44,51 @@ const CardDetail = ({
 
   //*Datos
 
+  const userReviews = [
+    {
+      userName: 'Pepito Perez',
+      userRating: 4,
+      userTitle: 'Buen producto.',
+      userComment:
+        'Después de haberlo utilizado puedo decir que es un buen producto, buena calidad.',
+    },
+    {
+      userName: 'Fito Paez',
+      userRating: 3,
+      userTitle: 'No está mal',
+      userComment: 'No está mal, aunque sinceramente habría cosas por mejorar.',
+    },
+    {
+      userName: 'Camilo Nuñez',
+      userRating: 5,
+      userTitle: 'Me gustó bastante.',
+      userComment: 'Me gustaria comprarlo de nuevo, no decepciona.',
+    },
+  ];
+
+  console.log(userReviews);
+
   //General Reviews
   let reviews = 4;
   //Nombre
-  let userName = 'Pepito Perez';
-  //Rating
-  let userRating = 4;
-  //Titulo
-  let userTitle = 'Buen producto.';
-  //Comentario
-  let userComment =
-    'Después de haberlo utilizado puedo decir que es un buen producto, buena calidad.';
+
   return (
     <div className='w-full mt-12 flex flex-col justify-center items-center '>
-      <NavLink className='mb-1  transition duration-300 ease-in-out transform m-2'>
-        <button
-          onClick={handleGoBack}
-          className='bg-blue-600 rounded-md text-white hover:bg-blue-700 '
-        >
-          Volver al listado
-        </button>
-      </NavLink>
-
-      <div className='detailContainer flex w-3/4 rounded  shadow-lg  bg-gray-400'>
-        <div className='w-1/2 m-4 flex items-center justify-center '>
+      <div className='detailContainer flex flex-col lg:flex-row w-full lg:w-3/4 rounded  shadow-lg  bg-gray-100'>
+        <div className='flex justify-start items-start w-5 -mt-10'>
+          <NavLink className=' justify-self-start mb-1  transition duration-300 ease-in-out transform m-2'>
+            <button
+              onClick={handleGoBack}
+              className='bg-blue-600 rounded-md text-white hover:bg-blue-700 p-2'
+            >
+              Volver
+            </button>
+          </NavLink>
+        </div>
+        <div className='w-full lg:w-1/2 m-4 flex items-center justify-center '>
           <Carrusel />
         </div>
-        <div className='w-1/2  px-8 py-6'>
+        <div className='w-full lg:w-1/2  px-8 py-6'>
           <div className='text-teesaBlueDark font-bold text-lg mb-2'>
             {categoria} {marca}
           </div>
@@ -119,36 +137,18 @@ const CardDetail = ({
           </div>
         </div>
       </div>
-
       {/* Reviews */}
-      <div className='reviewsContainer w-3/4 m-4  border-t-2 border-blue-950'>
+      <div className='reviewsContainer w-full m-8 lg:m-4 lg:w-3/4   border-t-2 border-blue-950'>
         <h1 className='font-bold text-lg m-4'>Opiniones:</h1>
-        <article className=' rounded   flex flex-col  m-4'>
-          <div className='flex items-center mb-1 '>
-            <AccountCircleIcon
-              style={{ fontSize: '30px' }}
-              className=' rounded-fulls mr-2'
-            />
-            <div className='space-y-1 font-bold text-lg'>
-              <p>{userName} </p>
-            </div>
-          </div>
-          <div className='flex items-center'>
-            <Rating
-              name='size-medium'
-              defaultValue={userRating}
-              precision={1}
-              size='medium'
-              readOnly
-              emptyIcon={<StarBorderIcon style={{ color: '#192C8C' }} />}
-              icon={<StarIcon style={{ color: '#192C8C' }} />}
-            />
-            <h3 className='pt-[3px] text-lg font-semibold text-gray-900 ml-2'>
-              {userTitle}
-            </h3>
-          </div>
-          <p className='my-2 text-gray-800 '>{userComment}</p>
-        </article>
+        {userReviews.map((review, index) => (
+          <Review
+            key={index}
+            userName={review.userName}
+            userRating={review.userRating}
+            userComment={review.userComment}
+            userTitle={review.userTitle}
+          />
+        ))}
       </div>
     </div>
   );
