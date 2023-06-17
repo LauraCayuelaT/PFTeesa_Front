@@ -90,10 +90,12 @@ const CardDetail = ({
             <span className='ml-2 text-teesaBlueDark '>{`(${reviews})`}</span>
           </div>
           <p className='text-gray-900 text-xl mb-6'>
-            Descripcion: {descripcion}
+            <span className='font-bold text-md'>Descripcion</span> <br />{' '}
+            {descripcion}
           </p>
           <p className='text-gray-900 text-xl mb-6'>
-            Caracteristicas: {caracteristicas}
+            <span className='font-bold text-md'>Caracteristicas</span> <br />{' '}
+            {caracteristicas}
           </p>
           <div className='flex flex-col mb-6'>
             <h2 className='text-teesaBlueDark text-2xl font-bold'>{`$${
