@@ -11,9 +11,11 @@ import Contact from './Components/Contact/Contact';
 import About from './views/About/About';
 import Register from './views/Register/Register';
 import Error404 from './views/Error404/Error404';
+import { Carrito } from './Components/Carrito/Carrito';
 import { getUserDataFromCookie } from './features/reduxReducer/userSlice';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
+import Cart from './Components/Carrito/Cart';
 
 function App() {
   const location = useLocation();
@@ -42,6 +44,7 @@ function App() {
         <Route path='/signup' element={<Register />} />
         <Route path='error404' element={<Error404 />} />
         <Route path='*' element={<Navigate to='error404' />} />
+        <Route path='carrito' element={<Cart />} />
       </Routes>
     </div>
   );

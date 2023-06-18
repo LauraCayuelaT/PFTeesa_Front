@@ -26,6 +26,8 @@ import {
 } from '../../features/reduxReducer/userSlice';
 import Cookies from 'universal-cookie';
 import axios from 'axios';
+import Carrito from '../Carrito/Carrito';
+// import { addToCartWithQuantity } from '../../features/reduxReducer/carritoSlice';
 import NoHayProductosSearch from '../NoHayProductosSearch/NoHayProductosSearch';
 
 function Home() {
@@ -46,23 +48,7 @@ function Home() {
     setOrden(`Ordenado por precio ${e.target.value}`);
   };
 
-  // const [noResults, setNoResults] = useState(false);
-
-  // const handleApplyFilterss = (selectedFilters) => {
-  //   dispatch(addFilter(selectedFilters));
-  //   dispatch(fetchProducts(selectedFilters))
-  //     .then((response) => {
-  //       if (response.payload.products.length === 0) {
-  //         setNoResults(true);
-  //       } else {
-  //         setNoResults(false);
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.log('Error fetching products:', error);
-  //       setNoResults(true);
-  //     });
-  // };
+  // Carrito 
 
 
   // Tiago y Juan - Estado de Páginación:
@@ -145,7 +131,7 @@ function Home() {
         <SearchBar />
       </div>
       {/* Hero */}
-      <div className='heroContainer flex w-full h-[800px]'>
+      <div className='heroContainer flex w-full h-[1000px]'>
         {/* Inicia parte de Sol. */} {/* FILTROS */}
         <div className='filters w-full md:w-1/6 m-4 bg-gray-100 p-4 rounded-lg'>
           <h1 className='text-xl font-bold mb-4 text-teesaBlueDark'>Filtrar por:</h1>
@@ -158,7 +144,7 @@ function Home() {
         {/* Termina parte de Sol. */}
         {/* Inicia parte de Juan. */}
         {/* Cards */}
-        <div className='cardsContainer w-5/6 h-fit m-5 bg-teesaWhite  items-end '>
+        <div className='cardsContainer w-full md:w-2/3 h-fit m-5 bg-teesaWhite flex flex-wrap justify-center'>
           {status === 'loading' && (
             <div className='flex justify-center items-center w-full h-[800px]'>
               <img src={loadingGif} alt='gif' />    
@@ -182,13 +168,14 @@ function Home() {
               ))}
             </div>
           )}
+  
           <Pagination
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
           />
         </div>
+        </div>
     </div>  
-      </div>
   );
 }
 

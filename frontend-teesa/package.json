@@ -25,6 +25,7 @@
     "react-redux": "^8.0.5",
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.11.2",
+    "react-spring": "^9.7.1",
     "sweetalert2": "^11.7.10",
     "tailwind": "^4.0.0",
     "typeface-roboto": "^1.1.13",
