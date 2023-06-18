@@ -1,8 +1,10 @@
-
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addFilter, fetchProducts } from '../../features/reduxReducer/filterSlice';
+import {
+  addFilter,
+  fetchProducts,
+} from '../../features/reduxReducer/filterSlice';
 
 export const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState('');

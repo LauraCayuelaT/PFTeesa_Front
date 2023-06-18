@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { useDispatch,useSelector } from "react-redux";
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 // import { useSelector } from 'react-redux';
 import {
@@ -24,20 +24,17 @@ const FilterComponent = ({currentPage, setCurrentPage}) => {
 
   const pageState = useSelector((state) => state?.filters?.page);
 
-
-
   const dispatch = useDispatch();
 
   useEffect(() => {
     const filters = {
-      page: pageState ,
+      page: pageState,
       estado: estado,
       tipo: tipo,
       marca: marca,
 
-      precioMinimo: precio.split("-")[0],
-      precioMaximo: precio.split("-")[1],
-
+      precioMinimo: precio.split('-')[0],
+      precioMaximo: precio.split('-')[1],
     };
     dispatch(fetchProducts(filters));
   }, [pageState, estado, tipo, marca, precio, dispatch]);
@@ -57,10 +54,8 @@ useEffect(() => {
 
 
   const handleChange = () => {
-   dispatch(changePage(1))
-   
-  }
-
+    dispatch(changePage(1));
+  };
 
   const handleSort = (e) => {
     e.preventDefault();

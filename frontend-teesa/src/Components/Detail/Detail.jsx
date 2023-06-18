@@ -16,8 +16,7 @@ function Detail() {
   const dispatch = useDispatch();
   const detail = useSelector((state) => state?.detailState?.productDetail);
   let loading = useSelector((state) => state.detailState.loading); // Cambia state.productState.loading por state.detailState.loading
- 
-  
+
   useEffect(() => {
     dispatch(getProductById(id));
 
@@ -25,8 +24,6 @@ function Detail() {
       dispatch(clearDetail());
     };
   }, [dispatch, id]);
-
- 
 
   return (
     <div>

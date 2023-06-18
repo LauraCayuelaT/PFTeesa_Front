@@ -22,7 +22,7 @@ import FilterComponent from './FilterComponent';
 import Pagination from '../Pagination/Pagination';
 import {
   getUserDataFromCookie,
-  saveUserNameToCookie,
+  saveUserDataToCookie,
 } from '../../features/reduxReducer/userSlice';
 import Cookies from 'universal-cookie';
 import axios from 'axios';
@@ -33,14 +33,13 @@ import NoHayProductosSearch from '../NoHayProductosSearch/NoHayProductosSearch';
 function Home() {
   const [effectExecuted, setEffectExecuted] = useState(false);
   //Sol - Ordenamientos:
-  //FUNCIONANDO PERFECTO
+
   const handleSort = (e) => {
     e.preventDefault();
     dispatch(sortByName(e.target.value)); // Pasa el valor directamente
     setOrden(`Ordenado ${e.target.value}`);
   };
 
-  //FUNCIONANDO PERFECTO
   const handleSortPrices = (e) => {
     e.preventDefault();
     dispatch(sortByPrice({ minPrice: 100000000, maxPrice: 500000000 }));
@@ -68,17 +67,13 @@ function Home() {
     dispatch(getPaginationData(currentPage));
   }, [dispatch, currentPage]);
 
-  //isLoading
-  let loading = useSelector((state) => state.productState.loading);
-  let googleUser = useSelector((state) => state.loginState.loading);
-
   //*Filtros Nuevos:
 
   const { filters, products, status, error } = useSelector(
     (state) => state.filters
   );
 
-  //useEffect para evitar errores al momento de la carga de información
+  //*Nuestro Login: Comprobar token - Cargar Datos del User (userSlice).
   useEffect(() => {
     const cookies = new Cookies();
 
@@ -98,14 +93,15 @@ function Home() {
     dispatch(addFilter(selectedFilters));
   };
 
-  //*Google Auth
+  //*Google Auth: Sacar Data de Query
 
   useEffect(() => {
     const url = new URL(window.location.href);
     const nombre = url.searchParams.get('nombre');
-    console.log(`Nombre Google: ${nombre}`);
+    const correo = url.searchParams.get('correo');
+    const id = url.searchParams.get('id');
     if (nombre) {
-      dispatch(saveUserNameToCookie({ nombre }));
+      dispatch(saveUserDataToCookie({ nombre, correo, id }));
     }
   }, [dispatch]);
 

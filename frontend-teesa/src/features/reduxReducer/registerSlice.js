@@ -14,11 +14,11 @@ const initialState = {
 // Comunicación con BACK.
 export const registerUser = createAsyncThunk(
   'product/registerUser',
-  async ({ nit, nombre, direccion, telefono, correo,  contrasena, confirmarContrasena, tipo  }, { rejectWithValue }) => {
+  async ({ nombre, correo,  contrasena, confirmarContrasena }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
         'https://servidor-teesa.onrender.com/signup',
-        { nit, nombre, direccion, telefono, correo, contrasena, confirmarContrasena, tipo }
+        { nombre, correo, contrasena, confirmarContrasena}
       );
       console.log(response.data.token);
       return response.data.token;
