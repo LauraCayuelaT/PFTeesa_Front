@@ -148,10 +148,10 @@ const Login = () => {
   //       }
   //     );
   //     console.log(response.data);
-  //      Aquí puedes manejar la respuesta de la API
+  //     // Aquí puedes manejar la respuesta de la API
   //   } catch (error) {
   //     console.error(error.response.data);
-  //      Aquí puedes manejar cualquier error ocurrido durante la solicitud
+  //      //Aquí puedes manejar cualquier error ocurrido durante la solicitud
   //   }
   // };
 

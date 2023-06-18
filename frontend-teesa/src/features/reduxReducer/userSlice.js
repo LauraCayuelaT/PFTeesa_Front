@@ -1,8 +1,48 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import Cookies from 'universal-cookie';
 import jwt_decode from 'jwt-decode';
+import Swal from 'sweetalert2';
+import axios from 'axios';
 
 const cookies = new Cookies();
+
+//userProfile
+export const putUser = createAsyncThunk('user/putUser', async (payload) => {
+  try {
+    const { userName, userNit, userAddress, userPhone, userId, userType, userEmail } = payload;
+    const nombre = userName;
+    const nit = userNit;
+    const direccion = userAddress;
+    const telefono = userPhone;
+    const tipo=userType
+    const correo=userEmail
+    console.log("Esto es payload en userSlice", payload);
+    console.log(nit)
+    console.log(nombre)
+    console.log(direccion)
+    console.log(telefono)
+    const sub=userId
+    
+    const response = await axios.put(`https://servidor-teesa.onrender.com/user/${userId}`,  {
+      nombre, nit, direccion, telefono, tipo, correo, sub
+    });
+
+    console.log(response)
+    Swal.fire({
+      title: 'A!',
+      text: 'Has ingresado a tu cuenta con éxito.',
+      icon: 'success',
+      confirmButtonText: 'Ok.',
+      confirmButtonColor: '#192C8C',
+    });
+    console.log("Esto es el response", response);
+    return response;
+  } catch (error) {
+    console.log(error.response.data.message);
+    Swal("Error", "Hubo un error al actualizar su información, intentelo de nuevo", "error");
+    throw error;
+  }
+});
 
 // Estados
 const initialState = {
