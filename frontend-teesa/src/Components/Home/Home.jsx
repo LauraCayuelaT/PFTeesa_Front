@@ -28,22 +28,19 @@ import Cookies from 'universal-cookie';
 function Home() {
   const [effectExecuted, setEffectExecuted] = useState(false);
   //Sol - Ordenamientos:
-  //FUNCIONANDO PERFECTO
+
   const handleSort = (e) => {
     e.preventDefault();
     dispatch(sortByName(e.target.value)); // Pasa el valor directamente
     setOrden(`Ordenado ${e.target.value}`);
   };
 
-  //FUNCIONANDO PERFECTO
   const handleSortPrices = (e) => {
     e.preventDefault();
     dispatch(sortByPrice({ minPrice: 100000000, maxPrice: 500000000 }));
     dispatch(sortByPrice(e.target.value.toLowerCase()));
     setOrden(`Ordenado por precio ${e.target.value}`);
   };
-
-  // Tiago y Juan - Estado de Páginación:
 
   //Tiago y Juan - Paginación.
 
@@ -59,10 +56,6 @@ function Home() {
   useEffect(() => {
     dispatch(getPaginationData(currentPage));
   }, [dispatch, currentPage]);
-
-  //isLoading
-  let loading = useSelector((state) => state.productState.loading);
-  let googleUser = useSelector((state) => state.loginState.loading);
 
   //*Filtros Nuevos:
 
@@ -90,7 +83,7 @@ function Home() {
     dispatch(addFilter(selectedFilters));
   };
 
-  //*Google Auth
+  //*Google Auth: Sacar Data de Query
 
   useEffect(() => {
     const url = new URL(window.location.href);

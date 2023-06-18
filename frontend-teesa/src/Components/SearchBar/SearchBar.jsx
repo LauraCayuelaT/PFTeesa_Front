@@ -1,12 +1,14 @@
-
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addFilter, fetchProducts } from '../../features/reduxReducer/filterSlice';
+import {
+  addFilter,
+  fetchProducts,
+} from '../../features/reduxReducer/filterSlice';
 
 export const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  
+
   const dispatch = useDispatch();
 
   const handleSearch = () => {
@@ -18,9 +20,6 @@ export const SearchBar = () => {
     dispatch(fetchProducts(filters));
   };
 
-
-
-  
   return (
     <div className='flex items-center justify-evenly md:justify-start w-full md:w-auto'>
       <input
@@ -42,6 +41,3 @@ export const SearchBar = () => {
     </div>
   );
 };
-
-
-
