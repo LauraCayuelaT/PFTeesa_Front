@@ -181,17 +181,17 @@ export default function NavBar() {
             <i className='bx bxs-user mr-6' style={{ fontSize: '1.5rem' }}></i>
           </NavLink>
         )}
-        <i
+        {/* <i
           className={`bx bx-cart mr-6 ${
             isMobileMenuOpen ? 'hidden sm:flex' : 'flex'
           }`}
           style={{ fontSize: '1.5rem' }}
-        ></i>
+        ></i> */}
 
 {/* Boton carrito*/}
 <div className="relative">
         <NavLink to="/carrito">
-          <i className="fa-solid fa-cart-shopping rounded-md"></i>
+          <i className="fa-solid fa-cart-shopping rounded-md hover:text-teesaGreen"></i>
           {/* {cartCount > 0 && (
             <span className="absolute -top-1 -right-1 bg-teesaGreen text-white rounded-full text-xs px-2 py-1">
               {cartCount}
