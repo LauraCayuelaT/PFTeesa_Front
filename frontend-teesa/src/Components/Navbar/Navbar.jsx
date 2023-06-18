@@ -84,7 +84,11 @@ export default function NavBar() {
   return (
     <div className='flex flex-row justify-between items-center w-full h-[4em] border-b-2 border-gray-300 bg-teesaBlueDark text-white text-xl sm:text-lg relative'>
       <div className='flex items-center'>
-        <img className='w-[10%] my-0' src={title} alt='Icono Teesa' />
+        <img
+          className='w-[10%] my-0'
+          src={title}
+          alt='Icono Teesa'
+        />
         <div className='hidden sm:flex gap-[4%]'>
           <NavLink
             to='/home'
@@ -178,7 +182,10 @@ export default function NavBar() {
               isMobileMenuOpen ? 'hidden sm:flex' : 'flex'
             }`}
           >
-            <i className='bx bxs-user mr-6' style={{ fontSize: '1.5rem' }}></i>
+            <i
+              className='bx bxs-user mr-6'
+              style={{ fontSize: '1.5rem' }}
+            ></i>
           </NavLink>
         )}
         {/* <i

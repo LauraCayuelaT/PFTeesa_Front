@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser, getCart } from '../../features/reduxReducer/carritoSlice';
 import { Carrito } from '../Carrito/Carrito';
 import { Link } from 'react-router-dom';
-import Logo from '../../assets/Logo - Screenshot.jpg';
+import { postLinkMercado } from '../../features/reduxReducer/mercadoSlice';
 
 function calculateTotal(cartProducts) {
   let total = 0;
@@ -38,7 +38,8 @@ export const Cart = () => {
     dispatch(getUser()).then((action) => {
       const response = action.payload;
       console.log(response);
-      const cartId = response.find((user) => user.id === userData.userId)?.Cart.id;
+      const cartId = response.find((user) => user.id === userData.userId)?.Cart
+        .id;
       console.log(cartId);
       if (cartId) {
         dispatch(getCart(cartId)).then((action) => {
@@ -54,13 +55,32 @@ export const Cart = () => {
   }, [dispatch, userData]);
   console.log(info.items);
 
+  //*MercadoPago Button:
+
+  const userId = useSelector((state) => state.userState.userData.userId);
+  console.log(userId);
+
+  const linkMercadoPago = useSelector(
+    (state) => state.mercadoState.linkMercado
+  );
+  const status = useSelector((state) => state.mercadoState.status);
+  const error = useSelector((state) => state.mercadoState.error);
+
+  useEffect(() => {
+    if (userId !== null) {
+      dispatch(postLinkMercado(userId));
+    }
+  }, [dispatch, userId]);
+
   return (
-    <div className="flex flex-col items-center justify-center mt-8">
-      <h2 className="text-4xl font-medium text-gray-800 mb-4">Carrito de Productos</h2>
+    <div className='flex flex-col items-center justify-center mt-8'>
+      <h2 className='text-4xl font-medium text-gray-800 mb-4'>
+        Carrito de Productos
+      </h2>
       <main>
-        <div className="max-w-3xl p-8 bg-white shadow-lg rounded-lg">
+        <div className='max-w-3xl p-8 bg-white shadow-lg rounded-lg'>
           {info.items === '' ? (
-            <p className="text-2xl font-bold text-gray-800">Cargando...</p>
+            <p className='text-2xl font-bold text-gray-800'>Cargando...</p>
           ) : info.items?.cartProducts?.length > 0 ? (
             <>
               {info.items.cartProducts.map((item) => (
@@ -74,28 +94,59 @@ export const Cart = () => {
                   imagen={item.Product.imagenes}
                 />
               ))}
-              <div className="mt-8">
-                <h2 className="text-2xl font-bold text-gray-800">
+              <div className='mt-8'>
+                <h2 className='text-2xl font-bold text-gray-800'>
                   Total:{' '}
-                  <span className="text-2xl font-bold text-black">
+                  <span className='text-2xl font-bold text-black'>
                     ${' '}
-                    {calculateTotal(info.items?.cartProducts).toLocaleString('es-ES', options)}
+                    {calculateTotal(info.items?.cartProducts).toLocaleString(
+                      'es-ES',
+                      options
+                    )}
                   </span>
                 </h2>
               </div>
-              <div className="flex justify-center mt-8">
-                <Link to="/home" className="bg-teesaBlueDark text-white px-6 py-3 rounded-lg mr-4">
+              <div className='flex justify-center mt-8'>
+                <Link
+                  to='/home'
+                  className='bg-teesaBlueDark text-white px-6 py-3 rounded-lg mr-4'
+                >
                   Seguir comprando
                 </Link>
-                <Link to="/checkout" className="bg-teesaGreen text-white px-6 py-3 rounded-lg">
-                  Terminar compra
-                </Link>
+                <div>
+                  {status === 'pending' && (
+                    <button className='w-70 px-4 py-3 border-4 bg-blue-500  rounded-2xl font-bold text-white hover:bg-blue-600 transition duration-100 transform hover:scale-105'>
+                      Cargando...
+                    </button>
+                  )}
+                  {status === 'fulfilled' && (
+                    <a
+                      onClick={() => {
+                        window.open(
+                          linkMercadoPago,
+                          '_blank',
+                          'width=800,height=800'
+                        );
+                      }}
+                    >
+                      <button className='7-80 px-4 py-3 border-4 bg-blue-500  rounded-2xl font-bold text-white hover:bg-blue-600 transition duration-100 transform hover:scale-105'>
+                        Comprar con MercadoPago
+                      </button>
+                    </a>
+                  )}
+                  {status === 'rejected' && <p>Error: {error}</p>}
+                </div>
               </div>
             </>
           ) : (
-            <div className="flex flex-col items-center justify-center">
-              <p className="text-2xl font-bold text-gray-800 mb-4">No hay productos en el carrito</p>
-              <Link to="/home" className="bg-teesaBlueDark text-white px-6 py-3 rounded-lg">
+            <div className='flex flex-col items-center justify-center'>
+              <p className='text-2xl font-bold text-gray-800 mb-4'>
+                No hay productos en el carrito
+              </p>
+              <Link
+                to='/home'
+                className='bg-teesaBlueDark text-white px-6 py-3 rounded-lg'
+              >
                 Seguir comprando
               </Link>
             </div>
