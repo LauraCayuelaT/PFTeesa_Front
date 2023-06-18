@@ -9,6 +9,9 @@ import {
   resetUserState,
   updateUserDataFromCookie,
 } from '../../features/reduxReducer/userSlice';
+// import { addToCartWithQuantity } from '../../features/reduxReducer/carritoSlice';
+// import Cookies from 'universal-cookie';
+// import CartIcon from '../Carrito/CartIcon';
 
 export default function NavBar() {
   //Traer Data del User - Nuestro Login y Register
@@ -69,6 +72,14 @@ export default function NavBar() {
   const handleMobileMenuToggle = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
+
+
+//carrito
+// const cartt = useSelector((state) => state.app.cart);
+
+// console.log("Cart Length:", cartt.length);
+
+
 
   return (
     <div className='flex flex-row justify-between items-center w-full h-[4em] border-b-2 border-gray-300 bg-teesaBlueDark text-white text-xl sm:text-lg relative'>
@@ -177,12 +188,24 @@ export default function NavBar() {
             ></i>
           </NavLink>
         )}
-        <i
+        {/* <i
           className={`bx bx-cart mr-6 ${
             isMobileMenuOpen ? 'hidden sm:flex' : 'flex'
           }`}
           style={{ fontSize: '1.5rem' }}
-        ></i>
+        ></i> */}
+
+{/* Boton carrito*/}
+<div className="relative">
+        <NavLink to="/carrito">
+          <i className="fa-solid fa-cart-shopping rounded-md hover:text-teesaGreen"></i>
+          {/* {cartCount > 0 && (
+            <span className="absolute -top-1 -right-1 bg-teesaGreen text-white rounded-full text-xs px-2 py-1">
+              {cartCount}
+            </span>
+          )} */}
+        </NavLink>
+</div>
       </div>
 
       {isMobileMenuOpen && (
@@ -220,5 +243,4 @@ export default function NavBar() {
         </div>
       )}
     </div>
-  );
-}
+  )}

@@ -52,7 +52,7 @@ export const getBrands = createAsyncThunk('products/getBrands', async () => {
     const response = await axios.get(
       'https://servidor-teesa.onrender.com/brands'
     );
-    return response.data.products;
+    return response.data; // Actualiza aquí para acceder a response.data
   } catch (error) {
     console.error('Error fetching brands:', error);
     throw error;
