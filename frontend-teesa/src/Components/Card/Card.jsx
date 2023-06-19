@@ -6,6 +6,7 @@ import { postCart, getUser } from '../../features/reduxReducer/carritoSlice';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { NavLink, useNavigate  } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+// import CartWindowCart from './CardWindowCart';
 
 
 export const Card = ({ nombre, categoria, imagenes, precio, marca, id }) => {
@@ -78,6 +79,47 @@ export const Card = ({ nombre, categoria, imagenes, precio, marca, id }) => {
     // navigate('/carrito');
   };
 
+
+  // carro 
+  
+
+      
+      // const [cartItems, setCartItems] = useState([]);
+
+  // const handleAddToCart = () => {
+  //   const newItem = {
+  //     id,
+  //     nombre,
+  //     precio,
+  //     cantidad: cart.cantidad,
+  //   };
+  //   setCartItems((prevItems) => [...prevItems, newItem]);
+  //   setCart({
+  //     ProductId: id,
+  //     CartId: cart.CartId,
+  //     cantidad: 0,
+  //   });
+  // };
+
+
+
+  // const handleAddToCart = () => {
+  //   const newItem = {
+  //     id,
+  //     nombre,
+  //     precio,
+  //     cantidad: cart.cantidad,
+  //   };
+  //   setCartItems((prevItems) => [...prevItems, newItem]);
+  //   setCart({
+  //     ProductId: id,
+  //     CartId: cart.CartId,
+  //     cantidad: 0,
+  //   });
+  //   // setShowCart(true);
+  // };
+
+
   return (
     <div className='flex w-[260px] h-[460px] my-2 mx-6 transition duration-100 transform hover:scale-105 hover:cursor-pointer'>
       <div className='shadow-md border bg-teesaWhite border-gray-400 rounded-md flex flex-col'>
@@ -122,6 +164,7 @@ export const Card = ({ nombre, categoria, imagenes, precio, marca, id }) => {
                 </button>
                 <button
                   type='submit'
+                  // onClick={handleAddToCart}
                   className='ml-2 px-8 py-0.3 bg-teesaBlueDark text-white rounded-md'
                 >
                   Agregar al Carrito <i className='fa-solid fa-cart-shopping rounded-md'></i>
@@ -133,6 +176,9 @@ export const Card = ({ nombre, categoria, imagenes, precio, marca, id }) => {
           </div>
         </div>
       </div>
+      {/* <div className="menu-deslizante-container"> */}
+      {/* {cartItems.length > 0 && <CartWindowCart cartItems={cartItems} />} */}
+      {/* </div> */}
     </div>
   );
   

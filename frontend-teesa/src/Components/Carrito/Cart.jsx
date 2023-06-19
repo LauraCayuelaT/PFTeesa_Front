@@ -59,9 +59,10 @@ export const Cart = () => {
       <h2 className="text-4xl font-medium text-gray-800 mb-4">Carrito de Productos</h2>
       <main>
         <div className="max-w-3xl p-8 bg-white shadow-lg rounded-lg">
-          {info.items === '' ? (
+          {/* {info.items === '' ? (
             <p className="text-2xl font-bold text-gray-800">Cargando...</p>
-          ) : info.items?.cartProducts?.length > 0 ? (
+          ) : info.items?.cartProducts?.length > 0 ? ( */}
+          {info.items?.cartProducts?.length > 0 ? (
             <>
               {info.items.cartProducts.map((item) => (
                 <Carrito

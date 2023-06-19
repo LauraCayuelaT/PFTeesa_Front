@@ -15,6 +15,7 @@ import {
 //Gif
 import loadingGif from '../../assets/icon/Loading.gif';
 //Componentes:
+// import CartWindowCart from '../Card/CardWindowCart';
 import { SearchBar } from '../SearchBar/SearchBar';
 // import { NoHayProductosSearch } from '../../Components/NoHayProductosSearch/'
 import { Card } from '../Card/Card';
@@ -27,7 +28,6 @@ import {
 import Cookies from 'universal-cookie';
 import axios from 'axios';
 import Carrito from '../Carrito/Carrito';
-// import { addToCartWithQuantity } from '../../features/reduxReducer/carritoSlice';
 import NoHayProductosSearch from '../NoHayProductosSearch/NoHayProductosSearch';
 
 function Home() {
@@ -164,7 +164,6 @@ function Home() {
               ))}
             </div>
           )}
-  
           <Pagination
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}

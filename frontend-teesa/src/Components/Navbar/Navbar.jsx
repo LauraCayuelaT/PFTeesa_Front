@@ -9,6 +9,7 @@ import {
   resetUserState,
   updateUserDataFromCookie,
 } from '../../features/reduxReducer/userSlice';
+import { postCart } from '../../features/reduxReducer/carritoSlice';
 // import { addToCartWithQuantity } from '../../features/reduxReducer/carritoSlice';
 // import Cookies from 'universal-cookie';
 // import CartIcon from '../Carrito/CartIcon';
@@ -78,6 +79,35 @@ export default function NavBar() {
 // const cartt = useSelector((state) => state.app.cart);
 
 // console.log("Cart Length:", cartt.length);
+
+const [cartItems, setCartItems] = useState([]);
+
+const handleAddToCart = (id, nombre, precio) => {
+  const newItem = {
+    id,
+    nombre,
+    precio,
+    cantidad: 0,
+  };
+  setCartItems((prevItems) => [...prevItems, newItem]);
+};
+
+// const handleAddToCart = () => {
+//   const newItem = {
+//     id,
+//     nombre,
+//     precio,
+//     cantidad: cart.cantidad,
+//   };
+//   setCartItems((prevItems) => [...prevItems, newItem]);
+//   setCart({
+//     ProductId: id,
+//     CartId: cart.CartId,
+//     cantidad: 0,
+//   });
+//   // setShowCart(true);
+// };
+
 
 
 
@@ -192,11 +222,6 @@ export default function NavBar() {
 <div className="relative">
         <NavLink to="/carrito">
           <i className="fa-solid fa-cart-shopping rounded-md hover:text-teesaGreen"></i>
-          {/* {cartCount > 0 && (
-            <span className="absolute -top-1 -right-1 bg-teesaGreen text-white rounded-full text-xs px-2 py-1">
-              {cartCount}
-            </span>
-          )} */}
         </NavLink>
 </div>
       </div>
