@@ -78,7 +78,7 @@ export const Cart = () => {
         Carrito de Productos
       </h2>
       <main>
-        <div className="max-w-3xl p-8 bg-white shadow-lg rounded-lg">
+        <div className='max-w-3xl p-8 bg-white shadow-lg rounded-lg'>
           {/* {info.items === '' ? (
             <p className="text-2xl font-bold text-gray-800">Cargando...</p>
           ) : info.items?.cartProducts?.length > 0 ? ( */}
@@ -121,16 +121,8 @@ export const Cart = () => {
                     </button>
                   )}
                   {status === 'fulfilled' && (
-                    <a
-                      onClick={() => {
-                        window.open(
-                          linkMercadoPago,
-                          '_blank',
-                          'width=800,height=800'
-                        );
-                      }}
-                    >
-                      <button className='7-80 px-4 py-3 border-4 bg-teesaGreen  rounded-lg text-white hover:bg-blue-600 transition duration-100 transform hover:scale-105'>
+                    <a href={linkMercadoPago}>
+                      <button className='7-80 px-4 py-3 border-4 bg-teesaGreen rounded-2xl font-bold text-white hover:bg-blue-600 transition duration-100 transform hover:scale-105'>
                         Comprar con MercadoPago
                       </button>
                     </a>

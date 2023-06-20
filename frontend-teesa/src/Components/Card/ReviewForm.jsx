@@ -3,11 +3,8 @@ import { Rating, Button, TextField } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import Swal from 'sweetalert2';
-import { useNavigate } from 'react-router-dom';
 
 const ReviewForm = () => {
-  const navigate = useNavigate();
-
   //Alert
 
   const alertConfirm = () => {
@@ -19,6 +16,7 @@ const ReviewForm = () => {
       confirmButtonColor: '#192C8C',
     });
   };
+
   //Form
 
   const {
