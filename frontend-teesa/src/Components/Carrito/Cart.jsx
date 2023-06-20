@@ -120,15 +120,7 @@ export const Cart = () => {
                     </button>
                   )}
                   {status === 'fulfilled' && (
-                    <a
-                      onClick={() => {
-                        window.open(
-                          linkMercadoPago,
-                          '_blank',
-                          'width=800,height=800'
-                        );
-                      }}
-                    >
+                    <a href={linkMercadoPago}>
                       <button className='7-80 px-4 py-3 border-4 bg-blue-500  rounded-2xl font-bold text-white hover:bg-blue-600 transition duration-100 transform hover:scale-105'>
                         Comprar con MercadoPago
                       </button>
