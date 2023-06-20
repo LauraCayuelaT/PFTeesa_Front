@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import waves from '../../assets/icon/waves.svg';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { putUser } from '../../features/reduxReducer/userSlice';
 //import { getProducts } from '../../features/reduxReducer/userSlice';
 import 'boxicons/css/boxicons.min.css';
-import Cookies from 'universal-cookie';
+// import Cookies from 'universal-cookie';
 import Swal from 'sweetalert2';
 
 const UserProfile = () => {
@@ -36,14 +35,14 @@ const UserProfile = () => {
     reset,
     trigger,
     setValue,
-    getValues,
+    // getValues,
   } = useForm();
 
   //*Entrar al User Page
 
-  const cookies = new Cookies();
-  const token = cookies.get('token');
-  const userIdCookie = cookies.get('idGoogle');
+  // const cookies = new Cookies();
+  // const token = cookies.get('token');
+  // const userIdCookie = cookies.get('idGoogle');
 
   useEffect(() => {
     if (!user) {

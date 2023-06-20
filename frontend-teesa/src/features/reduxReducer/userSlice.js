@@ -6,7 +6,7 @@ import axios from 'axios';
 
 const cookies = new Cookies();
 
-//* PUT: userProfile - Cookies
+//* PUT: userProfile - Token
 
 export const putUser = createAsyncThunk('user/putUser', async (payload) => {
   try {
@@ -16,8 +16,8 @@ export const putUser = createAsyncThunk('user/putUser', async (payload) => {
       userAddress,
       userPhone,
       userId,
-      userType,
-      userEmail,
+      // userType,
+      // userEmail,
     } = payload;
     const nombre = userName;
     const nit = userNit;
