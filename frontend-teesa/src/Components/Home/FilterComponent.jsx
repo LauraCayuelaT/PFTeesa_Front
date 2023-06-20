@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { useDispatch,useSelector } from "react-redux";
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 // import { useSelector } from 'react-redux';
 import {
@@ -8,6 +8,7 @@ import {
   sortByPrice,
   changePage
 } from "../../features/reduxReducer/filterSlice";
+import { getBrands } from "../../features/reduxReducer/productSlice";
 // import NoRepuestosDisponibles from '../NoHayRep/NoRepuestos';
 // import NoHayProductosRango from '../NoHayProductosRango/NoHayProductosRango';
 
@@ -19,34 +20,42 @@ const FilterComponent = ({currentPage, setCurrentPage}) => {
   const [precio, setPrecio] = useState("");
   const [orderPrice, setOrderPrice] = useState("");
   const [orderName, setOrderName] = useState("");
+  const [brands, setBrands] = useState([]);
 
   const pageState = useSelector((state) => state?.filters?.page);
-
-
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     const filters = {
-      page: pageState ,
+      page: pageState,
       estado: estado,
       tipo: tipo,
       marca: marca,
 
-      precioMinimo: precio.split("-")[0],
-      precioMaximo: precio.split("-")[1],
-
+      precioMinimo: precio.split('-')[0],
+      precioMaximo: precio.split('-')[1],
     };
     dispatch(fetchProducts(filters));
   }, [pageState, estado, tipo, marca, precio, dispatch]);
 
 
+useEffect(() => {
+  dispatch(getBrands())
+    .then((response) => {
+      setBrands(response.payload);
+    })
+    .catch((error) => {
+      console.error("Error fetching brands:", error);
+    });
+}, [dispatch]);
+
+
+
 
   const handleChange = () => {
-   dispatch(changePage(1))
-   
-  }
-
+    dispatch(changePage(1));
+  };
 
   const handleSort = (e) => {
     e.preventDefault();
@@ -115,73 +124,23 @@ const FilterComponent = ({currentPage, setCurrentPage}) => {
   </label>
   <br />
   <div className="flex flex-col mb-4 text-teesaBlueDark">
-    <span className="mb-2 font-semibold">Marca:</span>
-    <label className="flex items-center mb-1">
+  <span className="mb-2 font-semibold">Marca:</span>
+  {brands.map((brand) => (
+    <label className="flex items-center mb-1" key={brand}>
       <input
         type="checkbox"
-        value="unox"
-        checked={marca === "unox"}
+        value={brand}
+        checked={marca === brand}
         onChange={(e) => {
-          setMarca(e.target.checked ? "unox" : "");
+          setMarca(e.target.checked ? brand : "");
           handleChange();
         }}
         className="mr-2 leading-tight focus:outline-none"
       />
-      <span>Unox</span>
+      <span>{brand}</span>
     </label>
-    <label className="flex items-center mb-1">
-      <input
-        type="checkbox"
-        value="rational"
-        checked={marca === "rational"}
-        onChange={(e) => {
-          setMarca(e.target.checked ? "rational" : "");
-          handleChange();
-        }}
-        className="mr-2 leading-tight focus:outline-none"
-      />
-      <span>Rational</span>
-    </label>
-    <label className="flex items-center mb-1">
-      <input
-        type="checkbox"
-        value="fagor"
-        checked={marca === "fagor"}
-        onChange={(e) => {
-          setMarca(e.target.checked ? "fagor" : "");
-          handleChange();
-        }}
-        className="mr-2 leading-tight focus:outline-none"
-      />
-      <span>Fagor</span>
-    </label>
-    <label className="flex items-center mb-1">
-      <input
-        type="checkbox"
-        value="winterhalter"
-        checked={marca === "winterhalter"}
-        onChange={(e) => {
-          setMarca(e.target.checked ? "winterhalter" : "");
-          handleChange();
-        }}
-        className="mr-2 leading-tight focus:outline-none"
-      />
-      <span>WinterHalter</span>
-    </label>
-    <label className="flex items-center mb-1">
-      <input
-        type="checkbox"
-        value="lainox"
-        checked={marca === "lainox"}
-        onChange={(e) => {
-          setMarca(e.target.checked ? "lainox" : "");
-          handleChange();
-        }}
-        className="mr-2 leading-tight focus:outline-none"
-      />
-      <span>Lainox</span>
-    </label>
-  </div>
+  ))}
+</div>
   <br />
   <label className="block mb-2 font-semibold text-teesaBlueDark">
     Precio:

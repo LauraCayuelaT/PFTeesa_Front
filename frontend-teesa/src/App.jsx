@@ -8,15 +8,21 @@ import Detail from './Components/Detail/Detail';
 import Login from './Components/Login/Login';
 import Services from './views/Services/Services';
 import Contact from './Components/Contact/Contact';
-import CheckoutAlerts from './Components/CheckoutAlerts/CheckoutAlerts';
+import Mercado from './Components/Mercado/Mercado';
 import About from './views/About/AboutUs/AboutUs';
 import AboutDevs from './views/About/AboutDevs';
 import Register from './views/Register/Register';
 import Error404 from './views/Error404/Error404';
+import { Carrito } from './Components/Carrito/Carrito';
+import CheckoutSucess from './views/Checkout/CheckoutSucess';
+import CheckoutPending from './views/Checkout/CheckoutPending';
+import CheckoutFailed from './views/Checkout/CheckoutFailed';
 import UserProfile from './views/UserProfile/UserProfile';
+//Redux
 import { getUserDataFromCookie } from './features/reduxReducer/userSlice';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
+import Cart from './Components/Carrito/Cart';
 
 function App() {
   const location = useLocation();
@@ -45,9 +51,14 @@ function App() {
         <Route path='contact' element={<Contact />} />
         <Route path='/signup' element={<Register />} />
         <Route path='error404' element={<Error404 />} />
-        <Route path='checkalerts' element={<CheckoutAlerts />} />
+        <Route path='mercado' element={<Mercado />} />
         <Route path='/profile' element={<UserProfile />} />
         <Route path='*' element={<Navigate to='error404' />} />
+        <Route path='carrito' element={<Cart />} />
+        {/* Checkout */}
+        <Route path='checkoutsuccess' element={<CheckoutSucess />} />
+        <Route path='checkoutpending' element={<CheckoutPending />} />
+        <Route path='checkoutfailed' element={<CheckoutFailed />} />
       </Routes>
     </div>
   );

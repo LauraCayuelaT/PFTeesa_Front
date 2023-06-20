@@ -1,37 +1,48 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { NavLink } from 'react-router-dom';
-import title from '../../title.png';
-import 'boxicons/css/boxicons.min.css';
-import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-//import { resetLoginState } from '../../features/reduxReducer/loginSlice';
+import { useState, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
+import Cookies from 'universal-cookie';
+import 'boxicons/css/boxicons.min.css';
+import title from '../../title.png';
 import {
   resetUserState,
-  saveUserNameToCookie,
+  updateUserDataFromCookie,
 } from '../../features/reduxReducer/userSlice';
-import Cookies from 'universal-cookie';
+// import { addToCartWithQuantity } from '../../features/reduxReducer/carritoSlice';
+// import Cookies from 'universal-cookie';
+// import CartIcon from '../Carrito/CartIcon';
 
 export default function NavBar() {
   //Traer Data del User - Nuestro Login y Register
   const userData = useSelector((state) => state.userState);
-  //Google
-  const [nombreGoogle, setNombreGoogle] = useState(null);
-  const cookies = new Cookies();
-  const dispatch = useDispatch();
-
   const {
     user,
     userData: { userName },
   } = userData;
 
-  //Traer Data del User - Google Auth
+  //Google
+  const [nombreGoogle, setNombreGoogle] = useState(null);
+  const cookies = new Cookies();
+  const dispatch = useDispatch();
+
+  //Sesión Continúa: Data del User - Google Auth
 
   useEffect(() => {
     const nombreGoogleCookie = cookies.get('nombreGoogle');
-    if (nombreGoogleCookie && !user) {
-      dispatch(saveUserNameToCookie({ nombre: nombreGoogleCookie }));
+    // const idGoogleCookie = cookies.get('idGoogle');
+    // const emailGoogleCookie = cookies.get('correoGoogle');
+
+    if (nombreGoogleCookie) {
+      dispatch(updateUserDataFromCookie());
       setNombreGoogle(nombreGoogleCookie);
     }
+
+    //Parte Original:
+    // if (nombreGoogleCookie && !user) {
+    //   dispatch(saveUserDataToCookie({ nombre: nombreGoogleCookie }));
+    //   setNombreGoogle(nombreGoogleCookie);
+    // }
   }, []);
 
   //Log Out Button
@@ -40,7 +51,10 @@ export default function NavBar() {
     // Vaciar estados de Login, Register y vaciar data del User.
     const cookies = new Cookies();
     cookies.remove('token', { path: '/' });
+    cookies.remove('idGoogle', { path: '/' });
     cookies.remove('nombreGoogle', { path: '/' });
+    cookies.remove('correoGoogle', { path: '/' });
+    cookies.remove('OursUserEmail', { path: '/' });
     resetUserState();
     navigate('/home', { replace: true });
     window.location.reload();
@@ -59,10 +73,22 @@ export default function NavBar() {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+
+//carrito
+// const cartt = useSelector((state) => state.app.cart);
+
+// console.log("Cart Length:", cartt.length);
+
+
+
   return (
     <div className='flex flex-row justify-between items-center w-full h-[4em] border-b-2 border-gray-300 bg-teesaBlueDark text-white text-xl sm:text-lg relative'>
       <div className='flex items-center'>
-        <img className='w-[10%] my-0' src={title} alt='Icono Teesa' />
+        <img
+          className='w-[10%] my-0'
+          src={title}
+          alt='Icono Teesa'
+        />
         <div className='hidden sm:flex gap-[4%]'>
           <NavLink
             to='/home'
@@ -156,15 +182,30 @@ export default function NavBar() {
               isMobileMenuOpen ? 'hidden sm:flex' : 'flex'
             }`}
           >
-            <i className='bx bxs-user mr-6' style={{ fontSize: '1.5rem' }}></i>
+            <i
+              className='bx bxs-user mr-6'
+              style={{ fontSize: '1.5rem' }}
+            ></i>
           </NavLink>
         )}
-        <i
+        {/* <i
           className={`bx bx-cart mr-6 ${
             isMobileMenuOpen ? 'hidden sm:flex' : 'flex'
           }`}
           style={{ fontSize: '1.5rem' }}
-        ></i>
+        ></i> */}
+
+{/* Boton carrito*/}
+<div className="relative">
+        <NavLink to="/carrito">
+          <i className="fa-solid fa-cart-shopping rounded-md hover:text-teesaGreen"></i>
+          {/* {cartCount > 0 && (
+            <span className="absolute -top-1 -right-1 bg-teesaGreen text-white rounded-full text-xs px-2 py-1">
+              {cartCount}
+            </span>
+          )} */}
+        </NavLink>
+</div>
       </div>
 
       {isMobileMenuOpen && (
@@ -202,5 +243,4 @@ export default function NavBar() {
         </div>
       )}
     </div>
-  );
-}
+  )}

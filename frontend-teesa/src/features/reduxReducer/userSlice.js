@@ -7,6 +7,7 @@ import axios from 'axios';
 const cookies = new Cookies();
 
 //userProfile
+
 export const putUser = createAsyncThunk('user/putUser', async (payload) => {
   try {
     const { userName, userNit, userAddress, userPhone, userId, userType, userEmail } = payload;
@@ -14,44 +15,62 @@ export const putUser = createAsyncThunk('user/putUser', async (payload) => {
     const nit = userNit;
     const direccion = userAddress;
     const telefono = userPhone;
-    const tipo=userType
-    const correo=userEmail
-    console.log("Esto es payload en userSlice", payload);
-    console.log(nit)
-    console.log(nombre)
-    console.log(direccion)
-    console.log(telefono)
-    const sub=userId
-    
-    const response = await axios.put(`https://servidor-teesa.onrender.com/user/${userId}`,  {
-      nombre, nit, direccion, telefono, tipo, correo, sub
-    });
 
-    console.log(response)
+    const response = await axios.put(`https://servidor-teesa.onrender.com/user/${userId}`, {
+      nombre,
+      nit,
+      direccion,
+      telefono,
+    });
+    delete response.config.transformResponse;
+    delete response.headers;
+    delete response.config.transformRequest;
+
+    console.log("Respuesta de la solicitud PUT:", response);
     Swal.fire({
-      title: 'A!',
-      text: 'Has ingresado a tu cuenta con éxito.',
+      title: 'Cambios realizados',
+      text: 'Tus cambios se realizaron con éxito 😁.',
       icon: 'success',
       confirmButtonText: 'Ok.',
       confirmButtonColor: '#192C8C',
     });
-    console.log("Esto es el response", response);
+
     return response;
   } catch (error) {
-    console.log(error.response.data.message);
+    console.log('error', error.response.data.message);
     Swal("Error", "Hubo un error al actualizar su información, intentelo de nuevo", "error");
     throw error;
   }
 });
 
+// export const getProducts= createAsyncThunk('user/getProducts', async (payload) => {
+  
+
+//   console.log(UserId)
+//   try {
+//     const response = await axios.get(`https://servidor-teesa.onrender.com/purchase/${userId}`,{
+      
+//     })
+//   console.log(response) 
+//   return response
+   
+//   } catch (error) {
+//     console.log('ERROR', error.response.data.message);
+//     throw error;
+//   }
+  
+// })
+
 // Estados
 const initialState = {
   user: null,
+  userGoogle: null,
+  userOurs: null,
   userData: {
     userId: null,
     userName: null,
-    userType: null,
     userEmail: null,
+    userType: null,
     userNit: null,
     userAddress: null,
     userPhone: null,
@@ -65,11 +84,7 @@ const userSlice = createSlice({
   reducers: {
     setUser: (state, action) => {
       state.user = true;
-  //     userEmail: null,
-  //   userNit: null,
-  //   userAddress: null,
-  //   userPhone: null,
-  // },
+      state.userOurs = true;
       state.userData.userId = action.payload.userId;
       state.userData.userName = action.payload.userName;
       state.userData.userType = action.payload.userType;
@@ -80,54 +95,96 @@ const userSlice = createSlice({
     },
     resetUserState: (state) => {
       state.user = false;
+      state.userOurs = false;
+      state.userGoogle = false;
       state.userData.userId = null;
       state.userData.userName = null;
+      state.userData.userEmail = null;
       state.userData.userType = null;
-      state.userData.userEmail = null
-      state.userData.userNit = null
-      state.userData.userAddress = null
-      state.userData.userPhone = null
+      state.userData.userNit = null;
+      state.userData.userAddress = null;
+      state.userData.userPhone = null;
       state.userIsLoaded = false; // Reiniciar el estado userIsLoaded
     },
     // Nuevo reducer para obtener la información de la cookie
-    getUserDataFromCookie: (state) => {
-      const userDataCookie = cookies.get('token');
+    getUserDataFromCookie: (state, action) => {
+      const userDataCookie = action.payload || cookies.get('token'); // Usar el parámetro action.payload o las cookies existentes
       if (userDataCookie) {
         const userData = jwt_decode(userDataCookie);
         state.user = true;
         state.userData.userName = userData.nombre;
         state.userData.userType = userData.tipo;
         state.userData.userId = userData.sub;
-        state.userData.userEmail = userData.correo;
         state.userData.userNit = userData.nit;
         state.userData.userAddress = userData.direccion;
+        state.userData.userEmail = userData.correo;
         state.userData.userPhone = userData.telefono;
+        // Email:
+        const userEmail = cookies.get('OursUserEmail');
+        state.userData.userEmail = userEmail;
       }
     },
-
-    //*Google Login
-    saveUserNameToCookie: (state, action) => {
-      const { nombre } = action.payload;
-      cookies.set('nombreGoogle', nombre, { path: '/', overwrite: true });
-      state.user = true;
-      state.userData.userName = nombre;
+    saveUserEmail: (state, action) => {
+      cookies.set('OursUserEmail', action.payload, { path: '/' });
+      state.userData.userEmail = action.payload;
     },
-    getUserNameFromCookie: (state) => {
+
+    //*Google Login - Guardar Data en Cookies
+
+    saveUserDataToCookie: (state, action) => {
+      const { nombre, correo, id } = action.payload;
+      cookies.set('idGoogle', id, { path: '/', overwrite: true });
+      cookies.set('nombreGoogle', nombre, { path: '/', overwrite: true });
+      cookies.set('correoGoogle', correo, { path: '/', overwrite: true });
+      state.user = true;
+      state.userGoogle = true;
+      state.userData.userId = id;
+      state.userData.userName = nombre;
+      state.userData.userEmail = correo;
+    },
+    //*Google Login - Tomar Cookies y Ponerlas en Estado
+    updateUserDataFromCookie: (state) => {
+      //No traigo data porque lo recibo en cookies (miremos si funciona o si me la traigo del Nav).
+      const userIdCookie = cookies.get('idGoogle');
       const userNameCookie = cookies.get('nombreGoogle');
+      const userEmailCookie = cookies.get('correoGoogle');
       if (userNameCookie) {
         state.user = true;
+        state.userGoogle = true;
+        state.userData.userId = userIdCookie;
         state.userData.userName = userNameCookie;
+        state.userData.userEmail = userEmailCookie;
       }
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(putUser.fulfilled, (state, action) => {
+      const responseData = action.payload.data.token; // Obtener la información actualizada del servidor
+      console.log(responseData)
+      cookies.set("token", responseData, {path: "/"})
+      // Actualizar los estados con la información recibida
+      if (responseData) {
+        const userData = jwt_decode(responseData);
+        console.log('userdata',userData)
+        state.user = true;
+        state.userData.userName = userData.nombre;
+        state.userData.userNit = userData.nit;
+        state.userData.userAddress = userData.direccion;
+        state.userData.userPhone = userData.telefono;
+        
+      }
+    });
+  },
+  
 });
 
 export const {
   setUser,
+  saveUserEmail,
   resetUserState,
   getUserDataFromCookie,
-  saveUserNameToCookie,
-  getUserNameFromCookie,
+  saveUserDataToCookie,
+  updateUserDataFromCookie,
 } = userSlice.actions;
 
 export default userSlice.reducer;
