@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-
 import Rating from '@mui/material/Rating';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
@@ -8,6 +7,9 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 const Review = ({ userName, userRating, userTitle, userComment }) => {
   return (
     <article className=' rounded   flex flex-col  m-4'>
+      {/* Form Review */}
+
+      {/* Reviews */}
       <div className='flex items-center mb-1 '>
         <AccountCircleIcon
           style={{ fontSize: '30px' }}

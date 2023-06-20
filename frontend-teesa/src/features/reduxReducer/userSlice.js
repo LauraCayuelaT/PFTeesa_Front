@@ -6,27 +6,38 @@ import axios from 'axios';
 
 const cookies = new Cookies();
 
-//userProfile
+//* PUT: userProfile - Token
 
 export const putUser = createAsyncThunk('user/putUser', async (payload) => {
   try {
-    const { userName, userNit, userAddress, userPhone, userId, userType, userEmail } = payload;
+    const {
+      userName,
+      userNit,
+      userAddress,
+      userPhone,
+      userId,
+      // userType,
+      // userEmail,
+    } = payload;
     const nombre = userName;
     const nit = userNit;
     const direccion = userAddress;
     const telefono = userPhone;
 
-    const response = await axios.put(`https://servidor-teesa.onrender.com/user/${userId}`, {
-      nombre,
-      nit,
-      direccion,
-      telefono,
-    });
+    const response = await axios.put(
+      `https://servidor-teesa.onrender.com/user/${userId}`,
+      {
+        nombre,
+        nit,
+        direccion,
+        telefono,
+      }
+    );
     delete response.config.transformResponse;
     delete response.headers;
     delete response.config.transformRequest;
 
-    console.log("Respuesta de la solicitud PUT:", response);
+    console.log('Respuesta de la solicitud PUT:', response);
     Swal.fire({
       title: 'Cambios realizados',
       text: 'Tus cambios se realizaron con éxito 😁.',
@@ -38,7 +49,11 @@ export const putUser = createAsyncThunk('user/putUser', async (payload) => {
     return response;
   } catch (error) {
     console.log('error', error.response.data.message);
-    Swal("Error", "Hubo un error al actualizar su información, intentelo de nuevo", "error");
+    Swal(
+      'Error',
+      'Hubo un error al actualizar su información, intentelo de nuevo',
+      'error'
+    );
     throw error;
   }
 });
@@ -55,7 +70,7 @@ export const getProducts= createAsyncThunk('user/getProducts', async (userId) =>
 })
 
 // Estados
-const initialState = { 
+const initialState = {
   user: null,
   userGoogle: null,
   userOurs: null,
@@ -163,7 +178,6 @@ const userSlice = createSlice({
         state.userData.userNit = userData.nit;
         state.userData.userAddress = userData.direccion;
         state.userData.userPhone = userData.telefono;
-        
       }
     });
     builder.addCase(getProducts.fulfilled, (state, action) => {
@@ -171,7 +185,6 @@ const userSlice = createSlice({
       state.userProducts=responseData
     })
   },
-  
 });
 
 export const {
