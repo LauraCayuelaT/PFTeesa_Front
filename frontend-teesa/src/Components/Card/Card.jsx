@@ -164,7 +164,6 @@ export const Card = ({ nombre, categoria, imagenes, precio, marca, id }) => {
                 </button>
                 <button
                   type='submit'
-                  // onClick={handleAddToCart}
                   className='ml-2 px-8 py-0.3 bg-teesaBlueDark text-white rounded-md'
                 >
                   Agregar al Carrito <i className='fa-solid fa-cart-shopping rounded-md'></i>

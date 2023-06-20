@@ -26,7 +26,7 @@ const Mercado = () => {
     <div className='buttonContainer m-5'>
       <div>
         {status === 'pending' && (
-          <button className='w-80 px-4 py-2 border-4 bg-blue-500  rounded-2xl font-bold text-white hover:bg-blue-600 transition duration-100 transform hover:scale-105'>
+          <button className='w-80 px-4 py-2 border-4 bg-bg-teesaGreen  rounded-2xl font-bold text-white hover:bg-bg-teesaGreen transition duration-100 transform hover:scale-105'>
             Cargando...
           </button>
         )}
@@ -36,7 +36,7 @@ const Mercado = () => {
               window.open(linkMercadoPago, '_blank', 'width=800,height=800');
             }}
           >
-            <button className='w-80 px-4 py-2 border-4 bg-blue-500  rounded-2xl font-bold text-white hover:bg-blue-600 transition duration-100 transform hover:scale-105'>
+            <button className='w-80 px-4 py-2 border-4 bg-teesaGreen  rounded-2xl font-bold text-white hover:bg-bg-teesaGreen transition duration-100 transform hover:scale-105'>
               Comprar con MercadoPago
             </button>
           </a>
