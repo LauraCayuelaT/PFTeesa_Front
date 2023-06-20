@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { getUser, getCart } from '../../features/reduxReducer/carritoSlice';
 import { NavLink } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import 'boxicons/css/boxicons.min.css';
@@ -16,16 +17,44 @@ import {
 export default function NavBar() {
   //Traer Data del User - Nuestro Login y Register
   const userData = useSelector((state) => state.userState);
+  const dispatch = useDispatch();
   const {
     user,
     userData: { userName },
+    userData: { userId},
   } = userData;
 
+  const [cartId, setCartId] = useState('');
+
+  const [cart, setCart] = useState({
+    CartId: cartId,
+  });
+  const [info, setInfo] = useState({
+    items: '',
+  });
+
+  useEffect(() => {
+    dispatch(getUser()).then((action) => {
+      const response = action.payload;
+      console.log(response);
+      const cartId = response.find((user) => user.id === userId)?.Cart.id;
+      console.log(cartId);
+      if (cartId) {
+        dispatch(getCart(cartId)).then((action) => {
+          const response = action.payload;
+          console.log(response);
+          setInfo((prevInfo) => ({
+            ...prevInfo,
+            items: response,
+          }));
+        });
+      }
+    });
+  }, [dispatch, userData]);
+  console.log(info.items);
   //Google
   const [nombreGoogle, setNombreGoogle] = useState(null);
   const cookies = new Cookies();
-  const dispatch = useDispatch();
-
   //Sesión Continúa: Data del User - Google Auth
 
   useEffect(() => {
@@ -78,7 +107,6 @@ export default function NavBar() {
 // const cartt = useSelector((state) => state.app.cart);
 
 // console.log("Cart Length:", cartt.length);
-
 
 
   return (
@@ -195,15 +223,21 @@ export default function NavBar() {
           style={{ fontSize: '1.5rem' }}
         ></i> */}
 
-{/* Boton carrito*/}
+{/* Boton carrito Navv*/}
 <div className="relative">
-        <NavLink to="/carrito">
-          <i className="fa-solid fa-cart-shopping rounded-md hover:text-teesaGreen"></i>
+          <NavLink to="/carrito" className="flex items-center">
+            <i className="fa-solid fa-cart-shopping text-xl rounded-md hover:text-teesaGreen"></i>
+            {info.items?.cartProducts?.length > 0 && (
+              <span className="absolute -top-1 -right-3 bg-teesaGreen text-white rounded-full text-xs px-1.5 py-.05">
+                {info.items.cartProducts.length}
+              </span>
+            )}
           {/* {cartCount > 0 && (
             <span className="absolute -top-1 -right-1 bg-teesaGreen text-white rounded-full text-xs px-2 py-1">
               {cartCount}
             </span>
           )} */}
+          
         </NavLink>
 </div>
       </div>

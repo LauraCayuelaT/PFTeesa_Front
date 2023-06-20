@@ -8,9 +8,14 @@ import Rating from '@mui/material/Rating';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import ReviewForm from './ReviewForm';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useState, useEffect } from 'react';
+import { getUser, postCart } from '../../features/reduxReducer/carritoSlice';
 
 /* eslint-disable react/prop-types */
 const CardDetail = ({
+  id,
   nombre,
   descripcion,
   caracteristicas,
@@ -25,6 +30,72 @@ const CardDetail = ({
   const handleGoBack = () => {
     navigate(-1);
   };
+
+  const dispatch = useDispatch();
+  const userData = useSelector((state) => state.userState.userData);
+  const [cartId, setCartId] = useState('');
+  const [cart, setCart] = useState({
+    ProductId: id,
+    CartId: cartId,
+    cantidad: 0,
+  });
+
+  useEffect(() => {
+    dispatch(getUser()).then((action) => {
+      const response = action.payload;
+      console.log(response);
+      const cartId = response.find((user) => user.id === userData.userId)?.Cart.id;
+      console.log(cartId);
+      setCartId(cartId);
+      setCart((prevCart) => ({
+        ...prevCart,
+        CartId: cartId,
+      }));
+    });
+  }, [dispatch, userData]);
+
+
+  const [cantidad, setCantidad] = useState(0);
+
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setCart((prevCart) => ({
+      ...prevCart,
+      cantidad: value,
+    }));
+  };
+
+  const handleIncrement = () => {
+    setCart((prevCart) => ({
+      ...prevCart,
+      cantidad: (Number(prevCart.cantidad) + 1),
+    }));
+  };
+
+  const handleDecrement = () => {
+    if (cart.cantidad > 0) {
+      setCart((prevCart) => ({
+        ...prevCart,
+        cantidad: (Number(prevCart.cantidad) - 1),
+      }));
+    }
+  };
+  
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(cart);
+    dispatch(postCart(cart));
+    setCart({
+      ProductId: id,
+      CartId: cartId,
+      cantidad: 0,
+    });
+    // navigate('/carrito');
+  };
+
+
 
   //* Datos Descripción:
 
@@ -125,14 +196,37 @@ const CardDetail = ({
               Estado: {estadoMayus}.
             </h2>
           </div>
-          <div className='mt-6'>
-            <a
-              href='#'
-              className='block text-center text-white font-medium py-3 px-6 bg-blue-600 rounded-md text-2xl hover:bg-blue-700  justify-center w-45 m-auto'
-            >
-              Agregar al Carrito <i className='fas fa-shopping-cart'></i>
-            </a>
-          </div>
+          <form onSubmit={(e) => handleSubmit(e)}>
+              <div className='flex items-center mt-2'>
+                <button
+                  type='button'
+                  id='decrement'
+                  onClick={handleDecrement}
+                  className='px-3 py-1 border rounded-md border-gray-400 text-sm'
+                >
+                  -
+                </button>
+                <span id='quantity' className='px-2'>
+                  {cart.cantidad}
+                </span>
+                <button
+                  type='button'
+                  id='increment'
+                  onClick={handleIncrement}
+                  className='px-3 py-1 border rounded-md border-gray-400 text-sm'
+                >
+                  +
+                </button>
+                <button
+                  type='submit'
+                  className='ml-2 px-8 py-3 bg-teesaBlueDark text-white rounded-md'
+                >
+                  Agregar al Carrito <i className='fa-solid fa-cart-shopping rounded-md'></i>
+                </button>
+              </div>
+              <h6 className='hidden'>{id}</h6>
+              <h6 className='hidden'>{cart.CartId}</h6>
+            </form>
         </div>
       </div>
       {/* Reviews */}
