@@ -108,22 +108,7 @@ function Home() {
   return (
     <div className='flex w-full h-full flex-col flex-wrap'>
       {/* Second Navbar */}
-      <div className='flex flex-col md:flex-row bg-teesaBlueDark w-full m-0 items-center justify-center md:justify-start mt-[-1px] border-t-4 border-teesaGreen text-teesaWhite text-[16px]'>
-  <h2 className='mx-4 my-2 md:my-0 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>
-    Eléctrico
-  </h2>
-  <h2 className='mx-4 my-2 md:my-0 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>
-    Gas
-  </h2>
-  <h2 className='mx-4 my-2 md:my-0 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>
-    Refrigeración
-  </h2>
-  <h2 className='mx-4 my-2 md:my-0 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>
-    Hornos
-  </h2>
-  <h2 className='mx-4 my-2 md:my-0 transition duration-300 ease-in-out transform  hover:text-teesaGreen cursor-pointer'>
-    Repuestos
-  </h2>
+      <div className='flex flex-col bg-teesaBlueDark w-full h-[3em] items-center justify-center mt-[-1px] border-t-4 border-teesaGreen text-teesaWhite text-[16px]'>
         <SearchBar />
       </div>
       {/* Hero */}
