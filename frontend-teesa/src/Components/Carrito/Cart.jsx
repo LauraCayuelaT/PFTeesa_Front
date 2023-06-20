@@ -79,9 +79,10 @@ export const Cart = () => {
       </h2>
       <main>
         <div className='max-w-3xl p-8 bg-white shadow-lg rounded-lg'>
-          {info.items === '' ? (
-            <p className='text-2xl font-bold text-gray-800'>Cargando...</p>
-          ) : info.items?.cartProducts?.length > 0 ? (
+          {/* {info.items === '' ? (
+            <p className="text-2xl font-bold text-gray-800">Cargando...</p>
+          ) : info.items?.cartProducts?.length > 0 ? ( */}
+          {info.items?.cartProducts?.length > 0 ? (
             <>
               {info.items.cartProducts.map((item) => (
                 <Carrito
@@ -109,7 +110,7 @@ export const Cart = () => {
               <div className='flex justify-center mt-8'>
                 <Link
                   to='/home'
-                  className='bg-teesaBlueDark text-white px-6 py-3 rounded-lg mr-4'
+                  className='7-80 px-4 py-3 border-4 bg-teesaBlueDark rounded-lg text-white hover:bg-blue-600 transition duration-100 transform hover:scale-105 mr-4'
                 >
                   Seguir comprando
                 </Link>
@@ -121,7 +122,7 @@ export const Cart = () => {
                   )}
                   {status === 'fulfilled' && (
                     <a href={linkMercadoPago}>
-                      <button className='7-80 px-4 py-3 border-4 bg-blue-500  rounded-2xl font-bold text-white hover:bg-blue-600 transition duration-100 transform hover:scale-105'>
+                      <button className='7-80 px-4 py-3 border-4 bg-teesaGreen rounded-2xl font-bold text-white hover:bg-blue-600 transition duration-100 transform hover:scale-105'>
                         Comprar con MercadoPago
                       </button>
                     </a>
@@ -137,7 +138,7 @@ export const Cart = () => {
               </p>
               <Link
                 to='/home'
-                className='bg-teesaBlueDark text-white px-6 py-3 rounded-lg'
+                className='7-80 px-4 py-3 border-4 bg-teesaBlueDark rounded-lg text-white hover:bg-blue-600 transition duration-100 transform hover:scale-105'
               >
                 Seguir comprando
               </Link>
