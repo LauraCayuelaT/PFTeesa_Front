@@ -4,7 +4,12 @@ import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 
 const ReviewForm = () => {
-  const { register, control, handleSubmit } = useForm();
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const onSubmit = (data) => {
     console.log(data);
@@ -35,15 +40,18 @@ const ReviewForm = () => {
           <Controller
             name='rating'
             control={control}
-            rules={{ required: true }}
+            rules={{ required: 'Debe seleccionar una revisión' }}
             render={({ field }) => (
-              <Rating
-                name={field.name}
-                value={parseInt(field.value)} // Convertimos el valor a un número utilizando parseInt
-                onChange={field.onChange}
-                emptyIcon={<StarBorderIcon style={{ color: '#192C8C' }} />}
-                icon={<StarIcon style={{ color: '#192C8C' }} />}
-              />
+              <>
+                <Rating
+                  name={field.name}
+                  value={parseInt(field.value)} // Convertimos el valor a un número utilizando parseInt
+                  onChange={field.onChange}
+                  emptyIcon={<StarBorderIcon style={{ color: '#192C8C' }} />}
+                  icon={<StarIcon style={{ color: '#192C8C' }} />}
+                />
+                {errors.rating && <p>{errors.rating.message}</p>}
+              </>
             )}
           />
         </div>
