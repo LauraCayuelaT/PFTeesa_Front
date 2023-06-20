@@ -7,6 +7,7 @@ import Review from './Review';
 import Rating from '@mui/material/Rating';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
+import ReviewForm from './ReviewForm';
 
 /* eslint-disable react/prop-types */
 const CardDetail = ({
@@ -66,11 +67,8 @@ const CardDetail = ({
     },
   ];
 
-  console.log(userReviews);
-
-  //General Reviews
+  //*General Reviews - Product
   let reviews = 4;
-  //Nombre
 
   return (
     <div className='w-full mt-12 flex flex-col justify-center items-center '>
@@ -139,7 +137,9 @@ const CardDetail = ({
       </div>
       {/* Reviews */}
       <div className='reviewsContainer w-full m-8 lg:m-4 lg:w-3/4   border-t-2 border-blue-950'>
+        <ReviewForm />
         <h1 className='font-bold text-lg m-4'>Opiniones:</h1>
+
         {userReviews.map((review, index) => (
           <Review
             key={index}
