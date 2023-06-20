@@ -6,7 +6,6 @@ import { postCart, getUser } from '../../features/reduxReducer/carritoSlice';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { NavLink, useNavigate  } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-// import CartWindowCart from './CardWindowCart';
 
 
 export const Card = ({ nombre, categoria, imagenes, precio, marca, id }) => {
@@ -175,9 +174,6 @@ export const Card = ({ nombre, categoria, imagenes, precio, marca, id }) => {
           </div>
         </div>
       </div>
-      {/* <div className="menu-deslizante-container"> */}
-      {/* {cartItems.length > 0 && <CartWindowCart cartItems={cartItems} />} */}
-      {/* </div> */}
     </div>
   );
   
