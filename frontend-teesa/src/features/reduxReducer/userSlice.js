@@ -58,22 +58,16 @@ export const putUser = createAsyncThunk('user/putUser', async (payload) => {
   }
 });
 
-// export const getProducts= createAsyncThunk('user/getProducts', async (payload) => {
-
-//   console.log(UserId)
-//   try {
-//     const response = await axios.get(`https://servidor-teesa.onrender.com/purchase/${userId}`,{
-
-//     })
-//   console.log(response)
-//   return response
-
-//   } catch (error) {
-//     console.log('ERROR', error.response.data.message);
-//     throw error;
-//   }
-
-// })
+export const getProducts= createAsyncThunk('user/getProducts', async (userId) => {
+  try {
+    const response = await axios.get(`https://servidor-teesa.onrender.com/purchase/${userId}`)
+  return response
+  } catch (error) {
+    console.log('ERROR', error.response.data.message);
+    throw error;
+  }
+  
+})
 
 // Estados
 const initialState = {
@@ -89,6 +83,7 @@ const initialState = {
     userAddress: null,
     userPhone: null,
   },
+  userProducts: null
 };
 
 // Slice Login
@@ -174,12 +169,10 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(putUser.fulfilled, (state, action) => {
       const responseData = action.payload.data.token; // Obtener la información actualizada del servidor
-      console.log(responseData);
-      cookies.set('token', responseData, { path: '/' });
+      cookies.set("token", responseData, {path: "/"})
       // Actualizar los estados con la información recibida
       if (responseData) {
         const userData = jwt_decode(responseData);
-        console.log('userdata', userData);
         state.user = true;
         state.userData.userName = userData.nombre;
         state.userData.userNit = userData.nit;
@@ -187,6 +180,10 @@ const userSlice = createSlice({
         state.userData.userPhone = userData.telefono;
       }
     });
+    builder.addCase(getProducts.fulfilled, (state, action) => {
+      const responseData = action.payload.data // Obtener la información actualizada del servidor
+      state.userProducts=responseData
+    })
   },
 });
 
