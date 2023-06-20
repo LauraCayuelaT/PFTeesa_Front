@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { putUser } from '../../features/reduxReducer/userSlice';
-import { getProducts } from '../../features/reduxReducer/userSlice';
+//import { getProducts } from '../../features/reduxReducer/userSlice';
 import 'boxicons/css/boxicons.min.css';
 import Cookies from 'universal-cookie';
 import Swal from 'sweetalert2';
@@ -34,8 +34,9 @@ const UserProfile = () => {
 
    const cookies= new Cookies()
    const token= cookies.get('token')
+   const googleToken=cookies.get('idGoogle')
    useEffect(()=>{
-    if(!token){
+    if(!token || !googleToken){
      nav("/login")
     }
    })
