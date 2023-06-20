@@ -2,8 +2,25 @@ import { useForm, Controller } from 'react-hook-form';
 import { Rating, Button, TextField } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 const ReviewForm = () => {
+  const navigate = useNavigate();
+
+  //Alert
+
+  const alertConfirm = () => {
+    Swal.fire({
+      title: '¡Opinión Enviada!',
+      text: 'Gracias por compartinos tu review.',
+      icon: 'success',
+      confirmButtonText: 'Aceptar',
+      confirmButtonColor: '#192C8C',
+    });
+  };
+  //Form
+
   const {
     register,
     control,
@@ -13,11 +30,36 @@ const ReviewForm = () => {
 
   const onSubmit = (data) => {
     console.log(data);
+    alertConfirm();
   };
+
   return (
-    <div className='mt-10'>
-      <h1>¿Quieres darnos tu opinón?</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <div className='mt-10 mx-5 lg:mx-0'>
+      <h1 className='font-bold text-lg'>¿Quieres darnos tu opinón?</h1>
+      <form
+        className='mt-5'
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <div>
+          <Controller
+            name='rating'
+            control={control}
+            rules={{ required: 'Debes calificar el producto.' }}
+            render={({ field }) => (
+              <div className='flex  items-center'>
+                <h1 className='font-bold text-md'>Puntuación:</h1>
+                <Rating
+                  name={field.name}
+                  value={parseInt(field.value)} // Convertimos el valor a un número utilizando parseInt
+                  onChange={field.onChange}
+                  emptyIcon={<StarBorderIcon style={{ color: '#192C8C' }} />}
+                  icon={<StarIcon style={{ color: '#192C8C' }} />}
+                />
+                {errors.rating && <p>{errors.rating.message}</p>}
+              </div>
+            )}
+          />
+        </div>
         <div className='my-4'>
           <TextField
             {...register('titulo')}
@@ -36,25 +78,7 @@ const ReviewForm = () => {
             required
           />
         </div>
-        <div>
-          <Controller
-            name='rating'
-            control={control}
-            rules={{ required: 'Debe seleccionar una revisión' }}
-            render={({ field }) => (
-              <>
-                <Rating
-                  name={field.name}
-                  value={parseInt(field.value)} // Convertimos el valor a un número utilizando parseInt
-                  onChange={field.onChange}
-                  emptyIcon={<StarBorderIcon style={{ color: '#192C8C' }} />}
-                  icon={<StarIcon style={{ color: '#192C8C' }} />}
-                />
-                {errors.rating && <p>{errors.rating.message}</p>}
-              </>
-            )}
-          />
-        </div>
+
         <Button
           type='submit'
           variant='contained'
