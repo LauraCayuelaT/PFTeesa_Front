@@ -6,27 +6,38 @@ import axios from 'axios';
 
 const cookies = new Cookies();
 
-//userProfile
+//* PUT: userProfile - Cookies
 
 export const putUser = createAsyncThunk('user/putUser', async (payload) => {
   try {
-    const { userName, userNit, userAddress, userPhone, userId, userType, userEmail } = payload;
+    const {
+      userName,
+      userNit,
+      userAddress,
+      userPhone,
+      userId,
+      userType,
+      userEmail,
+    } = payload;
     const nombre = userName;
     const nit = userNit;
     const direccion = userAddress;
     const telefono = userPhone;
 
-    const response = await axios.put(`https://servidor-teesa.onrender.com/user/${userId}`, {
-      nombre,
-      nit,
-      direccion,
-      telefono,
-    });
+    const response = await axios.put(
+      `https://servidor-teesa.onrender.com/user/${userId}`,
+      {
+        nombre,
+        nit,
+        direccion,
+        telefono,
+      }
+    );
     delete response.config.transformResponse;
     delete response.headers;
     delete response.config.transformRequest;
 
-    console.log("Respuesta de la solicitud PUT:", response);
+    console.log('Respuesta de la solicitud PUT:', response);
     Swal.fire({
       title: 'Cambios realizados',
       text: 'Tus cambios se realizaron con éxito 😁.',
@@ -38,31 +49,34 @@ export const putUser = createAsyncThunk('user/putUser', async (payload) => {
     return response;
   } catch (error) {
     console.log('error', error.response.data.message);
-    Swal("Error", "Hubo un error al actualizar su información, intentelo de nuevo", "error");
+    Swal(
+      'Error',
+      'Hubo un error al actualizar su información, intentelo de nuevo',
+      'error'
+    );
     throw error;
   }
 });
 
 // export const getProducts= createAsyncThunk('user/getProducts', async (payload) => {
-  
 
 //   console.log(UserId)
 //   try {
 //     const response = await axios.get(`https://servidor-teesa.onrender.com/purchase/${userId}`,{
-      
+
 //     })
-//   console.log(response) 
+//   console.log(response)
 //   return response
-   
+
 //   } catch (error) {
 //     console.log('ERROR', error.response.data.message);
 //     throw error;
 //   }
-  
+
 // })
 
 // Estados
-const initialState = { 
+const initialState = {
   user: null,
   userGoogle: null,
   userOurs: null,
@@ -160,22 +174,20 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(putUser.fulfilled, (state, action) => {
       const responseData = action.payload.data.token; // Obtener la información actualizada del servidor
-      console.log(responseData)
-      cookies.set("token", responseData, {path: "/"})
+      console.log(responseData);
+      cookies.set('token', responseData, { path: '/' });
       // Actualizar los estados con la información recibida
       if (responseData) {
         const userData = jwt_decode(responseData);
-        console.log('userdata',userData)
+        console.log('userdata', userData);
         state.user = true;
         state.userData.userName = userData.nombre;
         state.userData.userNit = userData.nit;
         state.userData.userAddress = userData.direccion;
         state.userData.userPhone = userData.telefono;
-        
       }
     });
   },
-  
 });
 
 export const {

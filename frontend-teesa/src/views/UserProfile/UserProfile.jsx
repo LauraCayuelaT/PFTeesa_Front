@@ -9,15 +9,22 @@ import 'boxicons/css/boxicons.min.css';
 import Cookies from 'universal-cookie';
 import Swal from 'sweetalert2';
 
-
 const UserProfile = () => {
-  const nav=useNavigate()
+  const nav = useNavigate();
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.userState);
 
   const {
     user,
-    userData: { userId, userName, userEmail, userNit, userAddress, userPhone, userType },
+    userData: {
+      userId,
+      userName,
+      userEmail,
+      userNit,
+      userAddress,
+      userPhone,
+      userType,
+    },
   } = userData;
 
   const [editing, setEditing] = useState(false);
@@ -32,16 +39,25 @@ const UserProfile = () => {
     getValues,
   } = useForm();
 
-   const cookies= new Cookies()
-   const token= cookies.get('token')
-   const googleToken=cookies.get('idGoogle')
-   useEffect(()=>{
-    if(!token || !googleToken){
-     nav("/login")
-    }
-   })
+  //*Entrar al User Page
 
-   const onClose = () => {
+  const cookies = new Cookies();
+  const token = cookies.get('token');
+  const userIdCookie = cookies.get('idGoogle');
+
+  useEffect(() => {
+    if (!user) {
+      nav('/login');
+    }
+  }, [user]);
+
+  // useEffect(() => {
+  //   if (!token) {
+  //     nav('/login');
+  //   }
+  // });
+
+  const onClose = () => {
     Swal.fire({
       title: 'Advertencia',
       text: '¿Estás seguro de que quieres cancelar los cambios?',
@@ -50,15 +66,14 @@ const UserProfile = () => {
       confirmButtonColor: '#192C8C',
       cancelButtonColor: '#FF0000',
       confirmButtonText: 'Si',
-      cancelButtonText: 'No, seguir editando'
+      cancelButtonText: 'No, seguir editando',
     }).then((result) => {
       if (result.isConfirmed) {
         setEditing(false);
       }
     });
   };
-  
-  
+
   useEffect(() => {
     setValue('userName', userName);
     setValue('userEmail', userEmail);
@@ -66,13 +81,20 @@ const UserProfile = () => {
     setValue('userAddress', userAddress);
     setValue('userPhone', userPhone);
     setValue('userType', userType);
-  }, [userName, userEmail, userNit, userAddress, userPhone, setValue, userType]);
+  }, [
+    userName,
+    userEmail,
+    userNit,
+    userAddress,
+    userPhone,
+    setValue,
+    userType,
+  ]);
 
   const handleBlur = (fieldName) => {
     trigger(fieldName);
   };
-  
-  
+
   const onSubmit = async (data) => {
     try {
       const payload = {
@@ -82,9 +104,9 @@ const UserProfile = () => {
         userAddress: data.userAddress,
         userEmail,
         userType,
-        userId
+        userId,
       };
-  
+
       Swal.fire({
         title: 'Confirmación',
         html: `
@@ -99,7 +121,7 @@ const UserProfile = () => {
         confirmButtonColor: '#192C8C',
         cancelButtonColor: '#FF0000',
         confirmButtonText: 'Sí',
-        cancelButtonText: 'No'
+        cancelButtonText: 'No',
       }).then((result) => {
         if (result.isConfirmed) {
           dispatch(putUser(payload));
@@ -110,8 +132,6 @@ const UserProfile = () => {
       console.log(error.response.data.message);
     }
   };
-  
-
 
   useEffect(() => {
     reset({
@@ -122,135 +142,152 @@ const UserProfile = () => {
       userPhone,
       userType,
     });
-  }, [userName, userEmail, userNit, userAddress, userPhone, userType, reset])  
+  }, [userName, userEmail, userNit, userAddress, userPhone, userType, reset]);
 
   // useEffect(() => {
   //   dispatch(getProducts(userId));
   // }, [dispatch]);
 
-    return (
-    <div className='allContainer bg-teesaBlueDark flex flex-row justify-center items-center gap-[5%] w-full h-screen bg-bottom bg-cover -mt-1 overflow-hidden'
-    >
+  return (
+    <div className='allContainer bg-teesaBlueDark flex flex-row justify-center items-center gap-[5%] w-full h-screen bg-bottom bg-cover -mt-1 overflow-hidden'>
       {/* info section */}
       <section className='bg-gradient-to-r from-teesaGreenDark to-teesaGreen rounded-lg flex flex-col justify-center items-center h-auto w-[30em] gap-7'>
         {editing ? (
-          <form onSubmit={handleSubmit(onSubmit)} 
-          className='bg-gradient-to-r from-teesaGreenDark to-teesaGreen rounded-lg flex flex-col justify-center items-center h-auto w-[30em] gap-2'>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className='bg-gradient-to-r from-teesaGreenDark to-teesaGreen rounded-lg flex flex-col justify-center items-center h-auto w-[30em] gap-2'
+          >
             <h1 className='font-bold text-white text-3xl '>Editar tus datos</h1>
             <label className='flex flex-col justify-center align-center items-center gap-[0.5em]'>
               <input
-            {...register('userName', { 
-              required: 'Este campo es obligatorio',
-              pattern: {
-                value: /^[a-zA-Z\s]+$/,
-                message: 'Solo se aceptan letras y espacios',
-              },
-            
-            })}
-              onBlur={() => handleBlur('userName')}
-              placeholder='Nombre'
-            />
-            {errors.userName ? (
+                {...register('userName', {
+                  required: 'Este campo es obligatorio',
+                  pattern: {
+                    value: /^[a-zA-Z\s]+$/,
+                    message: 'Solo se aceptan letras y espacios',
+                  },
+                })}
+                onBlur={() => handleBlur('userName')}
+                placeholder='Nombre'
+              />
+              {errors.userName ? (
                 <span className='text-red-500'>{errors.userName.message}</span>
               ) : (
                 <div className='h-[5px]'></div>
               )}
             </label>
-            
+
             <label className='flex flex-col justify-center align-center items-center gap-[0.5em]'>
-            <input
-              {...register('userNit', { 
-                required:'Este campo es obligatorio',
-                pattern: {
-                  value: /^[0-9]+$/,
-                  message: 'Solo se aceptan números',
-                },
-              })}
-              onBlur={() => handleBlur('userNit')}
-              placeholder='Nit'
-            />
-            {errors.userNit ? (
+              <input
+                {...register('userNit', {
+                  required: 'Este campo es obligatorio',
+                  pattern: {
+                    value: /^[0-9]+$/,
+                    message: 'Solo se aceptan números',
+                  },
+                })}
+                onBlur={() => handleBlur('userNit')}
+                placeholder='Nit'
+              />
+              {errors.userNit ? (
                 <span className='text-red-500'>{errors.userNit.message}</span>
               ) : (
                 <div className='h-[5px]'></div>
               )}
-             </label>
+            </label>
 
             <label className='flex flex-col justify-center align-center items-center gap-[0.5em]'>
               <input
-              {...register('userAddress', { 
-                required:'Este campo es obligatorio',
-                pattern: {
-                  value: /^[a-zA-Z0-9\s\-\#\.\']+$/,
-                  message: 'Ingrese una dirección válida',
-                },
-              })}
-              onBlur={() => handleBlur('userAddress')}
-              placeholder='Dirección'
-            />
-            {errors.userAddress ? (
-                <span className='text-red-500'>{errors.userAddress.message}</span>
+                {...register('userAddress', {
+                  required: 'Este campo es obligatorio',
+                  pattern: {
+                    value: /^[a-zA-Z0-9\s\-\#\.\']+$/,
+                    message: 'Ingrese una dirección válida',
+                  },
+                })}
+                onBlur={() => handleBlur('userAddress')}
+                placeholder='Dirección'
+              />
+              {errors.userAddress ? (
+                <span className='text-red-500'>
+                  {errors.userAddress.message}
+                </span>
               ) : (
                 <div className='h-[5px]'></div>
               )}
-            </label> 
-
+            </label>
 
             <label className='flex flex-col justify-center align-center items-center gap-[0.5em]'>
               <input
-              {...register('userPhone', { 
-                required:'Este campo es obligatorio',
+                {...register('userPhone', {
+                  required: 'Este campo es obligatorio',
                   pattern: {
                     value: /^[0-9]{7,14}$/,
                     message: 'Solo se aceptan números',
                   },
                 })}
-              onBlur={() => handleBlur('userPhone')}
-              placeholder='Número de teléfono'
-            />
-            {errors.userPhone ? (
+                onBlur={() => handleBlur('userPhone')}
+                placeholder='Número de teléfono'
+              />
+              {errors.userPhone ? (
                 <span className='text-red-500'>{errors.userPhone.message}</span>
               ) : (
                 <div className='h-[5px]'></div>
               )}
             </label>
             <div className='flex flex-row justify-center items-center gap-[15%] text-lg text-white mb-[3%]'>
-            <button type='submit' className='bg-teesaGreen rounded-xl p-[3%] hover:bg-green-600'>Guardar</button>
-            <label onClick={onClose} className='cursor-pointer bg-red-700 rounded-xl p-[3%] hover:bg-red-800'>Cancelar</label>
+              <button
+                type='submit'
+                className='bg-teesaGreen rounded-xl p-[3%] hover:bg-green-600'
+              >
+                Guardar
+              </button>
+              <label
+                onClick={onClose}
+                className='cursor-pointer bg-red-700 rounded-xl p-[3%] hover:bg-red-800'
+              >
+                Cancelar
+              </label>
             </div>
           </form>
         ) : (
           <>
-          <div className='flex flex-row gap-10 justify center align-middle items-center mt-[3%]'>
-            <div className=''>
-            <i
-              className='bx bxs-user ml-5 flex transition duration-300 ease-in-out transform text-white'
-              style={{ fontSize: '5em' }}
-            ></i>
+            <div className='flex flex-row gap-10 justify center align-middle items-center mt-[3%]'>
+              <div className=''>
+                <i
+                  className='bx bxs-user ml-5 flex transition duration-300 ease-in-out transform text-white'
+                  style={{ fontSize: '5em' }}
+                ></i>
+              </div>
+
+              <div className='flex flex-col gap-1 text-teesaWhite'>
+                <h1 className='font-bold text-3xl'>{userName}</h1>
+                <div className='flex flex-row gap-[45%]'>
+                  <h1 className='text-2xl'>{userEmail}</h1>
+                  <button onClick={() => setEditing(true)}>
+                    <i
+                      className='bx bx-pencil text-white hover:text-slate-600'
+                      style={{ fontSize: '22.5px' }}
+                    ></i>
+                  </button>
+                </div>
+                <div className='w-[20em] border-t-2 border-white '></div>
+              </div>
             </div>
-            
-            <div className='flex flex-col gap-1 text-teesaWhite'>
-            <h1 className='font-bold text-3xl'>{userName}</h1>
-            <div className='flex flex-row gap-[45%]'>
-            <h1 className='text-2xl'>{userEmail}</h1>
-            <button onClick={() => setEditing(true)}><i className="bx bx-pencil text-white hover:text-slate-600" style={{ fontSize: '22.5px' }}></i></button>
+            <div className='flex flex-col justify-center items-center gap-5 text-teesaWhite text-xl pb-[5%]'>
+              <h3>NIT/Cédula: {userNit}</h3>
+              <h3>Dirección: {userAddress}</h3>
+              <h3>Teléfono: {userPhone}</h3>
             </div>
-            <div className='w-[20em] border-t-2 border-white '></div>           
-            </div>          
-          </div>
-          <div className='flex flex-col justify-center items-center gap-5 text-teesaWhite text-xl pb-[5%]'>
-            <h3>NIT/Cédula: {userNit}</h3>
-            <h3>Dirección: {userAddress}</h3>
-            <h3>Teléfono: {userPhone}</h3>
-          </div>
           </>
         )}
       </section>
       {/* Products section */}
-      <section className='bg-teesaGrey rounded-lg xl:w-[50%]'>Productos comprados</section>
+      <section className='bg-teesaGrey rounded-lg xl:w-[50%]'>
+        Productos comprados
+      </section>
     </div>
   );
 };
-
 
 export default UserProfile;
