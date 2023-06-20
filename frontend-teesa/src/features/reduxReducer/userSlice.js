@@ -62,7 +62,7 @@ export const putUser = createAsyncThunk('user/putUser', async (payload) => {
 // })
 
 // Estados
-const initialState = {
+const initialState = { 
   user: null,
   userGoogle: null,
   userOurs: null,
