@@ -63,7 +63,7 @@ function App() {
         <Route path='checkoutsuccess' element={<CheckoutSucess />} />
         <Route path='checkoutpending' element={<CheckoutPending />} />
         <Route path='checkoutfailed' element={<CheckoutFailed />} />
-        <Route path='/dashboard/createproduct' element={<CreateProducts />}/>
+        <Route path='/admin/createproduct' element={<CreateProducts />}/>
       </Routes>
     </div>
   );
