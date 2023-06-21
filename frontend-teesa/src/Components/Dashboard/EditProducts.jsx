@@ -39,6 +39,23 @@ const EditProducts = () => {
   //     trigger(fieldName);
   //   };
 
+  //Images:
+  const [selectedFile, setSelectedFile] = useState([]);
+
+  const handleInputChange = (event) => {
+    const { files } = event.target;
+    if (files.length > 0) {
+      for (let i = 0; i < files.length; i++) {
+        const reader = new FileReader();
+        reader.readAsDataURL(files[i]);
+        reader.onloadend = () => {
+          setSelectedFile([reader.result]);
+          selectedFileRef.current = [...selectedFileRef.current, reader.result];
+        };
+      }
+    }
+  };
+
   return (
     <div className='flex justify-center items-center w-2/3'>
       <form
