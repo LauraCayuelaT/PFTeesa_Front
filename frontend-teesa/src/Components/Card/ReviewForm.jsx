@@ -3,6 +3,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { Rating, Button, TextField } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
+import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
 import { postReview } from '../../features/reduxReducer/reviewSlice';
 
@@ -25,12 +26,16 @@ const ReviewForm = ({ productId, userId }) => {
     register,
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
   //Form Data
+  const dispatch = useDispatch();
+
   const myProductId = productId;
   const myUserId = userId;
+
   const onSubmit = (data) => {
     const { comentario, estrellas } = data;
     const reviewData = {
@@ -42,6 +47,7 @@ const ReviewForm = ({ productId, userId }) => {
     //dispatch(postReview(reviewData));
     console.log(reviewData);
     alertConfirm();
+    reset();
   };
 
   return (

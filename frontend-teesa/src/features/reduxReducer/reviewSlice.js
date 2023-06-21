@@ -11,7 +11,9 @@ const initialState = {
   loadingPost: false,
   errorPost: null,
   //Verify User Review
+  userReviewLoading: false,
   userReviewEnabled: false,
+  userReviewError: null,
 };
 
 //* GET REVIEWS
@@ -39,6 +41,7 @@ export const postReview = createAsyncThunk(
         `https://servidor-teesa.onrender.com/reviews/${userId}`,
         { ProductId, comentario, estrellas }
       );
+      console.log(response.data);
       return response.data;
     } catch (error) {
       throw error.response.data;

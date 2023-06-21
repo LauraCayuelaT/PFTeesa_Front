@@ -133,6 +133,8 @@ const CardDetail = ({
     avgStars = 0;
   }
 
+  let newAvgStars = Math.round(avgStars);
+
   //*Datos Usuario
   const userId = useSelector((state) => state.userState.userData.userId);
 
@@ -147,6 +149,7 @@ const CardDetail = ({
   useEffect(() => {
     dispatch(verifyUserReview({ userID: userId, productID: id }));
   }, [dispatch, userId, id]);
+  //Si no funciona, ponerle que este atento al estado de userReview
 
   return (
     <div className='w-full mt-12 flex flex-col justify-center items-center '>
@@ -176,7 +179,7 @@ const CardDetail = ({
               <div className='flex my-4 items-center '>
                 <Rating
                   name='size-medium'
-                  value={avgStars}
+                  value={newAvgStars}
                   precision={1}
                   size='medium'
                   readOnly

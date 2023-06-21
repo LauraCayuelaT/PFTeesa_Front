@@ -22,7 +22,7 @@ const Review = ({ userName, userRating, userDate, userComment }) => {
       <div className='flex items-center'>
         <Rating
           name='size-medium'
-          defaultValue={userRating}
+          value={userRating}
           precision={1}
           size='medium'
           readOnly
