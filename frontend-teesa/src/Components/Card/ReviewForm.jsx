@@ -45,9 +45,10 @@ const ReviewForm = ({ productId, userId }) => {
       ProductId: myProductId,
     };
     dispatch(postReview(reviewData));
-    console.log(reviewData);
-    alertConfirm();
     reset();
+    console.log(reviewData);
+    window.location.reload();
+    //alertConfirm();
   };
 
   return (
