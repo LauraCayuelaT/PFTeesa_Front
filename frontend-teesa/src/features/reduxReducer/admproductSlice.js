@@ -19,7 +19,7 @@ export const createProduct = createAsyncThunk('admin/createProduct',
             payload
           );
           console.log(response);
-          return response;
+          return response; 
         } catch (error) {
           // Manejar cualquier error aquí
           console.log(error.response.data.message)
@@ -27,6 +27,10 @@ export const createProduct = createAsyncThunk('admin/createProduct',
         }
 })
 
+
+// export const editProduct = createAsyncThunk('admin/createProduct', 
+  
+// )
 
 const adminProductSlice = createSlice({
     name: 'adminProductState',

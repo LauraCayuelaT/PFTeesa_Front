@@ -7,7 +7,6 @@ import reviewReducer from '../features/reduxReducer/reviewSlice';
 import detailReducer from '../features/reduxReducer/detailSlice';
 import loginReducer from '../features/reduxReducer/loginSlice';
 import userReducer from '../features/reduxReducer/userSlice';
-import carritoReducer from '../features/reduxReducer/carritoSlice';
 import adminReducer from '../features/reduxReducer/admproductSlice'
 import { configureStore } from '@reduxjs/toolkit';
 
