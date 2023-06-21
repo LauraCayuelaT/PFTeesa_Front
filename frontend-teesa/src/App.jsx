@@ -13,6 +13,7 @@ import About from './views/About/AboutUs/AboutUs';
 import AboutDevs from './views/About/AboutDevs';
 import Register from './views/Register/Register';
 import Error404 from './views/Error404/Error404';
+import Dashboard from './Components/Dashboard/Dashboard';
 import { Carrito } from './Components/Carrito/Carrito';
 import CheckoutSucess from './views/Checkout/CheckoutSucess';
 import CheckoutPending from './views/Checkout/CheckoutPending';
@@ -55,6 +56,8 @@ function App() {
         <Route path='/profile' element={<UserProfile />} />
         <Route path='*' element={<Navigate to='error404' />} />
         <Route path='carrito' element={<Cart />} />
+        <Route path="/admin" element={<Dashboard/>}/>
+
         {/* Checkout */}
         <Route path='checkoutsuccess' element={<CheckoutSucess />} />
         <Route path='checkoutpending' element={<CheckoutPending />} />

@@ -21,6 +21,8 @@ export const getUser = createAsyncThunk('users/getUsers', async () => {
   }
 });
 
+
+
 export const postCart = createAsyncThunk(
   'cart/postCart',
   async ({ ProductId, CartId, cantidad }, { rejectWithValue }) => {
@@ -93,6 +95,7 @@ const cartSlice = createSlice({
       state.success = true;
       state.users = action.payload; // Actualiza la propiedad 'users' con los datos de respuesta
     })
+
     .addCase(getUser.rejected, (state, action) => {
       state.loading = false;
       state.error = true;
