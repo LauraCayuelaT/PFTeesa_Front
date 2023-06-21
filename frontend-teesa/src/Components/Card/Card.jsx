@@ -87,6 +87,7 @@ export const Card = ({ nombre, categoria, imagenes, precio, marca, id }) => {
       didOpen: (toast) => {
         toast.addEventListener('mouseenter', Swal.stopTimer);
         toast.addEventListener('mouseleave', Swal.resumeTimer);
+        toast.style.marginTop = '80px';
       },
     });
     // navigate('/carrito');
