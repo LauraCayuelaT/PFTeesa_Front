@@ -3,8 +3,9 @@ import { useForm, Controller } from 'react-hook-form';
 import { Rating, Button, TextField } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
+import { useEffect, useState } from 'react';
 import { postReview } from '../../features/reduxReducer/reviewSlice';
 
 const ReviewForm = ({ productId, userId }) => {
@@ -47,9 +48,22 @@ const ReviewForm = ({ productId, userId }) => {
     dispatch(postReview(reviewData));
     reset();
     console.log(reviewData);
-    window.location.reload();
+    setReloadPage(true);
     //alertConfirm();
   };
+
+  const posted = useSelector((state) => state.reviewState.userReviewPosted);
+
+  const [reloadPage, setReloadPage] = useState(false);
+
+  useEffect(() => {
+    if (posted === true && reloadPage === true) {
+      window.location.reload();
+      setReloadPage(false);
+    }
+  }, [posted, reloadPage]);
+
+  console.log(posted);
 
   return (
     <div className='mt-10 mx-5 lg:mx-0'>
