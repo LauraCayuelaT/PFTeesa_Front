@@ -3,10 +3,10 @@ import { useForm, Controller } from 'react-hook-form';
 import { Rating, Button, TextField } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
-import { useEffect, useState } from 'react';
 import { postReview } from '../../features/reduxReducer/reviewSlice';
+import { useNavigate } from 'react-router-dom';
 
 const ReviewForm = ({ productId, userId }) => {
   //Alert
@@ -18,6 +18,8 @@ const ReviewForm = ({ productId, userId }) => {
       icon: 'success',
       confirmButtonText: 'Aceptar',
       confirmButtonColor: '#192C8C',
+    }).then(() => {
+      navigate(0);
     });
   };
 
@@ -34,6 +36,8 @@ const ReviewForm = ({ productId, userId }) => {
   //Form Data
   const dispatch = useDispatch();
 
+  const navigate = useNavigate();
+
   const myProductId = productId;
   const myUserId = userId;
 
@@ -47,23 +51,8 @@ const ReviewForm = ({ productId, userId }) => {
     };
     dispatch(postReview(reviewData));
     reset();
-    console.log(reviewData);
-    setReloadPage(true);
-    //alertConfirm();
+    alertConfirm();
   };
-
-  const posted = useSelector((state) => state.reviewState.userReviewPosted);
-
-  const [reloadPage, setReloadPage] = useState(false);
-
-  useEffect(() => {
-    if (posted === true && reloadPage === true) {
-      window.location.reload();
-      setReloadPage(false);
-    }
-  }, [posted, reloadPage]);
-
-  console.log(posted);
 
   return (
     <div className='mt-10 mx-5 lg:mx-0'>
