@@ -6,6 +6,7 @@ import { postCart, getUser } from '../../features/reduxReducer/carritoSlice';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { NavLink, useNavigate  } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
 
 
 export const Card = ({ nombre, categoria, imagenes, precio, marca, id }) => {
@@ -75,8 +76,22 @@ export const Card = ({ nombre, categoria, imagenes, precio, marca, id }) => {
       CartId: cartId,
       cantidad: 0,
     });
+    Swal.fire({
+      icon: 'success',
+      title: 'Producto agregado al carrito',
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+      toast: true,
+      position: 'top-end',
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+      },
+    });
     // navigate('/carrito');
   };
+  
 
 
 
