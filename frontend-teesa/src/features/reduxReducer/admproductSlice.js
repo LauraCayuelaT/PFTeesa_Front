@@ -7,6 +7,7 @@ const initialState = {
     error: null,
     errorMessage: '',
     success: false,
+    
 }
 
 export const createProduct = createAsyncThunk('admin/createProduct', 
