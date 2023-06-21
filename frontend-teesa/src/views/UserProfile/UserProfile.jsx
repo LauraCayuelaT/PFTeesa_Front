@@ -68,8 +68,8 @@ const UserProfile = () => {
 
   //Mirar datos:
 
-  const userDetailData = useSelector((state) => state.userState.userDetail);
-  console.log(userDetailData);
+  // const userDetailData = useSelector((state) => state.userState.userDetail);
+  // console.log(userDetailData);
 
   //Alerts
 
