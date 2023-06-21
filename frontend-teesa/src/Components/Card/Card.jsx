@@ -79,45 +79,6 @@ export const Card = ({ nombre, categoria, imagenes, precio, marca, id }) => {
   };
 
 
-  // carro 
-  
-
-      
-      // const [cartItems, setCartItems] = useState([]);
-
-  // const handleAddToCart = () => {
-  //   const newItem = {
-  //     id,
-  //     nombre,
-  //     precio,
-  //     cantidad: cart.cantidad,
-  //   };
-  //   setCartItems((prevItems) => [...prevItems, newItem]);
-  //   setCart({
-  //     ProductId: id,
-  //     CartId: cart.CartId,
-  //     cantidad: 0,
-  //   });
-  // };
-
-
-
-  // const handleAddToCart = () => {
-  //   const newItem = {
-  //     id,
-  //     nombre,
-  //     precio,
-  //     cantidad: cart.cantidad,
-  //   };
-  //   setCartItems((prevItems) => [...prevItems, newItem]);
-  //   setCart({
-  //     ProductId: id,
-  //     CartId: cart.CartId,
-  //     cantidad: 0,
-  //   });
-  //   // setShowCart(true);
-  // };
-
 
   return (
     <div className='flex w-[260px] h-[460px] my-2 mx-6 transition duration-100 transform hover:scale-105 hover:cursor-pointer'>

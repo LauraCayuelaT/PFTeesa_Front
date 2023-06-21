@@ -50,7 +50,7 @@ export default function NavBar() {
         });
       }
     });
-  }, [dispatch, userData]);
+  }, [dispatch, userData, info]);
   console.log(info.items);
   //Google
   const [nombreGoogle, setNombreGoogle] = useState(null);
@@ -105,6 +105,10 @@ export default function NavBar() {
 
 //carrito
 // const cartt = useSelector((state) => state.app.cart);
+
+const cartItems = useSelector((state) => state.app.items);
+
+
 
 // console.log("Cart Length:", cartt.length);
 

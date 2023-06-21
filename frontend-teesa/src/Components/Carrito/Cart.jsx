@@ -5,13 +5,6 @@ import { Carrito } from '../Carrito/Carrito';
 import { Link } from 'react-router-dom';
 import { postLinkMercado } from '../../features/reduxReducer/mercadoSlice';
 
-function calculateTotal(cartProducts) {
-  let total = 0;
-  for (let i = 0; i < cartProducts.length; i++) {
-    total += cartProducts[i].precioTotal;
-  }
-  return total;
-}
 
 export const Cart = () => {
   const options = {
@@ -19,17 +12,27 @@ export const Cart = () => {
     useGrouping: true,
     minimumFractionDigits: 0,
   };
+  
+  function calculateTotal(cartProducts) {
+    let total = 0;
+    for (let i = 0; i < cartProducts.length; i++) {
+      total += cartProducts[i].precioTotal;
+  
+    }
+    return total;
+  }
 
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.userState.userData);
 
-  const carrito = useSelector((state) => state.cart);
+  // const carrito = useSelector((state) => state.cart);
 
   const [cartId, setCartId] = useState('');
 
-  const [cart, setCart] = useState({
-    CartId: cartId,
-  });
+
+  // const [cart, setCart] = useState({
+  //   CartId: cartId,
+  // });
   const [info, setInfo] = useState({
     items: '',
   });
@@ -49,10 +52,11 @@ export const Cart = () => {
             ...prevInfo,
             items: response,
           }));
+          console.log(response)
         });
       }
     });
-  }, [dispatch, userData]);
+  }, [dispatch, userData, info]);
   console.log(info.items);
 
   //*MercadoPago Button:
