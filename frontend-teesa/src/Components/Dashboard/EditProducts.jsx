@@ -1,25 +1,11 @@
 import { useForm, Controller } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getBrands } from '../../features/reduxReducer/productSlice';
 
 const EditProducts = () => {
-  //Marcas
-  const [brands, setBrands] = useState([]);
-
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getBrands())
-      .then((response) => {
-        setBrands(response.payload);
-      })
-      .catch((error) => {
-        console.error('Error fetching brands:', error);
-      });
-  }, [dispatch]);
-
-  console.log(brands);
+  const productData = useSelector((state) => state.userState.userData);
 
   //Alert
   const alertConfirm = () => {

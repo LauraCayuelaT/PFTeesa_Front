@@ -137,28 +137,7 @@ const Login = () => {
     }
   }, [isUserLoaded, navigate]);
 
-  //*Prueba Token
-
-  // const fetchData = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       'https://servidor-teesa.onrender.com/loginCheck',
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       }
-  //     );
-  //     console.log(response.data);
-  //     // Aquí puedes manejar la respuesta de la API
-  //   } catch (error) {
-  //     console.error(error.response.data);
-  //      //Aquí puedes manejar cualquier error ocurrido durante la solicitud
-  //   }
-  // };
-
-  //Tengo que llamar la funcion dos veces o no actualiza la data.
-
+  
   return (
     <div
       style={{
