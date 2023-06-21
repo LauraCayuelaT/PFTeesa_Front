@@ -148,7 +148,7 @@ const CardDetail = ({
 
   useEffect(() => {
     dispatch(verifyUserReview({ userID: userId, productID: id }));
-  }, [dispatch, userId, id, userReviewEnabled]);
+  }, [dispatch, userId, id]);
   //Si no funciona con eso, recargar la página.
 
   return (
