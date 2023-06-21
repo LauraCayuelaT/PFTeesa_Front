@@ -12,6 +12,10 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { getUser, postCart } from '../../features/reduxReducer/carritoSlice';
+import {
+  fetchReviews,
+  verifyUserReview,
+} from '../../features/reduxReducer/reviewSlice';
 
 /* eslint-disable react/prop-types */
 const CardDetail = ({
@@ -43,9 +47,10 @@ const CardDetail = ({
   useEffect(() => {
     dispatch(getUser()).then((action) => {
       const response = action.payload;
-      console.log(response);
-      const cartId = response.find((user) => user.id === userData.userId)?.Cart.id;
-      console.log(cartId);
+      // console.log(response);
+      const cartId = response.find((user) => user.id === userData.userId)?.Cart
+        .id;
+      // console.log(cartId);
       setCartId(cartId);
       setCart((prevCart) => ({
         ...prevCart,
@@ -54,22 +59,20 @@ const CardDetail = ({
     });
   }, [dispatch, userData]);
 
+  // const [cantidad, setCantidad] = useState(0);
 
-  const [cantidad, setCantidad] = useState(0);
-
-
-  const handleChange = (e) => {
-    const value = e.target.value;
-    setCart((prevCart) => ({
-      ...prevCart,
-      cantidad: value,
-    }));
-  };
+  // const handleChange = (e) => {
+  //   const value = e.target.value;
+  //   setCart((prevCart) => ({
+  //     ...prevCart,
+  //     cantidad: value,
+  //   }));
+  // };
 
   const handleIncrement = () => {
     setCart((prevCart) => ({
       ...prevCart,
-      cantidad: (Number(prevCart.cantidad) + 1),
+      cantidad: Number(prevCart.cantidad) + 1,
     }));
   };
 
@@ -77,15 +80,14 @@ const CardDetail = ({
     if (cart.cantidad > 0) {
       setCart((prevCart) => ({
         ...prevCart,
-        cantidad: (Number(prevCart.cantidad) - 1),
+        cantidad: Number(prevCart.cantidad) - 1,
       }));
     }
   };
-  
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(cart);
+    // console.log(cart);
     dispatch(postCart(cart));
     setCart({
       ProductId: id,
@@ -94,8 +96,6 @@ const CardDetail = ({
     });
     // navigate('/carrito');
   };
-
-
 
   //* Datos Descripción:
 
@@ -114,32 +114,42 @@ const CardDetail = ({
 
   const estadoMayus = capitalizeWord(estado || '');
 
-  //*Datos
+  //*Datos de las Reviews: reviewState
+  //General
+  const reviewState = useSelector((state) => state?.reviewState);
+  let avgStars = reviewState?.reviewsData?.avgStars;
+  let totalReviews = reviewState?.reviewsData?.users;
+  //Reviews
+  let reviews = reviewState?.reviewsData?.reviews;
 
-  const userReviews = [
-    {
-      userName: 'Pepito Perez',
-      userRating: 4,
-      userTitle: 'Buen producto.',
-      userComment:
-        'Después de haberlo utilizado puedo decir que es un buen producto, buena calidad.',
-    },
-    {
-      userName: 'Fito Paez',
-      userRating: 3,
-      userTitle: 'No está mal',
-      userComment: 'No está mal, aunque sinceramente habría cosas por mejorar.',
-    },
-    {
-      userName: 'Camilo Nuñez',
-      userRating: 5,
-      userTitle: 'Me gustó bastante.',
-      userComment: 'Me gustaria comprarlo de nuevo, no decepciona.',
-    },
-  ];
+  useEffect(() => {
+    dispatch(fetchReviews(id));
+  }, [dispatch, id]);
 
-  //*General Reviews - Product
-  let reviews = 4;
+  // console.log(reviewState);
+  // console.log(reviews, avgStars, totalReviews);
+
+  if (avgStars === null && totalReviews === null) {
+    avgStars = 0;
+  }
+
+  let newAvgStars = Math.round(avgStars);
+
+  //*Datos Usuario
+  const userId = useSelector((state) => state.userState.userData.userId);
+
+  //*Verify User Review
+
+  const userReviewEnabled = useSelector(
+    (state) => state.reviewState.userReviewEnabled
+  );
+
+  //console.log('E', userReviewEnabled);
+
+  useEffect(() => {
+    dispatch(verifyUserReview({ userID: userId, productID: id }));
+  }, [dispatch, userId, id]);
+  //Si no funciona con eso, recargar la página.
 
   return (
     <div className='w-full mt-12 flex flex-col justify-center items-center '>
@@ -165,16 +175,22 @@ const CardDetail = ({
             {nombre}
           </h2>
           <div className='flex my-4 items-center '>
-            <Rating
-              name='size-medium'
-              defaultValue={reviews}
-              precision={1}
-              size='medium'
-              readOnly
-              emptyIcon={<StarBorderIcon style={{ color: '#192C8C' }} />}
-              icon={<StarIcon style={{ color: '#192C8C' }} />}
-            />
-            <span className='ml-2 text-teesaBlueDark '>{`(${reviews})`}</span>
+            {avgStars !== null && totalReviews !== null ? (
+              <div className='flex my-4 items-center '>
+                <Rating
+                  name='size-medium'
+                  value={newAvgStars}
+                  precision={1}
+                  size='medium'
+                  readOnly
+                  emptyIcon={<StarBorderIcon style={{ color: '#192C8C' }} />}
+                  icon={<StarIcon style={{ color: '#192C8C' }} />}
+                />
+                <span className='ml-2 text-teesaBlueDark '>{`(${totalReviews} opiniones).`}</span>
+              </div>
+            ) : (
+              <div className='h-[24px]'></div>
+            )}
           </div>
           <p className='text-gray-900 text-xl mb-6'>
             <span className='font-bold text-md'>Descripcion</span> <br />{' '}
@@ -197,52 +213,71 @@ const CardDetail = ({
             </h2>
           </div>
           <form onSubmit={(e) => handleSubmit(e)}>
-              <div className='flex items-center mt-2'>
-                <button
-                  type='button'
-                  id='decrement'
-                  onClick={handleDecrement}
-                  className='px-3 py-1 border rounded-md border-gray-400 text-sm'
-                >
-                  -
-                </button>
-                <span id='quantity' className='px-2'>
-                  {cart.cantidad}
-                </span>
-                <button
-                  type='button'
-                  id='increment'
-                  onClick={handleIncrement}
-                  className='px-3 py-1 border rounded-md border-gray-400 text-sm'
-                >
-                  +
-                </button>
-                <button
-                  type='submit'
-                  className='ml-2 px-8 py-3 bg-teesaBlueDark text-white rounded-md'
-                >
-                  Agregar al Carrito <i className='fa-solid fa-cart-shopping rounded-md'></i>
-                </button>
-              </div>
-              <h6 className='hidden'>{id}</h6>
-              <h6 className='hidden'>{cart.CartId}</h6>
-            </form>
+            <div className='flex items-center mt-2'>
+              <button
+                type='button'
+                id='decrement'
+                onClick={handleDecrement}
+                className='px-3 py-1 border rounded-md border-gray-400 text-sm'
+              >
+                -
+              </button>
+              <span
+                id='quantity'
+                className='px-2'
+              >
+                {cart.cantidad}
+              </span>
+              <button
+                type='button'
+                id='increment'
+                onClick={handleIncrement}
+                className='px-3 py-1 border rounded-md border-gray-400 text-sm'
+              >
+                +
+              </button>
+              <button
+                type='submit'
+                className='ml-2 px-8 py-3 bg-teesaBlueDark text-white rounded-md'
+              >
+                Agregar al Carrito{' '}
+                <i className='fa-solid fa-cart-shopping rounded-md'></i>
+              </button>
+            </div>
+            <h6 className='hidden'>{id}</h6>
+            <h6 className='hidden'>{cart.CartId}</h6>
+          </form>
         </div>
       </div>
       {/* Reviews */}
       <div className='reviewsContainer w-full m-8 lg:m-4 lg:w-3/4   border-t-2 border-blue-950'>
-        <ReviewForm />
-        <h1 className='font-bold text-lg m-4'>Opiniones:</h1>
-
-        {userReviews.map((review, index) => (
-          <Review
-            key={index}
-            userName={review.userName}
-            userRating={review.userRating}
-            userComment={review.userComment}
-            userTitle={review.userTitle}
+        {/* Review Form */}
+        {userReviewEnabled && (
+          <ReviewForm
+            productId={id}
+            userId={userId}
           />
-        ))}
+        )}
+
+        <h1 className='font-bold text-lg m-4'>Opiniones:</h1>
+        {/* Client Reviews*/}
+        {totalReviews === 0 ||
+        totalReviews === null ||
+        totalReviews === undefined ? (
+          <h1 className=' text-lg m-4'>
+            Aún no hay opiniones de este producto.
+          </h1>
+        ) : (
+          reviews.map((review, index) => (
+            <Review
+              key={index}
+              userName={review.User.nombre}
+              userRating={review.estrellas}
+              userComment={review.comentario}
+              userDate={reviews.fecha}
+            />
+          ))
+        )}
       </div>
     </div>
   );
