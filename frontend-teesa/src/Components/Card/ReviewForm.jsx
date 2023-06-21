@@ -44,7 +44,7 @@ const ReviewForm = ({ productId, userId }) => {
       comentario: comentario,
       ProductId: myProductId,
     };
-    //dispatch(postReview(reviewData));
+    dispatch(postReview(reviewData));
     console.log(reviewData);
     alertConfirm();
     reset();
