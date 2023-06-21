@@ -1,10 +1,13 @@
+/* eslint-disable react/prop-types */
 import { useForm, Controller } from 'react-hook-form';
 import { Rating, Button, TextField } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
+import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
+import { postReview } from '../../features/reduxReducer/reviewSlice';
 
-const ReviewForm = () => {
+const ReviewForm = ({ productId, userId }) => {
   //Alert
 
   const alertConfirm = () => {
@@ -23,12 +26,28 @@ const ReviewForm = () => {
     register,
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
+  //Form Data
+  const dispatch = useDispatch();
+
+  const myProductId = productId;
+  const myUserId = userId;
+
   const onSubmit = (data) => {
-    console.log(data);
+    const { comentario, estrellas } = data;
+    const reviewData = {
+      userId: myUserId,
+      estrellas: estrellas,
+      comentario: comentario,
+      ProductId: myProductId,
+    };
+    //dispatch(postReview(reviewData));
+    console.log(reviewData);
     alertConfirm();
+    reset();
   };
 
   return (
@@ -40,7 +59,7 @@ const ReviewForm = () => {
       >
         <div>
           <Controller
-            name='rating'
+            name='estrellas'
             control={control}
             rules={{ required: 'Debes calificar el producto.' }}
             render={({ field }) => (
@@ -60,18 +79,10 @@ const ReviewForm = () => {
         </div>
         <div className='my-4'>
           <TextField
-            {...register('titulo')}
-            label='Título'
-            fullWidth
-            required
-          />
-        </div>
-        <div className='my-4'>
-          <TextField
-            {...register('comentarios')}
+            {...register('comentario')}
             label='Comentarios'
             multiline
-            rows={4}
+            rows={2}
             fullWidth
             required
           />

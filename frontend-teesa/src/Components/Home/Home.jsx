@@ -47,9 +47,8 @@ function Home() {
     setOrden(`Ordenado por precio ${e.target.value}`);
   };
 
-  // Carrito 
+  // Carrito
   const [showFilters, setShowFilters] = useState(false); // Estado para mostrar/ocultar los filtros
-
 
   // Tiago y Juan - Estado de Páginación:
 
@@ -71,7 +70,7 @@ function Home() {
   //*Filtros Nuevos:
 
   const { filters, products, status, error } = useSelector(
-    (state) => state.filters
+    (state) => state?.filters
   );
 
   //*Nuestro Login: Comprobar token - Cargar Datos del User (userSlice).
@@ -106,54 +105,63 @@ function Home() {
     }
   }, [dispatch]);
 
-
   return (
     <div className='flex flex-col'>
-    {/* Second Navbar */}
-    <div className='flex flex-col bg-teesaBlueDark w-full h-[3em] items-center justify-center mt-[-1px] border-t-4 border-teesaGreen text-teesaWhite text-[16px]'>
-      <SearchBar />
-    </div>
-    {/* Hero */}
-    <div className='heroContainer flex flex-wrap'>
-      {/* Inicia parte de Sol. */} {/* FILTROS */}
-      <div className='filters w-full md:w-1/6 m-4 bg-gray-100 p-4 rounded-lg'>
-        <h1 className='text-xl font-bold mb-4 text-teesaBlueDark'>Filtrar por:</h1>
-        <FilterComponent
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          onApplyFilters={handleApplyFilters}
-        />
+      {/* Second Navbar */}
+      <div className='flex flex-col bg-teesaBlueDark w-full h-[3em] items-center justify-center mt-[-1px] border-t-4 border-teesaGreen text-teesaWhite text-[16px]'>
+        <SearchBar />
       </div>
-      {/* Termina parte de Sol. */}
-      {/* Inicia parte de Juan. */}
-      {/* Cards */}
-      <div className='cardsContainer w-full md:w-2/3 m-5 bg-teesaWhite flex flex-wrap justify-center'>
-        {status === 'loading' && (
-          <div className='flex justify-center items-center w-full h-[800px]'>
-            <img src={loadingGif} alt='gif' />
-          </div>
-        )}
-        {status === 'failed' && <div>Error al cargar los productos: {error}</div>}
-        {status === 'succeeded' && (
-          <div className='flex flex-wrap m-auto justify-center'>
-            {products.products?.map((product) => (
-              <Card
-                id={product.id}
-                key={product.id}
-                nombre={product.nombre}
-                categoria={product.categoria}
-                precio={product.precio}
-                imagenes={product.imagenes}
-                marca={product.marca}
+      {/* Hero */}
+      <div className='heroContainer flex flex-wrap'>
+        {/* Inicia parte de Sol. */} {/* FILTROS */}
+        <div className='filters w-full md:w-1/6 m-4 bg-gray-100 p-4 rounded-lg'>
+          <h1 className='text-xl font-bold mb-4 text-teesaBlueDark'>
+            Filtrar por:
+          </h1>
+          <FilterComponent
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            onApplyFilters={handleApplyFilters}
+          />
+        </div>
+        {/* Termina parte de Sol. */}
+        {/* Inicia parte de Juan. */}
+        {/* Cards */}
+        <div className='cardsContainer w-full md:w-2/3 m-5 bg-teesaWhite flex flex-wrap justify-center'>
+          {status === 'loading' && (
+            <div className='flex justify-center items-center w-full h-[800px]'>
+              <img
+                src={loadingGif}
+                alt='gif'
               />
-            ))}
-          </div>
-        )}
-        <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
+            </div>
+          )}
+          {status === 'failed' && (
+            <div>Error al cargar los productos: {error}</div>
+          )}
+          {status === 'succeeded' && (
+            <div className='flex flex-wrap m-auto justify-center'>
+              {products.products?.map((product) => (
+                <Card
+                  id={product?.id}
+                  key={product?.id}
+                  nombre={product?.nombre}
+                  categoria={product?.categoria}
+                  precio={product?.precio}
+                  imagenes={product?.imagenes}
+                  marca={product?.marca}
+                />
+              ))}
+            </div>
+          )}
+          <Pagination
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
+        </div>
       </div>
     </div>
-  </div>
   );
-  }
+}
 
 export default Home;
