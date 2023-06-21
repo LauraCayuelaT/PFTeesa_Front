@@ -7,7 +7,7 @@ import reviewReducer from '../features/reduxReducer/reviewSlice';
 import detailReducer from '../features/reduxReducer/detailSlice';
 import loginReducer from '../features/reduxReducer/loginSlice';
 import userReducer from '../features/reduxReducer/userSlice';
-import adminReducer from '../features/reduxReducer/adminSlice';
+import adminReducer from '../features/reduxReducer/admproductSlice'
 import { configureStore } from '@reduxjs/toolkit';
 
 export const store = configureStore({
@@ -21,7 +21,6 @@ export const store = configureStore({
     filters: filtersReducer,
     userState: userReducer,
     app: carritoReducer,
-    admin: adminReducer,
-
+    adminProductState: adminReducer
   },
 });

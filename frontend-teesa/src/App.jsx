@@ -18,6 +18,7 @@ import CheckoutSucess from './views/Checkout/CheckoutSucess';
 import CheckoutPending from './views/Checkout/CheckoutPending';
 import CheckoutFailed from './views/Checkout/CheckoutFailed';
 import UserProfile from './views/UserProfile/UserProfile';
+import CreateProducts from './views/Dashboard/CreateProducts';
 import Dashboard from './Components/Dashboard/Dashboard';
 //Redux
 import { getUserDataFromCookie } from './features/reduxReducer/userSlice';
@@ -62,6 +63,7 @@ function App() {
         <Route path='checkoutsuccess' element={<CheckoutSucess />} />
         <Route path='checkoutpending' element={<CheckoutPending />} />
         <Route path='checkoutfailed' element={<CheckoutFailed />} />
+        <Route path='/dashboard/createproduct' element={<CreateProducts />}/>
       </Routes>
     </div>
   );
