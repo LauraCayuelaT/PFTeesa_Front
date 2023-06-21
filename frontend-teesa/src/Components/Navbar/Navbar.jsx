@@ -146,6 +146,12 @@ export default function NavBar() {
           >
             Devs
           </NavLink>
+          <NavLink
+            to='/admin'
+            className='transition duration-300 ease-in-out transform hover:text-teesaGreen focus:text-teesaGreen'
+          >
+            Dashboard
+          </NavLink>
         </div>
         <div className='sm:hidden'>
           <i
