@@ -149,7 +149,7 @@ const CardDetail = ({
   useEffect(() => {
     dispatch(verifyUserReview({ userID: userId, productID: id }));
   }, [dispatch, userId, id, userReviewEnabled]);
-  //Si no funciona, ponerle que este atento al estado de userReviewEnabled
+  //Si no funciona con eso, recargar la página.
 
   return (
     <div className='w-full mt-12 flex flex-col justify-center items-center '>
