@@ -194,8 +194,8 @@ export default function NavBar(props) {
               {nombreGoogle ? nombreGoogle : userName}
             </span>
             <i
-              className='bx bxs-user ml-5 flex transition duration-300 ease-in-out transform hover:text-teesaGreen'
-              style={{ fontSize: '1.5rem' }}
+              className='fa-solid fa-user ml-5 flex transition duration-300 ease-in-out transform hover:text-teesaGreen'
+              style={{ fontSize: '1.4rem' }}
             ></i>
 
             {showTooltip && (
@@ -233,8 +233,8 @@ export default function NavBar(props) {
             }`}
           >
             <i
-              className='bx bxs-user mr-6'
-              style={{ fontSize: '1.5rem' }}
+              className='fa-solid fa-user mr-6'
+              style={{ fontSize: '1.6rem' }}
             ></i>
           </NavLink>
         )}
