@@ -308,7 +308,7 @@ const UserProfile = () => {
   <article className='w-[95%] '>
     {userProducts && userProducts.length > 0 ? (
       userProducts.map((product) => (
-        <section className='bg-slate-300 w-[100%] my-[3%] h-[10%] rounded-xl' key={product.id}>
+        <section className='bg-slate-300 w-[100%] h-auto p-3 my-[3%] h-[10%] rounded-xl' key={product.id}>
           <div className="flex flex-row items-center space-x-4">
             <Link to={`/home/${product.ProductId}`}>
               <img src={product.Product.imagenes[0]} alt={product.Product.nombre} className="w-16 hover:transform hover:scale-105 h-16 ml-[1%]"/>
