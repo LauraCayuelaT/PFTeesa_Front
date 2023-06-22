@@ -9,8 +9,6 @@ import {
 } from '../../features/reduxReducer/carritoSlice';
 import { updateCartGuestProducts, deleteCartGuestProducts } from '../../features/reduxReducer/cartGuestSlice';
 
-// import Cart from './Cart';
-// import Card from '../Card/Card';
 
 export const Carrito = ({
   id,
