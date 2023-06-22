@@ -6,11 +6,6 @@ const Pagination = () => {
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
   const page = useSelector((state) => state?.filters?.page);
-  // console.log(page);
-
-  // useEffect(() => {
-  //   dispatch(getPaginationData(currentPage));
-  // }, [dispatch, currentPage]);
 
   const general = useSelector((state) => state?.filters?.products);
   const total = useSelector((state) => state?.filters);
@@ -42,43 +37,51 @@ const Pagination = () => {
   };
 
   return (
-    <div className='flex justify-center mt-4 mb-4'>
-      <button
-        className={`px-4 py-2 mx-1 rounded-lg ${
-          currentPage
-            ? 'bg-teesaBlueDark text-teesaWhite'
-            : 'bg-gray-300 text-teesaBlueDark'
-        } ${page === 1 ? 'hidden' : 'flex'}`}
-        onClick={handlePrevClick}
-      >
-        {' '}
-        Atras
-      </button>
-      {paginasFinal?.map((pagina) => (
-        <button
-          onClick={() => pagesChange(pagina)}
-          className={`px-4 py-2 mx-1 rounded-lg ${
-            page === pagina
-              ? 'bg-teesaBlueDark text-teesaWhite'
-              : 'bg-gray-300 text-teesaBlueDark'
-          }`}
-          key={pagina}
-        >
-          {pagina}
-        </button>
-      ))}
-      <button
-        className={`px-4 py-2 mx-1 rounded-lg ${
-          currentPage
-            ? 'bg-teesaBlueDark text-teesaWhite'
-            : 'bg-gray-300 text-teesaBlueDark'
-        }
-        ${page === general.totalPages ? 'hidden' : 'flex'}`}
-        onClick={handleNextClick}
-      >
-        {' '}
-        Siguiente
-      </button>
+    <div className='pagination-container'>
+      {/* Renderizar los productos aquí */}
+      <div className='products-container' style={{ marginTop: '50px' }}>
+        {/* ... */}
+      </div>
+
+      {/* Paginación */}
+      <div className='pagination-wrapper fixed bottom-0 left-0 right-0 bg-white py-4' style={{ marginTop: '20px' }}>
+        <div className='pagination-inner flex justify-center'>
+          <button
+            className={`px-4 py-2 mx-1 rounded-lg ${
+              currentPage
+                ? 'bg-teesaBlueDark text-teesaWhite'
+                : 'bg-gray-300 text-teesaBlueDark'
+            } ${page === 1 ? 'hidden' : 'flex'}`}
+            onClick={handlePrevClick}
+          >
+            Anterior
+          </button>
+          {paginasFinal?.map((pagina) => (
+            <button
+              onClick={() => pagesChange(pagina)}
+              className={`px-4 py-2 mx-1 rounded-lg ${
+                page === pagina
+                  ? 'bg-teesaBlueDark text-teesaWhite'
+                  : 'bg-gray-300 text-teesaBlueDark'
+              }`}
+              key={pagina}
+            >
+              {pagina}
+            </button>
+          ))}
+          <button
+            className={`px-4 py-2 mx-1 rounded-lg ${
+              currentPage
+                ? 'bg-teesaBlueDark text-teesaWhite'
+                : 'bg-gray-300 text-teesaBlueDark'
+            }
+          ${page === general.totalPages ? 'hidden' : 'flex'}`}
+            onClick={handleNextClick}
+          >
+            Siguiente
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
