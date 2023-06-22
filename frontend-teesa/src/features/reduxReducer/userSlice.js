@@ -171,6 +171,7 @@ const userSlice = createSlice({
       state.userData.userId = id;
       state.userData.userName = nombre;
       state.userData.userEmail = correo;
+      state.userData.userType = false;
     },
     //*Google Login - Tomar Cookies y Ponerlas en Estado
     updateUserDataFromCookie: (state) => {
@@ -184,6 +185,7 @@ const userSlice = createSlice({
         state.userData.userId = userIdCookie;
         state.userData.userName = userNameCookie;
         state.userData.userEmail = userEmailCookie;
+        state.userData.userType = false;
       }
     },
   },

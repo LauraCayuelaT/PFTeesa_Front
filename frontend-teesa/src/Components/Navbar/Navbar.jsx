@@ -25,7 +25,6 @@ export default function NavBar() {
   } = userData;
 
   const userAdmin = useSelector((state) => state.userState.userData.userType);
-  console.log(userAdmin);
 
   const [cartId, setCartId] = useState('');
 
@@ -54,7 +53,7 @@ export default function NavBar() {
       }
     });
   }, [dispatch, userData, info]);
-  console.log(info.items);
+
   //Google
   const [nombreGoogle, setNombreGoogle] = useState(null);
   const cookies = new Cookies();
@@ -108,15 +107,12 @@ export default function NavBar() {
   //carrito
   // const cartt = useSelector((state) => state.app.cart);
 
-//carrito
-// const cartt = useSelector((state) => state.app.cart);
+  //carrito
+  // const cartt = useSelector((state) => state.app.cart);
 
-const cartItems = useSelector((state) => state.app.items);
+  const cartItems = useSelector((state) => state.app.items);
 
-
-
-// console.log("Cart Length:", cartt.length);
-
+  // console.log("Cart Length:", cartt.length);
 
   return (
     <div className='flex flex-row justify-between items-center w-full h-[4em] border-b-2 border-gray-300 bg-teesaBlueDark text-white text-xl sm:text-lg relative'>

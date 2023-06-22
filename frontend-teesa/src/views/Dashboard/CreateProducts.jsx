@@ -3,8 +3,56 @@ import { createProduct } from '../../features/reduxReducer/admproductSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect, useRef } from 'react';
 import { getBrands } from '../../features/reduxReducer/productSlice';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 const CreateProducts = (id) => {
+  //*Validar Admin - Juan:
+
+  const navigate = useNavigate();
+  const alertGoodbye = () => {
+    Swal.fire({
+      title: '¡Un momento!',
+      text: 'No eres admin, no puedes estar aquí.',
+      icon: 'info',
+      confirmButtonText: 'Aceptar',
+      confirmButtonColor: '#192C8C',
+    }).then(() => {
+      navigate('/home');
+    });
+  };
+
+  const userAdmin = useSelector((state) => state.userState.userData.userType);
+  console.log('data' + userAdmin);
+  const [waiting, setWaiting] = useState(true);
+
+  useEffect(() => {
+    if (userAdmin === null) {
+      const timeout = setTimeout(() => {
+        if (waiting) {
+          alertGoodbye();
+        }
+      }, 3000);
+
+      return () => {
+        clearTimeout(timeout);
+      };
+    } else {
+      setWaiting(false);
+    }
+  }, [userAdmin, waiting]);
+
+  useEffect(() => {
+    if (userAdmin !== null && !waiting) {
+      // Validar los datos después de que se hayan obtenido
+      if (userAdmin === false) {
+        alertGoodbye();
+      }
+    }
+  }, [userAdmin, waiting]);
+
+  //*Yose
+
   const dispatch = useDispatch();
   const [brands, setBrands] = useState([]);
   const [selectedFile, setSelectedFile] = useState([]);
