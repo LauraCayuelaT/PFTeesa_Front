@@ -301,50 +301,70 @@ const UserProfile = () => {
         )}
       </section>
       {/* Products section */}
-      
-      
+
       <section className='flex flex-col items-center mb-[5%] bg-gradient-to-r from-teesaGreenDark to-teesaGreen overflow-y-scroll rounded-lg xl:w-[55%] h-[80%]'>
-  <h1 className='font-bold text-teesaWhite mt-[2%] text-2xl'>Mis Compras</h1>
-  <article className='w-[95%] '>
-    {userProducts && userProducts.length > 0 ? (
-      userProducts.map((product) => (
-        <section className='bg-slate-300 w-[100%] h-auto p-3 my-[3%] h-[10%] rounded-xl' key={product.id}>
-          <div className="flex flex-row items-center space-x-4">
-            <Link to={`/home/${product.ProductId}`}>
-              <img src={product.Product.imagenes[0]} alt={product.Product.nombre} className="w-16 hover:transform hover:scale-105 h-16 ml-[1%]"/>
-            </Link>
-            <div>
-              <h3 className="text-2xl font-bold text-teesaBlueDark">{product.Product.nombre}</h3>
-              <section>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="col-span-1">
-                    <p className='text-teesaGreen'>{product.estado}</p>
-                    <p>Cantidad: {product.cantidad}</p>
-                  </div>
-                  <div className="col-span-1 flex flex-col justify-between">
-                    <div>
-                      <p>Precio: {product.precio}</p>
-                    </div>
-                    <div>
-                      <p>Fecha de compra: {new Date(product.fechaDeCompra).toLocaleDateString()}</p>
-                    </div>
+        <h1 className='font-bold text-teesaWhite mt-[2%] text-2xl'>
+          Mis Compras
+        </h1>
+        <article className='w-[95%] '>
+          {userProducts && userProducts.length > 0 ? (
+            userProducts.map((product) => (
+              <section
+                className='bg-slate-300 w-[100%] my-[3%] h-[30] rounded-xl'
+                key={product.id}
+              >
+                <div className='flex flex-row items-center space-x-4'>
+                  <Link to={`/home/${product.ProductId}`}>
+                    <img
+                      src={product.Product.imagenes[0]}
+                      alt={product.Product.nombre}
+                      className='w-16 hover:transform hover:scale-105 h-16 ml-[1%]'
+                    />
+                  </Link>
+                  <div>
+                    <h3 className='text-2xl font-bold text-teesaBlueDark'>
+                      {product.Product.nombre}
+                    </h3>
+                    <section>
+                      <div className='grid grid-cols-2 gap-4'>
+                        <div className='col-span-1'>
+                          <p className='text-teesaGreen'>{product.estado}</p>
+                          <p>Cantidad: {product.cantidad}</p>
+                        </div>
+                        <div className='col-span-1 flex flex-col justify-between'>
+                          <div>
+                            <p>Precio: {product.precio}</p>
+                          </div>
+                          <div>
+                            <p>
+                              Fecha de compra:{' '}
+                              {new Date(
+                                product.fechaDeCompra
+                              ).toLocaleDateString()}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </section>
                   </div>
                 </div>
               </section>
+            ))
+          ) : (
+            <div className='flex flex-col items-center '>
+              <p className='text-teesaWhite mb-4'>
+                Todavía no has realizado compras.
+              </p>
+              <Link
+                to='/home'
+                className='text-teesaBlueDark underline font-bold'
+              >
+                Ir a comprar
+              </Link>
             </div>
-          </div>
-        </section>
-      ))
-    ) : (
-      <div className="flex flex-col items-center ">
-        <p className="text-teesaWhite mb-4">Todavía no has realizado compras.</p>
-        <Link to="/home" className="text-teesaBlueDark underline font-bold">Ir a comprar</Link>
-      </div>
-    
-    )}
-  </article>
-</section>
-
+          )}
+        </article>
+      </section>
     </div>
   );
 };
