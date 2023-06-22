@@ -16,10 +16,10 @@ import {
   fetchReviews,
   verifyUserReview,
 } from '../../features/reduxReducer/reviewSlice';
-import { v4 as uuidv4 } from 'uuid';
-import {Cart} from '../Carrito/Cart';
+// import { v4 as uuidv4 } from 'uuid';
+// import {Cart} from '../Carrito/Cart';
 import Swal from 'sweetalert2';
-import { postCartGuestProducts } from '../../features/reduxReducer/cartGuestSlice';
+// import { postCartGuestProducts } from '../../features/reduxReducer/cartGuestSlice';
 
 /* eslint-disable react/prop-types */
 const CardDetail = ({
@@ -55,7 +55,7 @@ const CardDetail = ({
   const [cartGuest, setCartGuest] = useState({
     ProductId: id,
     cantidad: 0,
-    userId: localStorage.getItem('guestUserId') || uuidv4(),
+    // userId: localStorage.getItem('guestUserId') || uuidv4(),
   });
 
   useEffect(() => {
@@ -79,9 +79,9 @@ const CardDetail = ({
     if (cart.CartId) {
       setCart((prevCart) => ({
         ...prevCart,
-        cantidad: Number(prevCart.cantidad) +1,
+        cantidad: Number(prevCart.cantidad) + 1,
       }));
-    } else 
+    } else
       setCartGuest((prevCartGuest) => ({
         ...prevCartGuest,
         cantidad: Number(prevCartGuest.cantidad) + 1,
@@ -89,20 +89,19 @@ const CardDetail = ({
   };
 
   const handleDecrement = () => {
-    if(cart.cantidad>0){
-    if (cart.CartId) {
-      setCart((prevCart) => ({
-        ...prevCart,
-        cantidad: Number(prevCart.cantidad) - 1,
-      }));
-    } else 
-      setCartGuest((prevCartGuest) => ({
-        ...prevCartGuest,
-        cantidad: Number(prevCartGuest.cantidad) - 1,
-      }));
+    if (cart.cantidad > 0) {
+      if (cart.CartId) {
+        setCart((prevCart) => ({
+          ...prevCart,
+          cantidad: Number(prevCart.cantidad) - 1,
+        }));
+      } else
+        setCartGuest((prevCartGuest) => ({
+          ...prevCartGuest,
+          cantidad: Number(prevCartGuest.cantidad) - 1,
+        }));
     }
   };
-  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -127,19 +126,20 @@ const CardDetail = ({
           toast.style.marginTop = '80px';
         },
       });
-    } else if(cartGuest.cantidad > 0){
-      const updatedCartGuest = {
-        ...cartGuest,
-      };
-      dispatch(postCartGuestProducts(updatedCartGuest)); // Enviar el carrito actualizado del usuario no registrado
-      setCartGuest((prevCartGuest) => ({
-        ...prevCartGuest,
-        ProductId: id,
-        cantidad: 0,// Asignar el userId al estado cartGuest
-      }));
+    } else if (cartGuest.cantidad > 0) {
+      // const updatedCartGuest = {
+      //   ...cartGuest,
+      // };
+      // dispatch(postCartGuestProducts(updatedCartGuest)); // Enviar el carrito actualizado del usuario no registrado
+      // setCartGuest((prevCartGuest) => ({
+      //   ...prevCartGuest,
+      //   ProductId: id,
+      //   cantidad: 0,// Asignar el userId al estado cartGuest
+      // }));
       Swal.fire({
-        icon: 'success',
-        title: 'Producto agregado al carrito',
+        icon: 'warning',
+        title: '¡Error!',
+        text: 'Debes registrate para agregar productos al carrito.',
         showConfirmButton: false,
         timer: 2000,
         timerProgressBar: true,
@@ -151,15 +151,12 @@ const CardDetail = ({
           toast.style.marginTop = '80px';
         },
       });
-    }//navigate('/carrito');
-    <Cart userId={cartGuest.userId} />
-    
+    } //navigate('/carrito');
+    // <Cart userId={cartGuest.userId} />
+
     // navigate('/carrito');
   };
-  console.log(cartGuest)
-
-
-
+  console.log(cartGuest);
 
   // useEffect(() => {
   //   dispatch(getUser()).then((action) => {
@@ -287,7 +284,7 @@ const CardDetail = ({
             </button>
           </NavLink>
         </div>
-        <div className="w-full lg:w-1/2 m-4 flex items-center justify-center">
+        <div className='w-full lg:w-1/2 m-4 flex items-center justify-center'>
           <Carrusel />
         </div>
         <div className='w-full lg:w-1/2  px-8 py-6'>
@@ -349,7 +346,7 @@ const CardDetail = ({
                 id='quantity'
                 className='px-2'
               >
-               {cart.CartId ? cart.cantidad : cartGuest.cantidad}
+                {cart.CartId ? cart.cantidad : cartGuest.cantidad}
               </span>
               <button
                 type='button'

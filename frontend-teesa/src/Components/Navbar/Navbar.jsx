@@ -51,13 +51,14 @@ export default function NavBar(props) {
             items: response,
           }));
         });
-      }else dispatch(getCartGuestProducts(userUUID)).then((action) => {
-        const response = action.payload;
-        setInfo((prevInfo) => ({
-          ...prevInfo,
-          items: response,
-        }));
-      });
+      } else
+        dispatch(getCartGuestProducts(userUUID)).then((action) => {
+          const response = action.payload;
+          setInfo((prevInfo) => ({
+            ...prevInfo,
+            items: response,
+          }));
+        });
     });
   }, [dispatch, userData, info]);
 
@@ -247,18 +248,27 @@ export default function NavBar(props) {
 
         {/* Boton carrito Navv*/}
         <div className='relative'>
-        <NavLink to='/carrito' className='flex items-center'>
-  <i className='fa-solid fa-cart-shopping text-xl rounded-md hover:text-teesaGreen'></i>
-  {info.items?.cartProducts?.length > 0 ? (
-    <span className='absolute -top-1 -right-3 bg-teesaGreen text-white rounded-full text-xs px-1.5 py-.05'>
-      {info.items.cartProducts.reduce((total, item) => total + item.cantidad, 0)}
-    </span>
-  ) : info.items?.cartGuestProducts?.length > 0 ? (
-    <span className='absolute -top-1 -right-3 bg-teesaGreen text-white rounded-full text-xs px-1.5 py-.05'>
-      {info.items.cartGuestProducts.reduce((total, item) => total + item.cantidad, 0)}
-    </span>
-  ) : null}
-</NavLink>
+          <NavLink
+            to='/carrito'
+            className='flex items-center'
+          >
+            <i className='fa-solid fa-cart-shopping text-xl rounded-md hover:text-teesaGreen'></i>
+            {info.items?.cartProducts?.length > 0 ? (
+              <span className='absolute -top-1 -right-3 bg-teesaGreen text-white rounded-full text-xs px-1.5 py-.05'>
+                {info.items.cartProducts.reduce(
+                  (total, item) => total + item.cantidad,
+                  0
+                )}
+              </span>
+            ) : info.items?.cartGuestProducts?.length > 0 ? (
+              <span className='absolute -top-1 -right-3 bg-teesaGreen text-white rounded-full text-xs px-1.5 py-.05'>
+                {info.items.cartGuestProducts.reduce(
+                  (total, item) => total + item.cantidad,
+                  0
+                )}
+              </span>
+            ) : null}
+          </NavLink>
         </div>
       </div>
 
