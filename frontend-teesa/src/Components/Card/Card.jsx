@@ -7,6 +7,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
+
 export const Card = ({ nombre, categoria, imagenes, precio, marca, id }) => {
   const options = {
     style: 'decimal',
@@ -73,12 +74,29 @@ export const Card = ({ nombre, categoria, imagenes, precio, marca, id }) => {
       CartId: cartId,
       cantidad: 0,
     });
+    Swal.fire({
+      icon: 'success',
+      title: 'Producto agregado al carrito',
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+      toast: true,
+      position: 'top-end',
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+        toast.style.marginTop = '80px';
+      },
+    });
     // navigate('/carrito');
   };
 
-  // carro
 
-  // const [cartItems, setCartItems] = useState([]);
+  // carro 
+  
+
+      
+      // const [cartItems, setCartItems] = useState([]);
 
   // const handleAddToCart = () => {
   //   const newItem = {
@@ -94,6 +112,8 @@ export const Card = ({ nombre, categoria, imagenes, precio, marca, id }) => {
   //     cantidad: 0,
   //   });
   // };
+
+
 
   // const handleAddToCart = () => {
   //   const newItem = {
@@ -110,6 +130,7 @@ export const Card = ({ nombre, categoria, imagenes, precio, marca, id }) => {
   //   });
   //   // setShowCart(true);
   // };
+
 
   return (
     <div className='flex w-[260px] h-[460px] my-2 mx-6 transition duration-100 transform hover:scale-105 hover:cursor-pointer'>

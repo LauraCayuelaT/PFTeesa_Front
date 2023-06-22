@@ -24,6 +24,9 @@ export default function NavBar() {
     userData: { userId },
   } = userData;
 
+  const userAdmin = useSelector((state) => state.userState.userData.userType);
+  console.log(userAdmin);
+
   const [cartId, setCartId] = useState('');
 
   const [cart, setCart] = useState({
@@ -50,8 +53,8 @@ export default function NavBar() {
         });
       }
     });
-  }, [dispatch, userData]);
-  // console.log(info.items);
+  }, [dispatch, userData, info]);
+  console.log(info.items);
   //Google
   const [nombreGoogle, setNombreGoogle] = useState(null);
   const cookies = new Cookies();
@@ -105,7 +108,15 @@ export default function NavBar() {
   //carrito
   // const cartt = useSelector((state) => state.app.cart);
 
-  // console.log("Cart Length:", cartt.length);
+//carrito
+// const cartt = useSelector((state) => state.app.cart);
+
+const cartItems = useSelector((state) => state.app.items);
+
+
+
+// console.log("Cart Length:", cartt.length);
+
 
   return (
     <div className='flex flex-row justify-between items-center w-full h-[4em] border-b-2 border-gray-300 bg-teesaBlueDark text-white text-xl sm:text-lg relative'>
@@ -146,12 +157,16 @@ export default function NavBar() {
           >
             Devs
           </NavLink>
-          <NavLink
-            to='/admin'
-            className='transition duration-300 ease-in-out transform hover:text-teesaGreen focus:text-teesaGreen'
-          >
-            Dashboard
-          </NavLink>
+          {userAdmin == true ? (
+            <NavLink
+              to='/admin'
+              className='transition duration-300 ease-in-out transform hover:text-teesaGreen focus:text-teesaGreen'
+            >
+              Dashboard
+            </NavLink>
+          ) : (
+            <div></div>
+          )}
         </div>
         <div className='sm:hidden'>
           <i
@@ -280,6 +295,16 @@ export default function NavBar() {
           >
             Devs
           </NavLink>
+          {userAdmin == true ? (
+            <NavLink
+              to='/admin'
+              className='w-full px-4 py-2 hover:bg-teesaGreen hover:text-teesaBlueDark text-base block'
+            >
+              Dashboard
+            </NavLink>
+          ) : (
+            <div></div>
+          )}
         </div>
       )}
     </div>
