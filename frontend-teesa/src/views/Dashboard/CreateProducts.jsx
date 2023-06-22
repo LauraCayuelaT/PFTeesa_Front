@@ -3,8 +3,56 @@ import { createProduct } from '../../features/reduxReducer/admproductSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect, useRef } from 'react';
 import { getBrands } from '../../features/reduxReducer/productSlice';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 const CreateProducts = (id) => {
+  //*Validar Admin - Juan:
+
+  const navigate = useNavigate();
+  const alertGoodbye = () => {
+    Swal.fire({
+      title: '¡Un momento!',
+      text: 'No eres admin, no puedes estar aquí.',
+      icon: 'info',
+      confirmButtonText: 'Aceptar',
+      confirmButtonColor: '#192C8C',
+    }).then(() => {
+      navigate('/home');
+    });
+  };
+
+  const userAdmin = useSelector((state) => state.userState.userData.userType);
+  console.log('data' + userAdmin);
+  const [waiting, setWaiting] = useState(true);
+
+  useEffect(() => {
+    if (userAdmin === null) {
+      const timeout = setTimeout(() => {
+        if (waiting) {
+          alertGoodbye();
+        }
+      }, 3000);
+
+      return () => {
+        clearTimeout(timeout);
+      };
+    } else {
+      setWaiting(false);
+    }
+  }, [userAdmin, waiting]);
+
+  useEffect(() => {
+    if (userAdmin !== null && !waiting) {
+      // Validar los datos después de que se hayan obtenido
+      if (userAdmin === false) {
+        alertGoodbye();
+      }
+    }
+  }, [userAdmin, waiting]);
+
+  //*Yose
+
   const dispatch = useDispatch();
   const [brands, setBrands] = useState([]);
   const [selectedFile, setSelectedFile] = useState([]);
@@ -60,8 +108,11 @@ const CreateProducts = (id) => {
 
   return (
     <div className='flex flex-col items-center bg-gradient-to-r from-teesaGreen to-teesaBlueDark h-screen w-full gap-2 overflow-hidden'>
-        <h1 className='text-white text-3xl font-bold mt-[2%]'>Crear productos</h1>
-        <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col justify-center items-center h-auto gap-3'>
+      <h1 className='text-white text-3xl font-bold mt-[2%]'>Crear productos</h1>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className='flex flex-col justify-center items-center h-auto gap-3'
+      >
         {/* nombre */}
         <label className='flex flex-col justify-center align-center items-center '>
           <input
@@ -282,24 +333,28 @@ const CreateProducts = (id) => {
           <div className='h-[5px]'></div>
         </label>
         {/* estado */}
-        <label className="flex flex-col justify-center align-center items-center">
-  <select
-    name="estado"
-    className="bg-teesaBlueDark text-teesaGrey rounded-md h-[2em] w-[15em]"
-    {...register('estado', {
-      required: 'Este campo es obligatorio',
-    })}
-    onBlur={() => handleBlur('estado')}
-  >
-    <option value="">Selecciona un estado</option>
-      <option>Nuevo</option>
-      <option>Usado</option>
-  </select>  
-    <div className="h-[5px]"></div>
-
-</label>
-        <button type="submit" className='bg-teesaGreen font-bold rounded-lg w-[50%] h-[50%] hover:bg-green-500'>Crear</button>
-        </form>
+        <label className='flex flex-col justify-center align-center items-center'>
+          <select
+            name='estado'
+            className='bg-teesaBlueDark text-teesaGrey rounded-md h-[2em] w-[15em]'
+            {...register('estado', {
+              required: 'Este campo es obligatorio',
+            })}
+            onBlur={() => handleBlur('estado')}
+          >
+            <option value=''>Selecciona un estado</option>
+            <option>Nuevo</option>
+            <option>Usado</option>
+          </select>
+          <div className='h-[5px]'></div>
+        </label>
+        <button
+          type='submit'
+          className='bg-teesaGreen font-bold rounded-lg w-[50%] h-[50%] hover:bg-green-500'
+        >
+          Crear
+        </button>
+      </form>
     </div>
   );
 };
