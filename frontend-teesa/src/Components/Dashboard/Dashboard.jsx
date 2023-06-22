@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import { getUser, getShopId, enableUser, enableUserfalse } from '../../features/reduxReducer/adminSlice';
 
 function UserCard({ usuario }) {
@@ -108,26 +109,31 @@ function Dashboard() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-teesaBlueDark">
-      <button
-        onClick={handleMostrarUsuarios}
-        className="bg-blue-600 rounded-md text-white hover:bg-blue-700 p-2"
-      >
-        {mostrarUsuarios ? 'Ocultar Usuarios' : 'Mostrar Usuarios'}
+<div className="flex flex-col min-h-screen bg-teesaBlueDark">
+  <div className="flex justify-center mt-4">
+    <NavLink to="/admin/createproduct">
+      <button className="bg-blue-600 rounded-md text-white hover:bg-blue-700 p-2 ml-2">
+        Crear producto nuevo
       </button>
+    </NavLink>
+    <button
+      onClick={handleMostrarUsuarios}
+      className="bg-blue-600 rounded-md text-white hover:bg-blue-700 p-2 ml-2"
+    >
+      {mostrarUsuarios ? 'Ocultar Usuarios' : 'Mostrar Usuarios'}
+    </button>
+  </div>
 
-      {mostrarUsuarios && (
-        <div className={`grid grid-cols-2 gap-4 mt-4 mx-4`}>
-       {users?.map((usuario) => (
-            <div key={usuario.id} className="p-4 bg-white rounded-lg shadow">
-
-        <UserCard usuario={usuario} />
+  {mostrarUsuarios && (
+    <div className="grid grid-cols-2 gap-4 mt-4 mx-4">
+      {users?.map((usuario) => (
+        <div key={usuario.id} className="p-4 bg-white rounded-lg shadow">
+          <UserCard usuario={usuario} />
         </div>
       ))}
-
-        </div>
-      )}
     </div>
+  )}
+</div>
   );
 }
 

@@ -123,7 +123,7 @@ function App() {
           element={<CheckoutFailed />}
         />
         <Route
-          path='/dashboard/createproduct'
+          path='/admin/createproduct'
           element={<CreateProducts />}
         />
       </Routes>
