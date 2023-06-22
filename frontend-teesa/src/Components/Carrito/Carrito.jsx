@@ -30,16 +30,31 @@ export const Carrito = ({
 
   const dispatch = useDispatch();
 
-  const handleIncrement = (e) => {
-    e.preventDefault();
+  useEffect(() => {
     setCart((prevCart) => ({
       ...prevCart,
-      cantidad: Number(prevCart.cantidad) + 1,
+      cantidad: cantidad,
     }));
+  }, [cantidad]);
+
+  useEffect(() => {
+    const total = precio * cart.cantidad;
+  
+
+    // Actualiza el precio total en el estado local
+    setCart((prevCart) => ({
+      ...prevCart,
+      precioTotal: total,
+    }));
+  }, [precio, cart.cantidad]);
+
+  const handleIncrement = () => {
+    setCart((prevCart) => ({
+      ...prevCart,
+      cantidad: prevCart.cantidad + 1,
+    }));
+
     dispatch(updateCart({ CartProductId: id, cantidad: cart.cantidad + 1 }))
-      .then(() => {
-        window.location.reload();
-      })
       .catch((error) => {
         console.error(
           'Error al aumentar la cantidad del producto del carrito:',
@@ -48,30 +63,28 @@ export const Carrito = ({
       });
   };
 
-  const handleDecrement = (e) => {
-    e.preventDefault();
+  const handleDecrement = () => {
     if (cart.cantidad > 0) {
       setCart((prevCart) => ({
         ...prevCart,
-        cantidad: Number(prevCart.cantidad) - 1,
+        cantidad: prevCart.cantidad - 1,
       }));
+
+      dispatch(updateCart({ CartProductId: id, cantidad: cart.cantidad - 1 }))
+        .catch((error) => {
+          console.error(
+            'Error al disminuir la cantidad del producto del carrito:',
+            error
+          );
+        });
     }
-    dispatch(updateCart({ CartProductId: id, cantidad: cart.cantidad - 1 }))
-      .then(() => {
-        window.location.reload();
-      })
-      .catch((error) => {
-        console.error(
-          'Error al disminuir la cantidad del producto del carrito:',
-          error
-        );
-      });
   };
+
   const handleDelete = (e) => {
     e.preventDefault();
     dispatch(deleteCart(id))
       .then(() => {
-        window.location.reload();
+        // window.location.reload();
       })
       .catch((error) => {
         console.error('Error al eliminar el producto del carrito:', error);
@@ -118,7 +131,7 @@ export const Carrito = ({
           </button>
         </div>
         <h4 className='text-gray-600 text-base font-medium mt-2'>
-          $ {precioTotal.toLocaleString('en-US', options)}
+          $ {cart.precioTotal ? cart.precioTotal.toLocaleString('en-US', options) : '0'}
         </h4>
         <button
           onClick={handleDelete}

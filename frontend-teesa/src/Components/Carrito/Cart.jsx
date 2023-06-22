@@ -5,13 +5,6 @@ import { Carrito } from '../Carrito/Carrito';
 import { Link } from 'react-router-dom';
 import { postLinkMercado } from '../../features/reduxReducer/mercadoSlice';
 
-function calculateTotal(cartProducts) {
-  let total = 0;
-  for (let i = 0; i < cartProducts.length; i++) {
-    total += cartProducts[i].precioTotal;
-  }
-  return total;
-}
 
 export const Cart = () => {
   const options = {
@@ -19,17 +12,27 @@ export const Cart = () => {
     useGrouping: true,
     minimumFractionDigits: 0,
   };
+  
+  function calculateTotal(cartProducts) {
+    let total = 0;
+    for (let i = 0; i < cartProducts.length; i++) {
+      total += cartProducts[i].precioTotal;
+  
+    }
+    return total;
+  }
 
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.userState.userData);
 
-  const carrito = useSelector((state) => state.cart);
+  // const carrito = useSelector((state) => state.cart);
 
   const [cartId, setCartId] = useState('');
 
-  const [cart, setCart] = useState({
-    CartId: cartId,
-  });
+
+  // const [cart, setCart] = useState({
+  //   CartId: cartId,
+  // });
   const [info, setInfo] = useState({
     items: '',
   });
@@ -49,10 +52,11 @@ export const Cart = () => {
             ...prevInfo,
             items: response,
           }));
+          console.log(response)
         });
       }
     });
-  }, [dispatch, userData]);
+  }, [dispatch, userData, info]);
   console.log(info.items);
 
   //*MercadoPago Button:
@@ -79,10 +83,9 @@ export const Cart = () => {
       </h2>
       <main>
         <div className='max-w-3xl p-8 bg-white shadow-lg rounded-lg'>
-          {/* {info.items === '' ? (
-            <p className="text-2xl font-bold text-gray-800">Cargando...</p>
-          ) : info.items?.cartProducts?.length > 0 ? ( */}
-          {info.items?.cartProducts?.length > 0 ? (
+          {status === 'pending' ? (
+            <p className='text-2xl font-bold text-gray-800'>Cargando...</p>
+          ) : info.items?.cartProducts?.length > 0 ? (
             <>
               {info.items.cartProducts.map((item) => (
                 <Carrito
@@ -114,21 +117,19 @@ export const Cart = () => {
                 >
                   Seguir comprando
                 </Link>
-                <div>
-                  {status === 'pending' && (
-                    <button className='w-70 px-4 py-3 border-4 bg-blue-500  rounded-2xl font-bold text-white hover:bg-blue-600 transition duration-100 transform hover:scale-105'>
-                      Cargando...
-                    </button>
-                  )}
-                  {status === 'fulfilled' && (
-                    <a href={linkMercadoPago}>
-                      <button className='7-80 px-4 py-3 border-4 bg-teesaGreen rounded-2xl font-bold text-white hover:bg-blue-600 transition duration-100 transform hover:scale-105'>
-                        Comprar con MercadoPago
-                      </button>
-                    </a>
-                  )}
-                  {status === 'rejected' && <p>Error: {error}</p>}
-                </div>
+                <a
+                  onClick={() => {
+                    window.open(
+                      linkMercadoPago,
+                      '_blank',
+                      'width=800,height=800'
+                    );
+                  }}
+                >
+                  <button className='7-80 px-4 py-3 border-4 bg-teesaGreen rounded-lg text-white hover:bg-blue-600 transition duration-100 transform hover:scale-105'>
+                    Comprar con MercadoPago
+                  </button>
+                </a>
               </div>
             </>
           ) : (
