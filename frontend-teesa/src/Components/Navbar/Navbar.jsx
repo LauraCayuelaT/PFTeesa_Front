@@ -10,11 +10,12 @@ import {
   resetUserState,
   updateUserDataFromCookie,
 } from '../../features/reduxReducer/userSlice';
+import { getCartGuestProducts } from '../../features/reduxReducer/cartGuestSlice';
 // import { addToCartWithQuantity } from '../../features/reduxReducer/carritoSlice';
 // import Cookies from 'universal-cookie';
 // import CartIcon from '../Carrito/CartIcon';
 
-export default function NavBar() {
+export default function NavBar(props) {
   //Traer Data del User - Nuestro Login y Register
   const userData = useSelector((state) => state.userState);
   const dispatch = useDispatch();
@@ -32,7 +33,7 @@ export default function NavBar() {
   const [info, setInfo] = useState({
     items: '',
   });
-
+  const userUUID = props.userId;
   useEffect(() => {
     dispatch(getUser()).then((action) => {
       const response = action.payload;
@@ -48,7 +49,13 @@ export default function NavBar() {
             items: response,
           }));
         });
-      }
+      }else dispatch(getCartGuestProducts(userUUID)).then((action) => {
+        const response = action.payload;
+        setInfo((prevInfo) => ({
+          ...prevInfo,
+          items: response,
+        }));
+      });
     });
   }, [dispatch, userData, info]);
   console.log(info.items);
@@ -237,22 +244,18 @@ const cartItems = useSelector((state) => state.app.items);
 
         {/* Boton carrito Navv*/}
         <div className='relative'>
-          <NavLink
-            to='/carrito'
-            className='flex items-center'
-          >
-            <i className='fa-solid fa-cart-shopping text-xl rounded-md hover:text-teesaGreen'></i>
-            {info.items?.cartProducts?.length > 0 && (
-              <span className='absolute -top-1 -right-3 bg-teesaGreen text-white rounded-full text-xs px-1.5 py-.05'>
-                {info.items.cartProducts.length}
-              </span>
-            )}
-            {/* {cartCount > 0 && (
-            <span className="absolute -top-1 -right-1 bg-teesaGreen text-white rounded-full text-xs px-2 py-1">
-              {cartCount}
-            </span>
-          )} */}
-          </NavLink>
+        <NavLink to='/carrito' className='flex items-center'>
+  <i className='fa-solid fa-cart-shopping text-xl rounded-md hover:text-teesaGreen'></i>
+  {info.items?.cartProducts?.length > 0 ? (
+    <span className='absolute -top-1 -right-3 bg-teesaGreen text-white rounded-full text-xs px-1.5 py-.05'>
+      {info.items.cartProducts.reduce((total, item) => total + item.cantidad, 0)}
+    </span>
+  ) : info.items?.cartGuestProducts?.length > 0 ? (
+    <span className='absolute -top-1 -right-3 bg-teesaGreen text-white rounded-full text-xs px-1.5 py-.05'>
+      {info.items.cartGuestProducts.reduce((total, item) => total + item.cantidad, 0)}
+    </span>
+  ) : null}
+</NavLink>
         </div>
       </div>
 
