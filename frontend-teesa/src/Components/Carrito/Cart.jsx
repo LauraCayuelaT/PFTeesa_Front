@@ -1,12 +1,60 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser, getCart } from '../../features/reduxReducer/carritoSlice';
-import { getCartGuestProducts } from '../../features/reduxReducer/cartGuestSlice';
+// import { getCartGuestProducts } from '../../features/reduxReducer/cartGuestSlice';
 import { Carrito } from '../Carrito/Carrito';
 import { Link } from 'react-router-dom';
 import { postLinkMercado } from '../../features/reduxReducer/mercadoSlice';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
-export const Cart = (props) => {
+export const Cart = () => {
+  //*Validar User:
+  const navigate = useNavigate();
+
+  const alertGoodbye = () => {
+    Swal.fire({
+      title: '¡Un momento!',
+      text: 'Tienes que logearte para ingresar al carrito.',
+      icon: 'info',
+      confirmButtonText: 'Aceptar',
+      confirmButtonColor: '#192C8C',
+    }).then(() => {
+      navigate('/login');
+    });
+  };
+
+  const user = useSelector((state) => state.userState.user);
+  console.log(user);
+  const [waiting, setWaiting] = useState(true);
+
+  useEffect(() => {
+    if (user === null) {
+      const timeout = setTimeout(() => {
+        if (waiting) {
+          alertGoodbye();
+        }
+      }, 2000);
+
+      return () => {
+        clearTimeout(timeout);
+      };
+    } else {
+      setWaiting(false);
+    }
+  }, [user, waiting]);
+
+  useEffect(() => {
+    if (user !== null && !waiting) {
+      // Validar los datos después de que se hayan obtenido
+      if (user === false) {
+        alertGoodbye();
+      }
+    }
+  }, [user, waiting]);
+
+  //Andres
+
   const options = {
     style: 'decimal',
     useGrouping: true,
@@ -26,8 +74,8 @@ export const Cart = (props) => {
 
   // const carrito = useSelector((state) => state.cart);
 
-  const userUUID = props.userId;
-  console.log(userUUID);
+  // const userUUID = props.userId;
+  // console.log(userUUID);
   const [cartId, setCartId] = useState('');
 
   // const [cart, setCart] = useState({
@@ -53,15 +101,7 @@ export const Cart = (props) => {
             items: response,
           }));
         });
-      } else
-        dispatch(getCartGuestProducts(userUUID)).then((action) => {
-          const response = action.payload;
-
-          setInfo((prevInfo) => ({
-            ...prevInfo,
-            items: response,
-          }));
-        });
+      }
     });
   }, [dispatch, userData, info]);
   console.log(info.items);
@@ -94,12 +134,9 @@ export const Cart = (props) => {
           ) : (
             <>
               {info.items ? (
-                info.items.cartProducts?.length > 0 ||
-                info.items.cartGuestProducts?.length > 0 ? (
+                info.items.cartProducts?.length > 0 ? (
                   <>
-                    {(
-                      info.items.cartProducts || info.items.cartGuestProducts
-                    ).map((item) => (
+                    {info.items.cartProducts.map((item) => (
                       <Carrito
                         key={item.id}
                         id={item.id}
@@ -108,7 +145,6 @@ export const Cart = (props) => {
                         nombre={item.Product?.nombre}
                         precio={item.Product?.precio}
                         imagen={item.Product?.imagenes}
-                        userUUID={userUUID}
                       />
                     ))}
                     <div className='mt-8'>
