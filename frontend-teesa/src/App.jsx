@@ -13,7 +13,6 @@ import About from './views/About/AboutUs/AboutUs';
 import AboutDevs from './views/About/AboutDevs';
 import Register from './views/Register/Register';
 import Error404 from './views/Error404/Error404';
-import { Carrito } from './Components/Carrito/Carrito';
 import CheckoutSucess from './views/Checkout/CheckoutSucess';
 import CheckoutPending from './views/Checkout/CheckoutPending';
 import CheckoutFailed from './views/Checkout/CheckoutFailed';
@@ -25,6 +24,7 @@ import { getUserDataFromCookie } from './features/reduxReducer/userSlice';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import Cart from './Components/Carrito/Cart';
+import EditProducts from './Components/Dashboard/EditProducts';
 
 function App() {
   const location = useLocation();
@@ -43,27 +43,89 @@ function App() {
       {/* Solucionar doble navbar */}
       {!hideNavbar && <Navbar />}
       <Routes>
-        <Route path='/' element={<Landing />} />
-        <Route path='home' element={<Home />} />
-        <Route path='home/:id' element={<Detail />} />
-        <Route path='login' element={<Login />} />
-        <Route path='services' element={<Services />} />
-        <Route path='aboutdevs' element={<AboutDevs />} />
-        <Route path='about' element={<About />} />
-        <Route path='contact' element={<Contact />} />
-        <Route path='/signup' element={<Register />} />
-        <Route path='error404' element={<Error404 />} />
-        <Route path='mercado' element={<Mercado />} />
-        <Route path='/profile' element={<UserProfile />} />
-        <Route path='*' element={<Navigate to='error404' />} />
-        <Route path='carrito' element={<Cart />} />
-        <Route path="/admin" element={<Dashboard/>}/>
+        <Route
+          path='/'
+          element={<Landing />}
+        />
+        <Route
+          path='home'
+          element={<Home />}
+        />
+        <Route
+          path='home/:id'
+          element={<Detail />}
+        />
+        <Route
+          path='login'
+          element={<Login />}
+        />
+        <Route
+          path='services'
+          element={<Services />}
+        />
+        <Route
+          path='aboutdevs'
+          element={<AboutDevs />}
+        />
+        <Route
+          path='about'
+          element={<About />}
+        />
+        <Route
+          path='contact'
+          element={<Contact />}
+        />
+        <Route
+          path='/signup'
+          element={<Register />}
+        />
+        <Route
+          path='error404'
+          element={<Error404 />}
+        />
+        <Route
+          path='mercado'
+          element={<Mercado />}
+        />
+        <Route
+          path='/profile'
+          element={<UserProfile />}
+        />
+        <Route
+          path='*'
+          element={<Navigate to='error404' />}
+        />
+        <Route
+          path='carrito'
+          element={<Cart />}
+        />
+        <Route
+          path='/admin'
+          element={<Dashboard />}
+        />
+
+        <Route
+          path='/dashboard/editproduct/:id'
+          element={<EditProducts />}
+        />
 
         {/* Checkout */}
-        <Route path='checkoutsuccess' element={<CheckoutSucess />} />
-        <Route path='checkoutpending' element={<CheckoutPending />} />
-        <Route path='checkoutfailed' element={<CheckoutFailed />} />
-        <Route path='/admin/createproduct' element={<CreateProducts />}/>
+        <Route
+          path='checkoutsuccess'
+          element={<CheckoutSucess />}
+        />
+        <Route
+          path='checkoutpending'
+          element={<CheckoutPending />}
+        />
+        <Route
+          path='checkoutfailed'
+          element={<CheckoutFailed />}
+        />
+        <Route
+          path='/admin/createproduct'
+          element={<CreateProducts />}
+        />
       </Routes>
     </div>
   );

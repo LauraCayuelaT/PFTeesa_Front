@@ -9,6 +9,7 @@ import { postReview } from '../../features/reduxReducer/reviewSlice';
 import { useNavigate } from 'react-router-dom';
 
 const ReviewForm = ({ productId, userId }) => {
+  const navigate = useNavigate();
   //Alert
 
   const alertConfirm = () => {
@@ -36,7 +37,7 @@ const ReviewForm = ({ productId, userId }) => {
   //Form Data
   const dispatch = useDispatch();
 
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   const myProductId = productId;
   const myUserId = userId;
