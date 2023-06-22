@@ -3,10 +3,13 @@ import React from 'react';
 import { getUserDataFromCookie } from '../../features/reduxReducer/userSlice';
 import { useState, useEffect } from 'react';
 import { postCart, getUser } from '../../features/reduxReducer/carritoSlice';
+import { postCartGuestProducts } from '../../features/reduxReducer/cartGuestSlice';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { v4 as uuidv4 } from 'uuid';
+import {Cart} from '../Carrito/Cart';
+import Swal from 'sweetalert2';
 
 export const Card = ({ nombre, categoria, imagenes, precio, marca, id }) => {
   const options = {
@@ -22,6 +25,11 @@ export const Card = ({ nombre, categoria, imagenes, precio, marca, id }) => {
     ProductId: id,
     CartId: cartId,
     cantidad: 0,
+  });
+  const [cartGuest, setCartGuest] = useState({
+    ProductId: id,
+    cantidad: 0,
+    userId: localStorage.getItem('guestUserId') || uuidv4(),
   });
 
   useEffect(() => {
@@ -41,56 +49,88 @@ export const Card = ({ nombre, categoria, imagenes, precio, marca, id }) => {
 
   const [cantidad, setCantidad] = useState(0);
 
-  const handleChange = (e) => {
-    const value = e.target.value;
-    setCart((prevCart) => ({
-      ...prevCart,
-      cantidad: value,
-    }));
-  };
-
   const handleIncrement = () => {
-    setCart((prevCart) => ({
-      ...prevCart,
-      cantidad: Number(prevCart.cantidad) + 1,
-    }));
+    if (cart.CartId) {
+      setCart((prevCart) => ({
+        ...prevCart,
+        cantidad: Number(prevCart.cantidad) +1,
+      }));
+    } else 
+      setCartGuest((prevCartGuest) => ({
+        ...prevCartGuest,
+        cantidad: Number(prevCartGuest.cantidad) + 1,
+      }));
   };
 
   const handleDecrement = () => {
-    if (cart.cantidad > 0) {
+    if(cart.cantidad>0){
+    if (cart.CartId) {
       setCart((prevCart) => ({
         ...prevCart,
         cantidad: Number(prevCart.cantidad) - 1,
       }));
+    } else 
+      setCartGuest((prevCartGuest) => ({
+        ...prevCartGuest,
+        cantidad: Number(prevCartGuest.cantidad) - 1,
+      }));
     }
   };
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log(cart);
-    dispatch(postCart(cart));
-    setCart({
-      ProductId: id,
-      CartId: cartId,
-      cantidad: 0,
-    });
-    Swal.fire({
-      icon: 'success',
-      title: 'Producto agregado al carrito',
-      showConfirmButton: false,
-      timer: 2000,
-      timerProgressBar: true,
-      toast: true,
-      position: 'top-end',
-      didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer);
-        toast.addEventListener('mouseleave', Swal.resumeTimer);
-        toast.style.marginTop = '80px';
-      },
-    });
+    if (cart.CartId && cart.cantidad > 0) {
+      dispatch(postCart(cart));
+      setCart({
+        ProductId: id,
+        CartId: cartId,
+        cantidad: 0,
+      });
+      Swal.fire({
+        icon: 'success',
+        title: 'Producto agregado al carrito',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        toast: true,
+        position: 'top-end',
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer);
+          toast.addEventListener('mouseleave', Swal.resumeTimer);
+          toast.style.marginTop = '80px';
+        },
+      });
+    } else if(cartGuest.cantidad > 0){
+      const updatedCartGuest = {
+        ...cartGuest,
+      };
+      dispatch(postCartGuestProducts(updatedCartGuest)); // Enviar el carrito actualizado del usuario no registrado
+      setCartGuest((prevCartGuest) => ({
+        ...prevCartGuest,
+        ProductId: id,
+        cantidad: 0,// Asignar el userId al estado cartGuest
+      }));
+      Swal.fire({
+        icon: 'success',
+        title: 'Producto agregado al carrito',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        toast: true,
+        position: 'top-end',
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer);
+          toast.addEventListener('mouseleave', Swal.resumeTimer);
+          toast.style.marginTop = '80px';
+        },
+      });
+    }//navigate('/carrito');
+    <Cart userId={cartGuest.userId} />
+    
     // navigate('/carrito');
   };
-
+  console.log(cartGuest)
 
   // carro 
   
@@ -163,11 +203,8 @@ export const Card = ({ nombre, categoria, imagenes, precio, marca, id }) => {
                 >
                   -
                 </button>
-                <span
-                  id='quantity'
-                  className='px-2'
-                >
-                  {cart.cantidad}
+                <span id='quantity' className='px-2'>
+                {cart.CartId ? cart.cantidad : cartGuest.cantidad}
                 </span>
                 <button
                   type='button'
