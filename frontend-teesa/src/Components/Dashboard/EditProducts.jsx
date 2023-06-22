@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRef } from 'react';
 import { editProduct } from '../../features/reduxReducer/admproductSlice';
+import { deleteProduct } from '../../features/reduxReducer/admproductSlice';
 import {
   getProductById,
   clearDetail,
@@ -125,7 +126,6 @@ const EditProducts = () => {
   };
 
   //Images:
-
   const handleInputChange = (event) => {
     const { files } = event.target;
     if (files.length > 0) {
@@ -140,24 +140,32 @@ const EditProducts = () => {
     }
   };
 
+  //delete product
+  const handleDelete = () => {
+    dispatch(deleteProduct(ProductID));
+    navigate('/home')
+    console.log('producto borrado')
+  };
+
+
   return (
-    <div className='flex justify-center items-center w-full'>
+    <div className='flex flex-col justify-center items-center w-full h-screen bg-gradient-to-r from-teesaGreen to-teesaBlueDark'>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className=' w-full md:w-2/3 lg:w-2/5 mx-4 my-10 bg-gray-100 p-5 rounded-lg border-teesaBlueDark border-2'
+        className=' w-full md:w-2/5 lg:w-2/5 xl:w-2/5 sm:w-4/5 xs:w-4/5  my-10 bg-gray-100 p-5 rounded-lg border-teesaBlueDark border-2 flex flex-col mt-[-5%]'
       >
-        <h1 className='font-bold text-2xl md:text-3xl text-teesaBlueDark my-1'>
+        <h1 className='font-bold text-lg md:text-3xl text-teesaBlueDark my-1'>
           Editar Producto
         </h1>
-        <h2 className='my-3 font-medium text-20px'>
+        <h2 className='my-3 font-medium text-sm'>
           Escribe la información actualizada del producto. Si no escribes un
           campo, dejaremos la información anteriormente establecida.
         </h2>
 
-        <h1 className='font-bold text-xl text-teesaBlueDark my-4'>{`Nombre: ${nombre} `}</h1>
+        <h1 className='font-bold text-lg text-teesaBlueDark my-2'>{`Nombre: ${nombre} `}</h1>
 
-        <div className='relative mb-1'>
-          <h1 className='font-medium'>Stock</h1>
+        <div className='relative'>
+          <h1 className='text-sm'>Stock</h1>
           <input
             type='number'
             name='stock'
@@ -170,10 +178,10 @@ const EditProducts = () => {
           {errors.stock && (
             <span className='text-red-500'>{errors.stock.message}</span>
           )}
-          {!errors.stock && <div className='h-[24px]'></div>}
+          {!errors.stock}
         </div>
         <div className='relative mb-1'>
-          <h1 className='font-medium'>Precio</h1>
+          <h1 className='text-sm'>Precio</h1>
           <input
             type='number'
             name='precio'
@@ -186,11 +194,11 @@ const EditProducts = () => {
           {errors.precio && (
             <span className='text-red-500'>{errors.precio.message}</span>
           )}
-          {!errors.precio && <div className='h-[24px]'></div>}
+          {!errors.precio}
         </div>
 
         <div className='relative mb-1'>
-          <h1 className='font-medium'>Imágenes</h1>
+          <h1 className='text-sm'>Imágenes</h1>
           <Controller
             name='imagenes'
             control={control}
@@ -218,14 +226,17 @@ const EditProducts = () => {
             )}
           />{' '}
         </div>
-
-        <div className='inline-block min-h-1.5rem justify-center pl-1.5rem md:flex'></div>
+      
+        {/* <div className='inline-block min-h-1.5rem justify-center pl-1.5rem md:flex'></div> */}
+        
         <input
           type='submit'
           value='Enviar'
           className='my-[20px] inline-block w-full rounded bg-teesaBlueLight  px-6 pt-2.5 pb-2 text-md font-medium uppercase leading-normal text-white shadow-lg hover:bg-teesaBlueDark cursor-pointer'
         />
       </form>
+      <div className='xl:w-[30em] lg:w-[30em] md:w-[20em] sm:w-[15em] xs:w-[15em] border-t-2 border-teesaBlueDark mt-[-2%] '></div>
+      <button onClick={handleDelete} className='bg-red-600 rounded-lg h-[3em] w-[9em] hover:bg-red-800 text-white font-bold mt-[1%]'>Eliminar producto</button>
     </div>
   );
 };

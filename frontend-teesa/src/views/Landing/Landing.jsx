@@ -1,12 +1,15 @@
 import { Link } from 'react-router-dom';
 import logo from '../../img/SVGs/TeesaAll.svg';
-import BlueCircleTeesa from '../../img/SVGs/BlueCircleTeesa.svg';
-import GreenCircleTeesa from '../../img/SVGs/GreenCircleTeesa.svg';
+import waves from "../../assets/icon/layered-waves.svg"
+import LightsSvg from '../../img/SVGs/LightSVG'
 
 function Landing() {
   return (
-    <div className="relative bg-cover h-screen bg-teesaBlueDark overflow-hidden">
-      <div className="flex justify-end xl:text-2xl lg:text-xl gap-10 pt-8 md:text-lg sm:mr-[5%] sm:text-sm text-teesaWhite">
+    <div className="relative bg-cover bg-no-repeat h-screen w-full overflow-hidden " style={{backgroundImage: `url(${waves})`}}>
+      <div className="absolute pointer-events-none animate-pulse">
+        <LightsSvg />
+      </div>
+      <div className="flex justify-end xl:text-2xl lg:text-xl gap-10 pt-4 md:text-lg sm:mr-[5%] sm:text-sm text-teesaWhite">
         <Link to="/contact">
           <button className='hover:text-gray-300'>Contáctanos</button>
         </Link>
@@ -15,40 +18,21 @@ function Landing() {
         </Link>
         <h1> ° ° ° </h1>
       </div>
-
-    
       <section className="flex flex-col justify-center items-center text-center my-auto xl:ml-[45%] lg:ml-[45%] lg md:ml-[]">
-  <div className="flex justify-center items-center">
-    <img src={logo} alt="logo" className="w-full xl:max-w-[450px] xl:mt-[10%] lg:max-w-[370px] md:max-w-[300px] sm:max-w-[290px] h-auto" />
-  </div>
-  <h1 className="text-teesaWhite m-auto xl:text-4xl xl:mt-[-5em] lg:text-2xl lg:mt-[-6em] md:text-xl md:mt-[-6em] sm:text-xl sm:mt-[-6em]">Tecnologías en Equipos Alimenticios</h1>
-</section>
-  
-        <div className='font-bold flex justify-center items-center h-screen w-[40%] m-auto xl:gap-12 xl:ml-[10%] lg:gap-12 lg:ml-[10%] mt-[-43%] md:gap-8'>
-        <Link to="/home">
-        <button className="bg-teesaGreen rounded-xl xl:h-[4em] xl:w-[10em] xl:text-xl lg:h-[3.5em] lg:w-[8em] lg:text-lg md:h-[3em] md:w-[7em] md:text-lg sm:text-xl sm:h-[3em] sm:w-[8em] text-black  hover:bg-green-600 hover:transform hover:scale-105">Tienda</button>
-      </Link>
-      <Link to="/services">
-      <button className="bg-teesaGreen rounded-xl xl:h-[4em] xl:w-[10em] xl:text-xl lg:h-[3.5em] lg:w-[8em] lg:text-lg  md:h-[3em] md:w-[7em] md:text-lg sm:text-xl sm:h-[3em] sm:w-[8em] hover:transform hover:scale-105 hover:bg-green-600">Servicios</button>
-      </Link> 
+        <div className="flex justify-center items-center">
+          <img src={logo} alt="logo" className="w-full xl:max-w-[450px]  lg:max-w-[370px] md:max-w-[300px] sm:max-w-[290px] xs:max-w-[240px] h-auto" />
         </div>
-   
+        <h1 className="text-teesaWhite m-auto xl:text-4xl xl:mt-[-5em] lg:text-2xl lg:mt-[-6em] md:text-xl md:mt-[-6em] sm:text-xl sm:mt-[-6em] xs:mt-[-6em]">Tecnologías en Equipos Alimenticios</h1>
+      </section>
 
-
-
-
-<img src={BlueCircleTeesa} alt="circulochiqui" className="  hidden xl:block lg:block absolute xl:h-[3em] xl:bottom-[75%] xl:left-[58%] lg:h-[2em] lg:bottom-[74%] lg:left-[56%]" />
-
-<img src={BlueCircleTeesa} alt="blueabajo" className=" hidden lg:block xl:block md:block sm:block absolute xl:h-[50%] xl:top-[83%] xl:left-[13%] lg:h-[50%] lg:left-[10%] md:h-[40%] md:top-[85%] md:left-[20%] sm:h-[40%] sm:top-[87%] sm:left-[26%] " />  
-<img src={GreenCircleTeesa} alt="greenabajo" className=" hidden lg:block xl:block md:block sm:block absolute xl:h-[40%] xl:top-[88%] xl:left-[35%] lg:h-[40%] lg:top-[90%] lg:left-[30%] md:h-[30%] md:top-[90%] md:left-[45%] sm:h-[35%] sm:top-[90%] sm:left-[47%]"/>
-
-<img src={BlueCircleTeesa} alt="blueizq" className=" hidden lg:block xl:block md:block sm:block absolute xl:h-[40%] xl:bottom-[75%] xl:left-[-8%] lg:h-[40%] lg:top-[-10%] lg:left-[-5%] md:h-[30%] md:bottom-[85%] md:right-[80%] sm:h-[30%] sm:bottom-[83%] sm:right-[78%] " />
-<img src={GreenCircleTeesa} alt="greenizqabajo" className=" hidden lg:block xl:block md:block sm:block absolute xl:h-[35%] xl:top-[20%] xl:left-[-12%] lg:h-[35%] lg:top-[18%] md:h-[30%] md:bottom-[65%] md:right-[90%] sm:h-[30%] sm:bottom-[65%] sm:right-[88%]" />
-<img src={GreenCircleTeesa} alt="izqarriba" className="hidden lg:block xl:block absolute xl:h-[35%] xl:bottom-[80%] xl:left-[10%] lg:h-[35%] lg:bottom-[80%] lg:left-[12%]"/>
--[4em]
-
-<img src={BlueCircleTeesa} alt="bluederecha" className="hidden lg:block xl:block sm:block absolute xl:h-[50%] xl:left-[90%] lg:h-[50%] lg:bottom-[35%] lg:left-[90%] sm:h-[40%] sm:bottom-[45%] sm:left-[87%]"/>
-    
+      <div className='font-bold flex justify-center items-center h-screen w-[40%] m-auto xl:gap-12 xl:ml-[10%] lg:gap-12 lg:ml-[10%] mt-[-43%] md:gap-8 xs:gap-[1em]'>
+        <Link to="/home"> 
+          <button className="bg-teesaGreen rounded-xl xl:h-[4em] xl:w-[10em] xl:text-xl lg:h-[3.5em] lg:w-[8em] lg:text-lg md:h-[3em] md:w-[7em] md:text-lg sm:text-xl sm:h-[3em] sm:w-[8em] text-black hover:bg-green-600 hover:transform hover:scale-105 xs:w-[100px] xs:h-[50px] ">Tienda</button>
+        </Link>
+        <Link to="/services">
+          <button className="bg-teesaGreen rounded-xl xl:h-[4em] xl:w-[10em] xl:text-xl lg:h-[3.5em] lg:w-[8em] lg:text-lg md:h-[3em] md:w-[7em] md:text-lg sm:text-xl sm:h-[3em] xs:w-[100px] xs:h-[50px] sm:w-[8em] hover:transform hover:scale-105 hover:bg-green-600">Servicios</button>
+        </Link> 
+      </div>
     </div> 
   );
 }
