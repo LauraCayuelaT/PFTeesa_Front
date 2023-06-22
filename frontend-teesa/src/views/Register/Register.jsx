@@ -203,21 +203,11 @@ function Register() {
                 {...register('contrasena', { 
 
                   required: 'Este campo es obligatorio',
-                  minLength: {
-                    value: 6,
-                    message: 'La contraseña debe tener al menos 6 caracteres',
-                  },
-                  maxLength: {
-                    value: 20,
-                    message:
-                      'La contraseña debe tener como máximo 20 caracteres',
-                  },
                   pattern: {
-                    value:
-                      /^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[!@#$%^&()])[a-zA-Z\d!@#$%^&()]+$/,
-                    message:
-                      'La contraseña debe contener al menos una mayúscula, un número y un caracter especial',
+                    value: /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&()_+\-=[\]{};':"\\|,.<>/?]).{6,20}$/,
+                    message: 'La contraseña debe contener al menos una mayúscula, un número y un caracter especial',
                   },
+                  
                 })}
                 onBlur={() => handleBlur('contrasena')}
               />
