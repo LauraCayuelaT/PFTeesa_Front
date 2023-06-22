@@ -7,6 +7,7 @@ import {
   updateCart,
   deleteCart,
 } from '../../features/reduxReducer/carritoSlice';
+import { updateCartGuestProducts, deleteCartGuestProducts } from '../../features/reduxReducer/cartGuestSlice';
 
 // import Cart from './Cart';
 // import Card from '../Card/Card';
@@ -18,76 +19,100 @@ export const Carrito = ({
   nombre,
   precio,
   imagen,
+  userUUID
 }) => {
   const options = {
     style: 'decimal',
     useGrouping: true,
     minimumFractionDigits: 0,
   };
+  const userData = useSelector((state) => state.userState.userData);
   const [cart, setCart] = useState({
     cantidad: cantidad,
   });
-
+  const [cartGuest, setCartGuest] = useState({
+    cantidad: cantidad,
+  });
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if(userData.userId){
     setCart((prevCart) => ({
       ...prevCart,
       cantidad: cantidad,
-    }));
-  }, [cantidad]);
+    }))}else setCartGuest((prevCartGuest) => ({
+      ...prevCartGuest,
+      cantidad: cantidad
+    }))
+  }, [cantidad, userData.userId]);
 
   useEffect(() => {
+    if(userData.userId){
     const total = precio * cart.cantidad;
-  
-
-    // Actualiza el precio total en el estado local
     setCart((prevCart) => ({
       ...prevCart,
       precioTotal: total,
-    }));
-  }, [precio, cart.cantidad]);
+    }))} else {const totalGuest = precio * cartGuest.cantidad;
+    setCartGuest((prevCartGuest) => ({
+      ...prevCartGuest,
+      precioTotal: totalGuest,
+    }))}
+  }, [precio, cart.cantidad, cartGuest.cantidad, userData.userId]);
 
   const handleIncrement = () => {
+    if (userData.userId) {
     setCart((prevCart) => ({
       ...prevCart,
       cantidad: prevCart.cantidad + 1,
     }));
 
     dispatch(updateCart({ CartProductId: id, cantidad: cart.cantidad + 1 }))
-      .catch((error) => {
-        console.error(
-          'Error al aumentar la cantidad del producto del carrito:',
-          error
-        );
-      });
+    } else setCartGuest((prevCartGuest) => ({
+      ...prevCartGuest,
+      cantidad: prevCartGuest.cantidad + 1,
+    })); 
+    dispatch(updateCartGuestProducts({CartGuestProductId: id, cantidad: cartGuest.cantidad +1 }))
   };
 
   const handleDecrement = () => {
-    if (cart.cantidad > 0) {
-      setCart((prevCart) => ({
-        ...prevCart,
-        cantidad: prevCart.cantidad - 1,
-      }));
-
-      dispatch(updateCart({ CartProductId: id, cantidad: cart.cantidad - 1 }))
-        .catch((error) => {
-          console.error(
-            'Error al disminuir la cantidad del producto del carrito:',
-            error
-          );
-        });
+    if (userData.userId) {
+      if (cart.cantidad > 1) {
+        setCart((prevCart) => ({
+          ...prevCart,
+          cantidad: prevCart.cantidad - 1,
+        }));
+        dispatch(
+          updateCart({ CartProductId: id, cantidad: cart.cantidad - 1 })
+        );
+      }
+    } else {
+      if (cartGuest.cantidad > 1) {
+        setCartGuest((prevCartGuest) => ({
+          ...prevCartGuest,
+          cantidad: prevCartGuest.cantidad - 1,
+        }));
+        dispatch(
+          updateCartGuestProducts({
+            CartGuestProductId: id,
+            cantidad: cartGuest.cantidad - 1,
+          })
+        );
+      }
     }
   };
 
   const handleDelete = (e) => {
     e.preventDefault();
+    if(userData.userId){
     dispatch(deleteCart(id))
       .then(() => {
         // window.location.reload();
       })
+    } else dispatch(deleteCartGuestProducts(id))
+      .then(() => {
+      })
       .catch((error) => {
-        console.error('Error al eliminar el producto del carrito:', error);
+        console.error('Error al eliminar el producto del carrito de invitado:', error);
       });
   };
 
@@ -112,6 +137,7 @@ export const Carrito = ({
             id='decrement'
             onClick={handleDecrement}
             className='px-2 py-1 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 focus:outline-none'
+            disabled={userData.userId ? cart.cantidad <= 1 : cartGuest.cantidad <= 1}
           >
             -
           </button>
@@ -119,7 +145,7 @@ export const Carrito = ({
             id='quantity'
             className='px-2 text-gray-700'
           >
-            {cart.cantidad}
+             {userData.userId ? cart.cantidad : cartGuest.cantidad}
           </span>
           <button
             type='button'
@@ -131,8 +157,9 @@ export const Carrito = ({
           </button>
         </div>
         <h4 className='text-gray-600 text-base font-medium mt-2'>
-          $ {cart.precioTotal ? cart.precioTotal.toLocaleString('en-US', options) : '0'}
-        </h4>
+  $ {cart.precioTotal ? cart.precioTotal.toLocaleString('en-US', options) : 
+  (cartGuest.precioTotal ? cartGuest.precioTotal.toLocaleString('en-US', options) : '0')}
+</h4>
         <button
           onClick={handleDelete}
           className='mt-4 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none'

@@ -63,8 +63,51 @@ const EditProducts = () => {
     // trigger,
   } = useForm();
 
+  //*Validar Admin:
+
+  const alertGoodbye = () => {
+    Swal.fire({
+      title: '¡Un momento!',
+      text: 'No eres admin, no puedes estar aquí.',
+      icon: 'info',
+      confirmButtonText: 'Aceptar',
+      confirmButtonColor: '#192C8C',
+    }).then(() => {
+      navigate('/home');
+    });
+  };
+
+  const userAdmin = useSelector((state) => state.userState.userData.userType);
+  console.log('data' + userAdmin);
+  const [waiting, setWaiting] = useState(true);
+
+  useEffect(() => {
+    if (userAdmin === null) {
+      const timeout = setTimeout(() => {
+        if (waiting) {
+          alertGoodbye();
+        }
+      }, 3000);
+
+      return () => {
+        clearTimeout(timeout);
+      };
+    } else {
+      setWaiting(false);
+    }
+  }, [userAdmin, waiting]);
+
+  useEffect(() => {
+    if (userAdmin !== null && !waiting) {
+      // Validar los datos después de que se hayan obtenido
+      if (userAdmin === false) {
+        alertGoodbye();
+      }
+    }
+  }, [userAdmin, waiting]);
+
   //ids
-  const userId = useSelector((state) => state?.userState.userData.userId);
+
   let ProductID = id;
 
   const onSubmit = (data) => {
@@ -76,7 +119,7 @@ const EditProducts = () => {
       stock: Number(data.stock),
       precio: Number(data.precio),
     };
-    dispatch(editProduct({ data: parsedData, ProductID, userId }));
+    dispatch(editProduct({ data: parsedData, ProductID }));
     alertConfirm();
     reset();
   };
@@ -147,6 +190,7 @@ const EditProducts = () => {
         </div>
 
         <div className='relative mb-1'>
+          <h1 className='font-medium'>Imágenes</h1>
           <Controller
             name='imagenes'
             control={control}
