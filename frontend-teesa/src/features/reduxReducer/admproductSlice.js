@@ -47,9 +47,9 @@ export const editProduct = createAsyncThunk(
   async (payload) => {
     try {
       const { imagenes, precio, stock } = payload.data;
-      const { ProductID, userId } = payload;
+      const { ProductID } = payload;
       const response = await axios.put(
-        `https://servidor-teesa.onrender.com/detail/${ProductID}?id=${userId}`,
+        `https://servidor-teesa.onrender.com/detail/${ProductID}`,
         { imagenes, precio, stock }
       );
 

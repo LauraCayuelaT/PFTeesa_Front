@@ -107,7 +107,7 @@ const EditProducts = () => {
   }, [userAdmin, waiting]);
 
   //ids
-  const userId = useSelector((state) => state?.userState.userData.userId);
+
   let ProductID = id;
 
   const onSubmit = (data) => {
@@ -119,7 +119,7 @@ const EditProducts = () => {
       stock: Number(data.stock),
       precio: Number(data.precio),
     };
-    dispatch(editProduct({ data: parsedData, ProductID, userId }));
+    dispatch(editProduct({ data: parsedData, ProductID }));
     alertConfirm();
     reset();
   };
