@@ -190,6 +190,7 @@ const EditProducts = () => {
         </div>
 
         <div className='relative mb-1'>
+          <h1 className='font-medium'>Imágenes</h1>
           <Controller
             name='imagenes'
             control={control}
