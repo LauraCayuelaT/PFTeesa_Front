@@ -25,6 +25,7 @@ export const createProduct = createAsyncThunk(
       descripcion,
       ref,
       estado,
+      id,
     } = payload;
     console.log(payload);
     try {
@@ -68,6 +69,27 @@ export const editProduct = createAsyncThunk(
   }
 );
 
+export const deleteProduct = createAsyncThunk(
+  'admin/deleteProduct',
+  async (ProductID) => {
+    try {
+      const response = await axios.delete(
+        `https://servidor-teesa.onrender.com/products/${ProductID}`
+      );
+      console.log('Respuesta de la solicitud DELETE:', response.data);
+      return response.data;
+    } catch (error) {
+      console.log('error', error.response.data.message);
+      Swal.fire({
+        title: 'Error',
+        text: 'Hubo un error al eliminar el producto, inténtelo de nuevo.',
+        icon: 'warning',
+      });
+      throw error;
+    }
+  }
+);
+
 const adminProductSlice = createSlice({
   name: 'adminProductState',
   initialState,
@@ -93,6 +115,21 @@ const adminProductSlice = createSlice({
       state.loading = false;
       state.error = null;
       state.success = true;
+    });
+    builder.addCase(deleteProduct.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+      state.errorMessage = null;
+    });
+    builder.addCase(deleteProduct.fulfilled, (state) => {
+      state.loading = false;
+      state.error = null;
+      state.success = true;
+    });
+    builder.addCase(deleteProduct.rejected, (state, action) => {
+      state.loading = false;
+      state.error = true;
+      state.errorMessage = action.payload;
     });
   },
 });

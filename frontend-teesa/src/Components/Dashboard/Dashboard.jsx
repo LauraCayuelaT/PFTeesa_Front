@@ -188,16 +188,19 @@ function Dashboard() {
   };
 
   return (
-    <div className='flex flex-col min-h-screen bg-teesaBlueDark'>
-      <div className='flex justify-center mt-4'>
+    <div className='flex flex-col items-center min-h-screen bg-gradient-to-r from-teesaGreen to-teesaBlueDark'>
+      <h1 className='text-3xl text-white font-bold mt-[1%] mb-[1%]'>Bienvenido al Dashboard!</h1>
+      <h2 className='font-bold text-2xl text-white'>Quieres</h2>
+      <div className='flex flex-row justify-center items-center mt-4 gap-[6%]'>
         <NavLink to='/admin/createproduct'>
-          <button className='bg-blue-600 rounded-md text-white hover:bg-blue-700 p-2 ml-2'>
+          <button className='bg-teesaBlueLight rounded-xl text-white flex flex-row hover:bg-teesaBlueDark p-2'>
             Crear producto nuevo
           </button>
         </NavLink>
+        <h3 className='font-bold text-2xl text-white'>o</h3>
         <button
           onClick={handleMostrarUsuarios}
-          className='bg-blue-600 rounded-md text-white hover:bg-blue-700 p-2 ml-2'
+          className='bg-teesaBlueLight rounded-xl text-white flex flex-row hover:bg-teesaBlueDark p-2'
         >
           {mostrarUsuarios ? 'Ocultar Usuarios' : 'Mostrar Usuarios'}
         </button>
