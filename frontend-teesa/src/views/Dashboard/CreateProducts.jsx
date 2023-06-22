@@ -108,8 +108,11 @@ const CreateProducts = (id) => {
 
   return (
     <div className='flex flex-col items-center bg-gradient-to-r from-teesaGreen to-teesaBlueDark h-screen w-full gap-2 overflow-hidden'>
-        <h1 className='text-white text-3xl font-bold mt-[2%]'>Crear productos</h1>
-        <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col justify-center items-center h-auto gap-3'>
+      <h1 className='text-white text-3xl font-bold mt-[2%]'>Crear productos</h1>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className='flex flex-col justify-center items-center h-auto gap-3'
+      >
         {/* nombre */}
         <label className='flex flex-col justify-center align-center items-center '>
           <input
@@ -330,24 +333,28 @@ const CreateProducts = (id) => {
           <div className='h-[5px]'></div>
         </label>
         {/* estado */}
-        <label className="flex flex-col justify-center align-center items-center">
-  <select
-    name="estado"
-    className="bg-teesaBlueDark text-teesaGrey rounded-md h-[2em] w-[15em]"
-    {...register('estado', {
-      required: 'Este campo es obligatorio',
-    })}
-    onBlur={() => handleBlur('estado')}
-  >
-    <option value="">Selecciona un estado</option>
-      <option>Nuevo</option>
-      <option>Usado</option>
-  </select>  
-    <div className="h-[5px]"></div>
-
-</label>
-        <button type="submit" className='bg-teesaGreen font-bold rounded-lg w-[50%] h-[50%] hover:bg-green-500'>Crear</button>
-        </form>
+        <label className='flex flex-col justify-center align-center items-center'>
+          <select
+            name='estado'
+            className='bg-teesaBlueDark text-teesaGrey rounded-md h-[2em] w-[15em]'
+            {...register('estado', {
+              required: 'Este campo es obligatorio',
+            })}
+            onBlur={() => handleBlur('estado')}
+          >
+            <option value=''>Selecciona un estado</option>
+            <option>Nuevo</option>
+            <option>Usado</option>
+          </select>
+          <div className='h-[5px]'></div>
+        </label>
+        <button
+          type='submit'
+          className='bg-teesaGreen font-bold rounded-lg w-[50%] h-[50%] hover:bg-green-500'
+        >
+          Crear
+        </button>
+      </form>
     </div>
   );
 };
