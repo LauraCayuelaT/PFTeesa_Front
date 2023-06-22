@@ -3,12 +3,12 @@ import React from 'react';
 import { getUserDataFromCookie } from '../../features/reduxReducer/userSlice';
 import { useState, useEffect } from 'react';
 import { postCart, getUser } from '../../features/reduxReducer/carritoSlice';
-import { postCartGuestProducts } from '../../features/reduxReducer/cartGuestSlice';
+// import { postCartGuestProducts } from '../../features/reduxReducer/cartGuestSlice';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { v4 as uuidv4 } from 'uuid';
-import {Cart} from '../Carrito/Cart';
+// import { v4 as uuidv4 } from 'uuid';
+// import {Cart} from '../Carrito/Cart';
 import Swal from 'sweetalert2';
 
 export const Card = ({ nombre, categoria, imagenes, precio, marca, id }) => {
@@ -29,7 +29,7 @@ export const Card = ({ nombre, categoria, imagenes, precio, marca, id }) => {
   const [cartGuest, setCartGuest] = useState({
     ProductId: id,
     cantidad: 0,
-    userId: localStorage.getItem('guestUserId') || uuidv4(),
+    // userId: localStorage.getItem('guestUserId') || uuidv4(),
   });
 
   useEffect(() => {
@@ -53,9 +53,9 @@ export const Card = ({ nombre, categoria, imagenes, precio, marca, id }) => {
     if (cart.CartId) {
       setCart((prevCart) => ({
         ...prevCart,
-        cantidad: Number(prevCart.cantidad) +1,
+        cantidad: Number(prevCart.cantidad) + 1,
       }));
-    } else 
+    } else
       setCartGuest((prevCartGuest) => ({
         ...prevCartGuest,
         cantidad: Number(prevCartGuest.cantidad) + 1,
@@ -63,20 +63,19 @@ export const Card = ({ nombre, categoria, imagenes, precio, marca, id }) => {
   };
 
   const handleDecrement = () => {
-    if(cart.cantidad>0){
-    if (cart.CartId) {
-      setCart((prevCart) => ({
-        ...prevCart,
-        cantidad: Number(prevCart.cantidad) - 1,
-      }));
-    } else 
-      setCartGuest((prevCartGuest) => ({
-        ...prevCartGuest,
-        cantidad: Number(prevCartGuest.cantidad) - 1,
-      }));
+    if (cart.cantidad > 0) {
+      if (cart.CartId) {
+        setCart((prevCart) => ({
+          ...prevCart,
+          cantidad: Number(prevCart.cantidad) - 1,
+        }));
+      } else
+        setCartGuest((prevCartGuest) => ({
+          ...prevCartGuest,
+          cantidad: Number(prevCartGuest.cantidad) - 1,
+        }));
     }
   };
-  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -101,19 +100,20 @@ export const Card = ({ nombre, categoria, imagenes, precio, marca, id }) => {
           toast.style.marginTop = '80px';
         },
       });
-    } else if(cartGuest.cantidad > 0){
-      const updatedCartGuest = {
-        ...cartGuest,
-      };
-      dispatch(postCartGuestProducts(updatedCartGuest)); // Enviar el carrito actualizado del usuario no registrado
-      setCartGuest((prevCartGuest) => ({
-        ...prevCartGuest,
-        ProductId: id,
-        cantidad: 0,// Asignar el userId al estado cartGuest
-      }));
+    } else if (cartGuest.cantidad > 0) {
+      // const updatedCartGuest = {
+      //   ...cartGuest,
+      // };
+      // dispatch(postCartGuestProducts(updatedCartGuest)); // Enviar el carrito actualizado del usuario no registrado
+      // setCartGuest((prevCartGuest) => ({
+      //   ...prevCartGuest,
+      //   ProductId: id,
+      //   cantidad: 0,// Asignar el userId al estado cartGuest
+      // }));
       Swal.fire({
-        icon: 'success',
-        title: 'Producto agregado al carrito',
+        icon: 'warning',
+        title: '¡Error!',
+        text: 'Debes registrate para agregar productos al carrito.',
         showConfirmButton: false,
         timer: 2000,
         timerProgressBar: true,
@@ -125,18 +125,16 @@ export const Card = ({ nombre, categoria, imagenes, precio, marca, id }) => {
           toast.style.marginTop = '80px';
         },
       });
-    }//navigate('/carrito');
-    <Cart userId={cartGuest.userId} />
-    
+    } //navigate('/carrito');
+    // <Cart userId={cartGuest.userId} />
+
     // navigate('/carrito');
   };
-  console.log(cartGuest)
+  console.log(cartGuest);
 
-  // carro 
-  
+  // carro
 
-      
-      // const [cartItems, setCartItems] = useState([]);
+  // const [cartItems, setCartItems] = useState([]);
 
   // const handleAddToCart = () => {
   //   const newItem = {
@@ -152,8 +150,6 @@ export const Card = ({ nombre, categoria, imagenes, precio, marca, id }) => {
   //     cantidad: 0,
   //   });
   // };
-
-
 
   // const handleAddToCart = () => {
   //   const newItem = {
@@ -170,7 +166,6 @@ export const Card = ({ nombre, categoria, imagenes, precio, marca, id }) => {
   //   });
   //   // setShowCart(true);
   // };
-
 
   return (
     <div className='flex w-[260px] h-[460px] my-2 mx-6 transition duration-100 transform hover:scale-105 hover:cursor-pointer'>
@@ -203,8 +198,11 @@ export const Card = ({ nombre, categoria, imagenes, precio, marca, id }) => {
                 >
                   -
                 </button>
-                <span id='quantity' className='px-2'>
-                {cart.CartId ? cart.cantidad : cartGuest.cantidad}
+                <span
+                  id='quantity'
+                  className='px-2'
+                >
+                  {cart.CartId ? cart.cantidad : cartGuest.cantidad}
                 </span>
                 <button
                   type='button'
