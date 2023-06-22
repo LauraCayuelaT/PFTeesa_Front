@@ -24,6 +24,9 @@ export default function NavBar() {
     userData: { userId },
   } = userData;
 
+  const userAdmin = useSelector((state) => state.userState.userData.userType);
+  console.log(userAdmin);
+
   const [cartId, setCartId] = useState('');
 
   const [cart, setCart] = useState({
@@ -146,12 +149,16 @@ export default function NavBar() {
           >
             Devs
           </NavLink>
-          <NavLink
-            to='/admin'
-            className='transition duration-300 ease-in-out transform hover:text-teesaGreen focus:text-teesaGreen'
-          >
-            Dashboard
-          </NavLink>
+          {userAdmin == true ? (
+            <NavLink
+              to='/admin'
+              className='transition duration-300 ease-in-out transform hover:text-teesaGreen focus:text-teesaGreen'
+            >
+              Dashboard
+            </NavLink>
+          ) : (
+            <div></div>
+          )}
         </div>
         <div className='sm:hidden'>
           <i
@@ -280,6 +287,16 @@ export default function NavBar() {
           >
             Devs
           </NavLink>
+          {userAdmin == true ? (
+            <NavLink
+              to='/admin'
+              className='w-full px-4 py-2 hover:bg-teesaGreen hover:text-teesaBlueDark text-base block'
+            >
+              Dashboard
+            </NavLink>
+          ) : (
+            <div></div>
+          )}
         </div>
       )}
     </div>

@@ -105,7 +105,7 @@ function App() {
         />
 
         <Route
-          path='/dashboard/editproduct'
+          path='/dashboard/editproduct/:id'
           element={<EditProducts />}
         />
 

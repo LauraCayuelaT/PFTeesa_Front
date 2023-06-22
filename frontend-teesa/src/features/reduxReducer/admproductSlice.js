@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import Swal from 'sweetalert2';
 import axios from 'axios';
@@ -45,26 +46,23 @@ export const editProduct = createAsyncThunk(
   'admin/editProduct',
   async (payload) => {
     try {
-      const { imagenes, precio, stock, idProduct } = payload;
+      const { imagenes, precio, stock } = payload.data;
+      const { ProductID, userId } = payload;
       const response = await axios.put(
-        `https://servidor-teesa.onrender.com/detail/${idProduct}`
+        `https://servidor-teesa.onrender.com/detail/${ProductID}?id=${userId}`,
+        { imagenes, precio, stock }
       );
-      console.log('Respuesta de la solicitud PUT:', response);
-      Swal.fire({
-        title: 'Cambios realizados',
-        text: 'Tus cambios se realizaron con éxito 😁.',
-        icon: 'success',
-        confirmButtonText: 'Ok.',
-        confirmButtonColor: '#192C8C',
-      });
-      return response;
+
+      console.log('Respuesta de la solicitud PUT:', response.data);
+
+      return response.data;
     } catch (error) {
       console.log('error', error.response.data.message);
-      Swal(
-        'Error',
-        'Hubo un error al actualizar su información, intentelo de nuevo',
-        'error'
-      );
+      Swal.fire({
+        title: 'Error',
+        text: 'Hubo un error al actualizar su información, inténtelo de nuevo.',
+        icon: 'warning',
+      });
       throw error;
     }
   }

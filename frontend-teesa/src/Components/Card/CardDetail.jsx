@@ -37,6 +37,10 @@ const CardDetail = ({
 
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.userState.userData);
+
+  const userAdmin = useSelector((state) => state.userState.userData.userType);
+  console.log(userAdmin);
+
   const [cartId, setCartId] = useState('');
   const [cart, setCart] = useState({
     ProductId: id,
@@ -151,9 +155,15 @@ const CardDetail = ({
   }, [dispatch, userId, id]);
   //Si no funciona con eso, recargar la página.
 
+  //Edit Product
+
+  let handleEdit = () => {
+    navigate(`/dashboard/editproduct/${id}`);
+  };
+
   return (
     <div className='w-full mt-12 flex flex-col justify-center items-center '>
-      <div className='detailContainer flex flex-col lg:flex-row w-full lg:w-3/4 rounded  shadow-lg  bg-gray-100'>
+      <div className='detailContainer flex flex-col lg:flex-row w-full lg:w-3/4 rounded   '>
         <div className='flex justify-start items-start w-5 -mt-10'>
           <NavLink className=' justify-self-start mb-1  transition duration-300 ease-in-out transform m-2'>
             <button
@@ -238,11 +248,21 @@ const CardDetail = ({
               </button>
               <button
                 type='submit'
-                className='ml-2 px-8 py-3 bg-teesaBlueDark text-white rounded-md'
+                className='ml-2 px-8 py-3 bg-teesaBlueDark text-white rounded-md hover:bg-blue-900'
               >
                 Agregar al Carrito{' '}
                 <i className='fa-solid fa-cart-shopping rounded-md'></i>
               </button>
+              {userAdmin == true ? (
+                <button
+                  onClick={handleEdit}
+                  className='ml-2 px-8 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-800'
+                >
+                  Editar{' '}
+                </button>
+              ) : (
+                <div></div>
+              )}
             </div>
             <h6 className='hidden'>{id}</h6>
             <h6 className='hidden'>{cart.CartId}</h6>
