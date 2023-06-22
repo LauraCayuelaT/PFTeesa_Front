@@ -6,19 +6,17 @@ import { Carrito } from '../Carrito/Carrito';
 import { Link } from 'react-router-dom';
 import { postLinkMercado } from '../../features/reduxReducer/mercadoSlice';
 
-
 export const Cart = (props) => {
   const options = {
     style: 'decimal',
     useGrouping: true,
     minimumFractionDigits: 0,
   };
-  
+
   function calculateTotal(cartProducts) {
     let total = 0;
     for (let i = 0; i < cartProducts.length; i++) {
       total += cartProducts[i].precioTotal;
-  
     }
     return total;
   }
@@ -29,9 +27,8 @@ export const Cart = (props) => {
   // const carrito = useSelector((state) => state.cart);
 
   const userUUID = props.userId;
-  console.log(userUUID)
+  console.log(userUUID);
   const [cartId, setCartId] = useState('');
-
 
   // const [cart, setCart] = useState({
   //   CartId: cartId,
@@ -43,10 +40,10 @@ export const Cart = (props) => {
   useEffect(() => {
     dispatch(getUser()).then((action) => {
       const response = action.payload;
-   
+
       const cartId = response.find((user) => user.id === userData.userId)?.Cart
         .id;
-  
+
       if (cartId) {
         dispatch(getCart(cartId)).then((action) => {
           const response = action.payload;
@@ -55,16 +52,16 @@ export const Cart = (props) => {
             ...prevInfo,
             items: response,
           }));
-
         });
-      }else dispatch(getCartGuestProducts(userUUID)).then((action) => {
-        const response = action.payload;
+      } else
+        dispatch(getCartGuestProducts(userUUID)).then((action) => {
+          const response = action.payload;
 
-        setInfo((prevInfo) => ({
-          ...prevInfo,
-          items: response,
-        }));
-      });
+          setInfo((prevInfo) => ({
+            ...prevInfo,
+            items: response,
+          }));
+        });
     });
   }, [dispatch, userData, info]);
   console.log(info.items);
@@ -72,7 +69,6 @@ export const Cart = (props) => {
   //*MercadoPago Button:
 
   const userId = useSelector((state) => state.userState.userData.userId);
-
 
   const linkMercadoPago = useSelector(
     (state) => state.mercadoState.linkMercado
@@ -98,9 +94,12 @@ export const Cart = (props) => {
           ) : (
             <>
               {info.items ? (
-                (info.items.cartProducts?.length > 0 || info.items.cartGuestProducts?.length > 0) ? (
+                info.items.cartProducts?.length > 0 ||
+                info.items.cartGuestProducts?.length > 0 ? (
                   <>
-                    {(info.items.cartProducts || info.items.cartGuestProducts).map((item) => (
+                    {(
+                      info.items.cartProducts || info.items.cartGuestProducts
+                    ).map((item) => (
                       <Carrito
                         key={item.id}
                         id={item.id}
@@ -117,10 +116,10 @@ export const Cart = (props) => {
                         Total:{' '}
                         <span className='text-2xl font-bold text-black'>
                           ${' '}
-                          {calculateTotal(info.items.cartProducts || info.items.cartGuestProducts).toLocaleString(
-                            'es-ES',
-                            options
-                          )}
+                          {calculateTotal(
+                            info.items.cartProducts ||
+                              info.items.cartGuestProducts
+                          ).toLocaleString('es-ES', options)}
                         </span>
                       </h2>
                     </div>
@@ -131,15 +130,8 @@ export const Cart = (props) => {
                       >
                         Seguir comprando
                       </Link>
-                      <a
-                        onClick={() => {
-                          window.open(
-                            linkMercadoPago,
-                            '_blank',
-                            'width=800,height=800'
-                          );
-                        }}
-                      >
+
+                      <a href={linkMercadoPago}>
                         <button className='7-80 px-4 py-3 border-4 bg-teesaGreen rounded-lg text-white hover:bg-blue-600 transition duration-100 transform hover:scale-105'>
                           Comprar con MercadoPago
                         </button>
