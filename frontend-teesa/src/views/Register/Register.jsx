@@ -266,6 +266,8 @@ function Register() {
               </a>
           </div> 
             </div>
+            
+          
         </div>
       </div>
   );
