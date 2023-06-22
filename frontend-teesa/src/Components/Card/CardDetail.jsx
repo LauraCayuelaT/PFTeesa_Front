@@ -164,7 +164,7 @@ const CardDetail = ({
             </button>
           </NavLink>
         </div>
-        <div className='w-full lg:w-1/2 m-4 flex items-center justify-center '>
+        <div className="w-full lg:w-1/2 m-4 flex items-center justify-center">
           <Carrusel />
         </div>
         <div className='w-full lg:w-1/2  px-8 py-6'>
