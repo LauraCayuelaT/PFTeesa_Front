@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import logo from '../../img/SVGs/TeesaAll.svg';
+import logo from '../../img/SVGs/logoSolo.svg';
 import { registerUser } from '../../features/reduxReducer/registerSlice';
 import { setUser } from '../../features/reduxReducer/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,6 +13,7 @@ import Cookies from 'universal-cookie';
 import { Link } from 'react-router-dom';
 //EmailJS - Mailer
 import emailjs from '@emailjs/browser';
+import waves from '../../assets/icon/layered-waves.svg';
 
 function Register() {
   const dispatch = useDispatch();
@@ -150,12 +151,10 @@ function Register() {
 
 
     return (
-      <div className="w-screen bg-teesaBlueDark h-screen flex flex-row justify-center align-center items-center xl:gap-[15em] lg:gap-[12em] md:gap-[5em] overflow-hidden m-auto">
+      <div className="relative bg-cover w-screen h-screen flex flex-row justify-center align-center items-center overflow-hidden m-auto" style={{backgroundImage: `url(${waves})`}}>
         <div className='flex-col xl:mb-[] lg:mb-[]'>
-          <img src={logo} alt="logo" className=' xl:h-[600px] lg:h-[500px] md:h-[400px]'/>
-          <h1 className='text-center text-teesaWhite xl:text-3xl xl:mt-[-6em] lg:text-2xl lg:mt-[-6em] md:text-xl md:mt-[-6em]'>Tecnología en Equipos Alimenticios</h1>
+          <img src={logo} alt="logo" className='mt-[15%] xl:h-[800px] lg:h-[700px] md:h-[400px] xs:hidden'/>
         </div>
-        
         <div className='bg-gradient-to-r from-teesaGreenDark to-teesaGreen rounded-lg flex flex-col justify-center align-center items-center h-auto mb-[12%] lg:mt-[12%]'>
           <h1 className='font-bold  xl:text-4xl lg:text-3xl text-teesaGrey  mt-[5%] '>Registrate</h1>
             <div className='flex flex-col justify-center align-center items-center p-8'>
@@ -215,7 +214,7 @@ function Register() {
                   },
                   pattern: {
                     value:
-                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()])[a-zA-Z\d!@#$%^&*()]+$/,
+                      /^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[!@#$%^&()])[a-zA-Z\d!@#$%^&()]+$/,
                     message:
                       'La contraseña debe contener al menos una mayúscula, un número y un caracter especial',
                   },
@@ -261,14 +260,12 @@ function Register() {
               <div className='flex justify-center items-center align-center text-center mt-2 w-[70%]'>
             <a href="https://servidor-teesa.onrender.com/google/signup">
             <button
-              className='flex mb-[5px] w-[100%] justify-center rounded  bg-teesaWhite text-md font-medium uppercase leading-normal text-black shadow-lg border-2 border-black hover:bg-gray-300 hover:transform hover:scale-105'
+              className='flex justify-cetner items-center mb-[5px] w-[16em] h-[2.5em] justify-center rounded  bg-teesaWhite text-md font-medium uppercase leading-normal text-black shadow-lg border-2 border-black hover:bg-gray-300 hover:transform hover:scale-105'
               type='submit'>
-              <img src={googleIcon} className='w-5 h-5 mx-3 my-auto' /> Ingresar con Google</button>
+              <img src={googleIcon} className=' w-22  h-5 mx-3 my-auto' /> Ingresar con Google</button>
               </a>
           </div> 
             </div>
-            
-          
         </div>
       </div>
   );
