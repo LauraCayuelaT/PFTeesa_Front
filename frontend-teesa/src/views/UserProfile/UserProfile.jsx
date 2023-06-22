@@ -167,13 +167,13 @@ const UserProfile = () => {
   }, [dispatch, userId]);
 
   return (
-    <div className='allContainer bg-teesaBlueDark flex flex-row justify-center items-center gap-[5%] w-full h-screen overflow-hidden'>
+    <div className='allContainer bg-teesaBlueDark flex xl:flex-row lg:flex-row md:flex-row sm-flex-col xs:flex-col justify-center items-center gap-[5%] w-full h-screen overflow-hidden'>
       {/* info section */}
-      <section className='bg-gradient-to-r from-teesaGreenDark to-teesaGreen rounded-lg flex flex-col justify-center items-center h-auto w-[30em] gap-7'>
+      <section className='bg-gradient-to-r from-teesaGreenDark to-teesaGreen rounded-lg flex flex-col justify-center items-center h-auto xl:w-[30em] lg:w-[30em] md:w-[20em] sm:w-auto xs:w-auto gap-7'>
         {editing ? (
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className='bg-gradient-to-r from-teesaGreenDark to-teesaGreen rounded-lg flex flex-col justify-center items-center h-auto w-[30em] gap-2'
+            className='rounded-lg flex flex-col justify-center items-center h-auto gap-2'
           >
             <h1 className='font-bold text-white text-3xl '>Editar tus datos</h1>
             <label className='flex flex-col justify-center align-center items-center gap-[0.5em]'>
@@ -274,25 +274,25 @@ const UserProfile = () => {
               <div className=''>
                 <i
                   className='bx bxs-user ml-5 flex transition duration-300 ease-in-out transform text-white'
-                  style={{ fontSize: '5em' }}
+                  style={{ fontSize: '4em' }}
                 ></i>
               </div>
 
               <div className='flex flex-col gap-1 text-teesaWhite'>
-                <h1 className='font-bold text-3xl'>{userName}</h1>
+                <h1 className='font-bold xl:text-3xl lg:text-3xl md:text-2xl sm:text-xl xs:text-xl'>{userName}</h1>
                 <div className='flex flex-row'>
-                  <h1 className='text-2xl'>{userEmail}</h1>
+                  <h1 className='xl:text-2xl lg:text-2xl md:text-2xl sm:text-xl xs:text-lg'>{userEmail}</h1>
                   <button onClick={() => setEditing(true)}>
                     <i
                       className='bx bx-pencil text-white hover:text-slate-600 ml-6'
-                      style={{ fontSize: '22.5px' }}
+                      style={{ fontSize: '22px' }}
                     ></i>
                   </button>
                 </div>
-                <div className='w-[20em] border-t-2 border-white '></div>
+                <div className='xl:w-[20em] lg:w-[15em] md:w-[10em] sm:w-[10em] xs:w-[10em] border-t-2 border-white '></div>
               </div>
             </div>
-            <div className='flex flex-col justify-center items-center gap-5 text-teesaWhite text-xl pb-[5%]'>
+            <div className='flex flex-col justify-center items-center gap-5 text-teesaWhite xl:text-xl lg:text-xl md:text-xl sm:text-lg xs:text-md pb-[5%]'>
               <h3>NIT/Cédula: {userNit}</h3>
               <h3>Dirección: {userAddress}</h3>
               <h3>Teléfono: {userPhone}</h3>
