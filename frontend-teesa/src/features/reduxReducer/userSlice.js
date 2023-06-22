@@ -58,26 +58,39 @@ export const putUser = createAsyncThunk('user/putUser', async (payload) => {
   }
 });
 
-// export const getProducts= createAsyncThunk('user/getProducts', async (payload) => {
+export const getProducts = createAsyncThunk(
+  'user/getProducts',
+  async (userId) => {
+    try {
+      const response = await axios.get(
+        `https://servidor-teesa.onrender.com/purchase/${userId}`
+      );
+      return response;
+    } catch (error) {
+      console.log('ERROR', error.response.data.message);
+      throw error;
+    }
+  }
+);
 
-//   console.log(UserId)
-//   try {
-//     const response = await axios.get(`https://servidor-teesa.onrender.com/purchase/${userId}`,{
+//* GET: userProfileData - Google
 
-//     })
-//   console.log(response)
-//   return response
-
-//   } catch (error) {
-//     console.log('ERROR', error.response.data.message);
-//     throw error;
-//   }
-
-// })
+export const fetchUserById = createAsyncThunk(
+  'user/fetchUserById',
+  async (id) => {
+    const response = await axios.get(
+      `https://servidor-teesa.onrender.com/users/${id}`
+    );
+    // console.log(response.data);
+    return response.data;
+  }
+);
 
 // Estados
 const initialState = {
   user: null,
+  userDetail: null,
+  userDetailStatus: null,
   userGoogle: null,
   userOurs: null,
   userData: {
@@ -89,6 +102,7 @@ const initialState = {
     userAddress: null,
     userPhone: null,
   },
+  userProducts: null,
 };
 
 // Slice Login
@@ -109,6 +123,8 @@ const userSlice = createSlice({
     },
     resetUserState: (state) => {
       state.user = false;
+      state.userDetail = null;
+      state.userDetailStatus = null;
       state.userOurs = false;
       state.userGoogle = false;
       state.userData.userId = null;
@@ -174,12 +190,10 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(putUser.fulfilled, (state, action) => {
       const responseData = action.payload.data.token; // Obtener la información actualizada del servidor
-      console.log(responseData);
       cookies.set('token', responseData, { path: '/' });
       // Actualizar los estados con la información recibida
       if (responseData) {
         const userData = jwt_decode(responseData);
-        console.log('userdata', userData);
         state.user = true;
         state.userData.userName = userData.nombre;
         state.userData.userNit = userData.nit;
@@ -187,6 +201,29 @@ const userSlice = createSlice({
         state.userData.userPhone = userData.telefono;
       }
     });
+    builder.addCase(getProducts.fulfilled, (state, action) => {
+      const responseData = action.payload.data; // Obtener la información actualizada del servidor
+      state.userProducts = responseData;
+    });
+
+    //*Profile Users - Google:
+
+    builder
+      .addCase(fetchUserById.pending, (state) => {
+        state.userDetailStatus = 'pending';
+      })
+      .addCase(fetchUserById.fulfilled, (state, action) => {
+        state.userDetailStatus = 'fulfilled';
+        state.userDetail = action.payload;
+        // Actualizar userData con userDetail.
+        state.userData.userName = action.payload.nombre;
+        state.userData.userNit = action.payload.nit;
+        state.userData.userAddress = action.payload.direccion;
+        state.userData.userPhone = action.payload.telefono;
+      })
+      .addCase(fetchUserById.rejected, (state, action) => {
+        state.userDetailStatus = action.error.message;
+      });
   },
 });
 

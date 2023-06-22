@@ -4,7 +4,7 @@ import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
-const Review = ({ userName, userRating, userTitle, userComment }) => {
+const Review = ({ userName, userRating, userDate, userComment }) => {
   return (
     <article className=' rounded   flex flex-col  m-4'>
       {/* Form Review */}
@@ -22,18 +22,16 @@ const Review = ({ userName, userRating, userTitle, userComment }) => {
       <div className='flex items-center'>
         <Rating
           name='size-medium'
-          defaultValue={userRating}
+          value={userRating}
           precision={1}
           size='medium'
           readOnly
           emptyIcon={<StarBorderIcon style={{ color: '#192C8C' }} />}
           icon={<StarIcon style={{ color: '#192C8C' }} />}
         />
-        <h3 className='pt-[3px] text-lg font-semibold text-gray-900 ml-2'>
-          {userTitle}
-        </h3>
+        <h3 className='pt-[3px] text-lg  text-gray-800 ml-2'>{userDate}</h3>
       </div>
-      <p className='my-2 text-gray-800 '>{userComment}</p>
+      <p className='my-2 text-gray-800 text-lg'>{userComment}</p>
     </article>
   );
 };

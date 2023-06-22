@@ -21,7 +21,7 @@ export default function NavBar() {
   const {
     user,
     userData: { userName },
-    userData: { userId},
+    userData: { userId },
   } = userData;
 
   const [cartId, setCartId] = useState('');
@@ -36,13 +36,13 @@ export default function NavBar() {
   useEffect(() => {
     dispatch(getUser()).then((action) => {
       const response = action.payload;
-      console.log(response);
+      // console.log(response);
       const cartId = response.find((user) => user.id === userId)?.Cart.id;
-      console.log(cartId);
+      // console.log(cartId);
       if (cartId) {
         dispatch(getCart(cartId)).then((action) => {
           const response = action.payload;
-          console.log(response);
+          // console.log(response);
           setInfo((prevInfo) => ({
             ...prevInfo,
             items: response,
@@ -102,6 +102,8 @@ export default function NavBar() {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  //carrito
+  // const cartt = useSelector((state) => state.app.cart);
 
 //carrito
 // const cartt = useSelector((state) => state.app.cart);
@@ -151,6 +153,12 @@ const cartItems = useSelector((state) => state.app.items);
             className='transition duration-300 ease-in-out transform hover:text-teesaGreen focus:text-teesaGreen'
           >
             Devs
+          </NavLink>
+          <NavLink
+            to='/admin'
+            className='transition duration-300 ease-in-out transform hover:text-teesaGreen focus:text-teesaGreen'
+          >
+            Dashboard
           </NavLink>
         </div>
         <div className='sm:hidden'>
@@ -227,23 +235,25 @@ const cartItems = useSelector((state) => state.app.items);
           style={{ fontSize: '1.5rem' }}
         ></i> */}
 
-{/* Boton carrito Navv*/}
-<div className="relative">
-          <NavLink to="/carrito" className="flex items-center">
-            <i className="fa-solid fa-cart-shopping text-xl rounded-md hover:text-teesaGreen"></i>
+        {/* Boton carrito Navv*/}
+        <div className='relative'>
+          <NavLink
+            to='/carrito'
+            className='flex items-center'
+          >
+            <i className='fa-solid fa-cart-shopping text-xl rounded-md hover:text-teesaGreen'></i>
             {info.items?.cartProducts?.length > 0 && (
-              <span className="absolute -top-1 -right-3 bg-teesaGreen text-white rounded-full text-xs px-1.5 py-.05">
+              <span className='absolute -top-1 -right-3 bg-teesaGreen text-white rounded-full text-xs px-1.5 py-.05'>
                 {info.items.cartProducts.length}
               </span>
             )}
-          {/* {cartCount > 0 && (
+            {/* {cartCount > 0 && (
             <span className="absolute -top-1 -right-1 bg-teesaGreen text-white rounded-full text-xs px-2 py-1">
               {cartCount}
             </span>
           )} */}
-          
-        </NavLink>
-</div>
+          </NavLink>
+        </div>
       </div>
 
       {isMobileMenuOpen && (
@@ -281,4 +291,5 @@ const cartItems = useSelector((state) => state.app.items);
         </div>
       )}
     </div>
-  )}
+  );
+}

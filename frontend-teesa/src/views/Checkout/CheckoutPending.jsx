@@ -1,7 +1,13 @@
 import waves from '../../assets/icon/waveschecklow.svg';
-import CircularProgress from '@mui/material/CircularProgress';
+import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
 
 const CheckoutPending = () => {
+  const navigate = useNavigate();
+
+  const handleNavigateToHome = () => {
+    navigate('/home');
+  };
   return (
     <div
       style={{
@@ -16,14 +22,16 @@ const CheckoutPending = () => {
           Transacción en Proceso
         </h2>
         <h2 className='text-2xl text-center font-mediumn mb-4'>
-          Por favor, continúa con la transacción.
+          MercadoPago está procesando tu pago, te comunicaremos cuando se haya
+          completado.
         </h2>
-        <div className='transition duration-100 transform hover:scale-105 mt-2 mb-4'>
-          <CircularProgress
-            sx={{ color: 'green', fontSize: 80 }}
-            className='hover:scale-110'
-          />
-        </div>
+        <Button
+          onClick={handleNavigateToHome}
+          variant='contained'
+          color='success'
+        >
+          Volver al Inicio
+        </Button>
       </div>
     </div>
   );

@@ -3,15 +3,27 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { putUser } from '../../features/reduxReducer/userSlice';
-//import { getProducts } from '../../features/reduxReducer/userSlice';
+import {
+  getProducts,
+  fetchUserById,
+} from '../../features/reduxReducer/userSlice';
 import 'boxicons/css/boxicons.min.css';
 // import Cookies from 'universal-cookie';
 import Swal from 'sweetalert2';
+import { Link } from 'react-router-dom';
 
 const UserProfile = () => {
   const nav = useNavigate();
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.userState);
+  const userProducts = useSelector((state) => state.userState.userProducts);
+
+  useEffect(() => {
+    if (userProducts) {
+      console.log('userProfile');
+      // console.log('userProfile', userProducts);
+    }
+  });
 
   const {
     user,
@@ -40,21 +52,26 @@ const UserProfile = () => {
 
   //*Entrar al User Page
 
-  // const cookies = new Cookies();
-  // const token = cookies.get('token');
-  // const userIdCookie = cookies.get('idGoogle');
-
   useEffect(() => {
     if (!user) {
       nav('/login');
     }
   }, [user]);
 
-  // useEffect(() => {
-  //   if (!token) {
-  //     nav('/login');
-  //   }
-  // });
+  //*Traer userData con el userDetail.
+
+  const userDataId = useSelector((state) => state.userState.userData.userId);
+
+  useEffect(() => {
+    dispatch(fetchUserById(userDataId));
+  }, [dispatch, userData.userData]);
+
+  //Mirar datos:
+
+  // const userDetailData = useSelector((state) => state.userState.userDetail);
+  // console.log(userDetailData);
+
+  //Alerts
 
   const onClose = () => {
     Swal.fire({
@@ -143,12 +160,14 @@ const UserProfile = () => {
     });
   }, [userName, userEmail, userNit, userAddress, userPhone, userType, reset]);
 
-  // useEffect(() => {
-  //   dispatch(getProducts(userId));
-  // }, [dispatch]);
+  useEffect(() => {
+    if (userId) {
+      dispatch(getProducts(userId));
+    }
+  }, [dispatch, userId]);
 
   return (
-    <div className='allContainer bg-teesaBlueDark flex flex-row justify-center items-center gap-[5%] w-full h-screen bg-bottom bg-cover -mt-1 overflow-hidden'>
+    <div className='allContainer bg-teesaBlueDark flex flex-row justify-center items-center gap-[5%] w-full h-screen overflow-hidden'>
       {/* info section */}
       <section className='bg-gradient-to-r from-teesaGreenDark to-teesaGreen rounded-lg flex flex-col justify-center items-center h-auto w-[30em] gap-7'>
         {editing ? (
@@ -200,7 +219,7 @@ const UserProfile = () => {
                 {...register('userAddress', {
                   required: 'Este campo es obligatorio',
                   pattern: {
-                    value: /^[a-zA-Z0-9\s\-\#\.\']+$/,
+                    value: /^[a-zA-Z0-9\s\-#.']+$/,
                     message: 'Ingrese una dirección válida',
                   },
                 })}
@@ -261,11 +280,11 @@ const UserProfile = () => {
 
               <div className='flex flex-col gap-1 text-teesaWhite'>
                 <h1 className='font-bold text-3xl'>{userName}</h1>
-                <div className='flex flex-row gap-[45%]'>
+                <div className='flex flex-row'>
                   <h1 className='text-2xl'>{userEmail}</h1>
                   <button onClick={() => setEditing(true)}>
                     <i
-                      className='bx bx-pencil text-white hover:text-slate-600'
+                      className='bx bx-pencil text-white hover:text-slate-600 ml-6'
                       style={{ fontSize: '22.5px' }}
                     ></i>
                   </button>
@@ -282,9 +301,50 @@ const UserProfile = () => {
         )}
       </section>
       {/* Products section */}
-      <section className='bg-teesaGrey rounded-lg xl:w-[50%]'>
-        Productos comprados
-      </section>
+      
+      
+      <section className='flex flex-col items-center mb-[5%] bg-gradient-to-r from-teesaGreenDark to-teesaGreen overflow-y-scroll rounded-lg xl:w-[55%] h-[80%]'>
+  <h1 className='font-bold text-teesaWhite mt-[2%] text-2xl'>Mis Compras</h1>
+  <article className='w-[95%] '>
+    {userProducts && userProducts.length > 0 ? (
+      userProducts.map((product) => (
+        <section className='bg-slate-300 w-[100%] my-[3%] h-[10%] rounded-xl' key={product.id}>
+          <div className="flex flex-row items-center space-x-4">
+            <Link to={`/home/${product.ProductId}`}>
+              <img src={product.Product.imagenes[0]} alt={product.Product.nombre} className="w-16 hover:transform hover:scale-105 h-16 ml-[1%]"/>
+            </Link>
+            <div>
+              <h3 className="text-2xl font-bold text-teesaBlueDark">{product.Product.nombre}</h3>
+              <section>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="col-span-1">
+                    <p className='text-teesaGreen'>{product.estado}</p>
+                    <p>Cantidad: {product.cantidad}</p>
+                  </div>
+                  <div className="col-span-1 flex flex-col justify-between">
+                    <div>
+                      <p>Precio: {product.precio}</p>
+                    </div>
+                    <div>
+                      <p>Fecha de compra: {new Date(product.fechaDeCompra).toLocaleDateString()}</p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </section>
+      ))
+    ) : (
+      <div className="flex flex-col items-center ">
+        <p className="text-teesaWhite mb-4">Todavía no has realizado compras.</p>
+        <Link to="/home" className="text-teesaBlueDark underline font-bold">Ir a comprar</Link>
+      </div>
+    
+    )}
+  </article>
+</section>
+
     </div>
   );
 };
