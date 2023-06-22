@@ -279,9 +279,9 @@ const UserProfile = () => {
               </div>
 
               <div className='flex flex-col gap-1 text-teesaWhite'>
-                <h1 className='font-bold xl:text-3xl lg:text-3xl md:text-2xl sm:text-xl xs:text-xl'>{userName}</h1>
+                
                 <div className='flex flex-row'>
-                  <h1 className='xl:text-2xl lg:text-2xl md:text-2xl sm:text-xl xs:text-lg'>{userEmail}</h1>
+                <h1 className='font-bold xl:text-3xl lg:text-3xl md:text-2xl sm:text-xl xs:text-xl'>{userName}</h1>
                   <button onClick={() => setEditing(true)}>
                     <i
                       className='bx bx-pencil text-white hover:text-slate-600 ml-6'
