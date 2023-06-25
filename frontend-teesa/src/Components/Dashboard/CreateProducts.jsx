@@ -102,7 +102,7 @@ const CreateProducts = (id) => {
     }
     console.log('esto es data', data);
     dispatch(createProduct(data));
-    navigate(`/home`)
+    navigate('/admin')
     reset();
   };
 
