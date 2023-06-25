@@ -42,6 +42,7 @@ const AboutUs = () => {
                 src={tech}
                 alt='img'
                 className='relative z-40 object-cover w-full h-full rounded-3xl'
+                loading='lazy'
               />
             </div>
           </div>
@@ -55,6 +56,7 @@ const AboutUs = () => {
               className='hidden lg:flex relative z-20 object-cover w-full rounded-2xl h-96'
               src={tech1}
               alt='photo'
+              loading='lazy'
             />
             <div className='bottom-0 z-40 mt-10 -mb-20 lg:absolute lg:right-0 lg:-mr-44 lg:mt-0 '>
               <div className='w-full p-8 border shadow-sm  bg-gray-50 lg:w-96 rounded-2xl'>
@@ -98,6 +100,7 @@ const AboutUs = () => {
             <img
               className='md:mt-40 lg:mt-0 relative z-20 object-cover w-full rounded-2xl h-96 md'
               src={tech2}
+              loading='lazy'
               alt='photo'
             />
           </div>
