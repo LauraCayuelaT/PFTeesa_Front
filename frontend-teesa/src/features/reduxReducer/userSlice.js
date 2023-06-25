@@ -17,7 +17,7 @@ export const putUser = createAsyncThunk('user/putUser', async (payload) => {
       userPhone,
       userId,
       // userType,
-      // userEmail,
+      userEmail,
     } = payload;
     const nombre = userName;
     const nit = userNit;

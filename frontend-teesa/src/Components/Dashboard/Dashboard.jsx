@@ -8,8 +8,12 @@ import {
   enableUser,
   enableUserfalse,
 } from '../../features/reduxReducer/adminSlice';
+import { getProductsChart } from '../../features/reduxReducer/admproductSlice';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
+import SalesChart from './SalesChart';
+import MonthSalesChart from './MonthSalesChart';
+
 
 function UserCard({ usuario }) {
   const dispatch = useDispatch();
@@ -19,6 +23,10 @@ function UserCard({ usuario }) {
   const [historialCompras, setHistorialCompras] = useState([]);
 
   const [mostrarHistorial, setMostrarHistorial] = useState(false); // Estado para controlar la visibilidad del historial
+ 
+ 
+
+
 
   useEffect(() => {
     const fetchHistorialCompras = async () => {
@@ -128,6 +136,7 @@ function UserCard({ usuario }) {
     </div>
   );
 }
+
 function Dashboard() {
   //*Validar Admin - Juan:
 
@@ -145,7 +154,7 @@ function Dashboard() {
   };
 
   const userAdmin = useSelector((state) => state.userState.userData.userType);
-  console.log('data' + userAdmin);
+  // console.log('data' + userAdmin);
   const [waiting, setWaiting] = useState(true);
 
   useEffect(() => {
@@ -183,6 +192,13 @@ function Dashboard() {
     dispatch(getUser());
   }, [dispatch]);
 
+  useEffect(()=>{
+    dispatch(getProductsChart())
+    }, [dispatch]) 
+
+    const ProductChart=useSelector((state)=>state.adminProductState.ProductChart)
+
+    console.log(ProductChart)
   const handleMostrarUsuarios = () => {
     setMostrarUsuarios(!mostrarUsuarios);
   };
@@ -190,6 +206,18 @@ function Dashboard() {
   return (
     <div className='flex flex-col items-center min-h-screen bg-gradient-to-r from-teesaGreen to-teesaBlueDark'>
       <h1 className='text-3xl text-white font-bold mt-[1%] mb-[1%]'>Bienvenido al Dashboard!</h1>
+      {/* charts */}
+      <section className='flex flex-row gap-[3em] items-center justify-center'>
+        <article className='flex flex-col items-center font-bold text-lg text-teesaGrey'>
+          <div>{ProductChart && <SalesChart salesData={ProductChart.productSales} />}</div>
+          Producto mas vendido:
+          {ProductChart && <h1>{ProductChart.mostSoldProduct}</h1>}
+          {ProductChart && <h2>{ProductChart.mostSoldCount}</h2>}
+           </article>
+        <article className=' bg-white'>
+        <div>{ProductChart && <MonthSalesChart salesByMonth={ProductChart.salesByMonth} />}</div>
+        </article>
+      </section>
       <h2 className='font-bold text-2xl text-white'>Quieres</h2>
       <div className='flex flex-row justify-center items-center mt-4 gap-[6%]'>
         <NavLink to='/admin/createproduct'>
