@@ -11,7 +11,7 @@ const AboutUs = () => {
           <div className='flex flex-wrap '>
             <div className='w-full px-4 mb-10 lg:w-1/2 lg:mb-0 '>
               <div className='lg:max-w-md'>
-                <div className='px-4 pl-4 mb-6 border-l-4 border-blue-500'>
+                <div className='px-4 pl-4 mb-6 border-l-4 border-teesaGreen'>
                   <span className='text-sm text-gray-600 uppercase '>
                     Quienes somos
                   </span>

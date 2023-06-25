@@ -16,13 +16,16 @@ import { getBrands } from "../../features/reduxReducer/productSlice";
 const FilterComponent = ({currentPage, setCurrentPage}) => {
   const [estado, setEstado] = useState("");
   const [tipo, setTipo] = useState("");
-  const [marca, setMarca] = useState("");
+  const [marca, setMarca] = useState([""]);
   const [precio, setPrecio] = useState("");
   const [orderPrice, setOrderPrice] = useState("");
   const [orderName, setOrderName] = useState("");
   const [brands, setBrands] = useState([]);
 
   const pageState = useSelector((state) => state?.filters?.page);
+
+  const [resetFilters, setResetFilters] = useState(false);
+
 
   const dispatch = useDispatch();
 
@@ -50,6 +53,29 @@ useEffect(() => {
     });
 }, [dispatch]);
 
+useEffect(() => {
+  if (resetFilters) {
+    setEstado("");
+    setTipo("");
+    setMarca("");
+    setPrecio("");
+    setOrderPrice("");
+    setOrderName("");
+    setResetFilters(false);
+    dispatch(fetchProducts({}));
+  }
+
+  const filters = {
+    page: pageState,
+    estado: estado,
+    tipo: tipo,
+    marca: marca,
+    precioMinimo: precio.split('-')[0],
+    precioMaximo: precio.split('-')[1],
+  };
+
+  dispatch(fetchProducts(filters));
+}, [pageState, estado, tipo, marca, precio, resetFilters, dispatch]);
 
 
 
@@ -71,6 +97,12 @@ useEffect(() => {
 
   return (
     <div className="mb-4">
+    <button
+    className="bg-teesaGreen text-white px-4 py-2 rounded-md mb-4"
+     onClick={() => setResetFilters(true)}
+      >
+      Resetear filtros
+    </button>
   <div className="block mb-2 font-semibold text-teesaBlueDark">
     <label htmlFor="sort" className="block mb-2 font-semibold">Orden Alfabético</label>
     <select

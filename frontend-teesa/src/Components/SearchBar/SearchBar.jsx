@@ -63,7 +63,7 @@ export const SearchBar = () => {
       </div>
       {noResults && (
         <div className="flex items-center justify-evenly md:justify-start w-full md:w-auto">
-          <p>No hay productos con ese nombre en este momento.</p>
+          <p className="text-white font-bold">No hay productos con ese nombre en este momento.</p>
           <button
             className="bg-teesaGreen text-white px-4 py-1 rounded-md ml-2"
             onClick={handleGoBack}
