@@ -8,6 +8,7 @@ const initialState = {
   error: null,
   errorMessage: '',
   success: false,
+  ProductChart: null
 };
 
 export const createProduct = createAsyncThunk(
@@ -90,6 +91,22 @@ export const deleteProduct = createAsyncThunk(
   }
 );
 
+export const getProductsChart = createAsyncThunk(
+  'admin/getProductsChart',
+  async () => {
+    try {
+      const response = await axios.get(
+        `https://servidor-teesa.onrender.com/purchase`
+      );
+      return response;
+    } catch (error) {
+      console.log('ERROR', error.response.data.message);
+      throw error;
+    }
+  }
+);
+
+
 const adminProductSlice = createSlice({
   name: 'adminProductState',
   initialState,
@@ -130,6 +147,10 @@ const adminProductSlice = createSlice({
       state.loading = false;
       state.error = true;
       state.errorMessage = action.payload;
+    });
+    builder.addCase(getProductsChart.fulfilled, (state, action) => {
+      const responseData = action.payload.data; // Obtener la información actualizada del servidor
+      state.ProductChart = responseData;
     });
   },
 });
